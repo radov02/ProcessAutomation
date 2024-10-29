@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <GVL Name="IO" Id="{9285b8f8-aeac-485f-b8b4-4dd4c3d508b1}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	ButtonRed AT %I*: BOOL;
+	ButtonUpperRight AT %I*: BOOL;
+	ButtonLowerLeft AT %I*: BOOL;
+	Switch AT %I*: BOOL;
+	LEDRed AT %Q*: BOOL;
+	LEDGreen AT %Q*: BOOL;
+	ButtonUpperLeft AT %I*: BOOL;
+	ButtonGreen AT %I*: BOOL;
+	ButtonLowerRight AT %I*: BOOL;
+	LEDBlueUpper AT %Q*: BOOL;
+	LEDBlueLower AT %Q*: BOOL;
+	
+	EndRotationSensor AT %I*: BOOL;
+	StepRotatonSwitch AT %I*: BOOL;
+	EndExtensionSensor AT %I*: BOOL;
+	StepExtensionSwitch AT %I*: BOOL;
+	EndLiftingSensor AT %I*: BOOL;
+	StepLiftingSwitch AT %I*: BOOL;
+	EndGripSensor AT %I*: BOOL;
+	StepGripSwitch AT %I*: BOOL;
+	MotorRotationDirection AT %Q*: BOOL;
+	MotorRotation AT %Q*: BOOL;
+	MotorExtensionDirection AT %Q*: BOOL;
+	MotorExtension AT %Q*: BOOL;
+	MotorLiftingDirection AT %Q*: BOOL;
+	MotorLifting AT %Q*: BOOL;
+	MotorGripDirection AT %Q*: BOOL;
+	MotorGrip AT %Q*: BOOL;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
