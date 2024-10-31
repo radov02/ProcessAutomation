@@ -31,9 +31,6 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\motor.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\p00_true_false.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -71,9 +68,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MotorSelection.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\SelectMovement.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
