@@ -40,7 +40,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{D2CAF1B5-1C4B-43C4-9DBE-2FD911699716}" Name="Lectures" PrjFilePath="Lectures\Lectures.plcproj" TmcFilePath="Lectures\Lectures.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Lectures\Lectures.tmc" TmcHash="{DDF9F699-D3D7-F151-CB95-0449DD012D6C}">
+				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Lectures\Lectures.tmc" TmcHash="{57AF3BE4-0843-7B0E-5FCD-C039EB33912D}">
 					<Name>Lectures Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">

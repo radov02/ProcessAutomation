@@ -3,6 +3,7 @@
   <POU Name="MAIN" Id="{ca0d1193-1c86-427a-9c71-41bf6bccd822}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
+	TimeForInterlockDelay: TIME := T#0.05S;
 	ManualMode: BOOL;
 	MotorSelection_1: MotorSelection;
 	SelectedMotor: INT;
@@ -365,7 +366,7 @@ END_VAR
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"T#0.25s"</v>
+                              <v n="Operand">"TimeForInterlockDelay"</v>
                               <v n="Type">"TIME"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -584,7 +585,7 @@ END_VAR
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"T#0.25s"</v>
+                              <v n="Operand">"TimeForInterlockDelay"</v>
                               <v n="Type">"TIME"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -642,7 +643,7 @@ END_VAR
                   <v n="ILValid">false</v>
                   <l2 n="ILLines" />
                   <v n="Comment">""</v>
-                  <v n="Title">"Movement Lifting"</v>
+                  <v n="Title">"Movement Rotation"</v>
                   <v n="Label">""</v>
                   <v n="OutCommented">false</v>
                   <l2 n="NetworkItems">
@@ -766,7 +767,7 @@ END_VAR
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <o>
-                            <v n="Operand">"IO.MotorLiftingDirection"</v>
+                            <v n="Operand">"IO.MotorRotationDirection"</v>
                             <v n="Type">"BOOL"</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
@@ -823,7 +824,7 @@ END_VAR
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"LowerRight"</v>
+                              <v n="Operand">"LowerLeft"</v>
                               <v n="Type">"BOOL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -842,7 +843,7 @@ END_VAR
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"LowerLeft"</v>
+                              <v n="Operand">"LowerRight"</v>
                               <v n="Type">"BOOL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -882,7 +883,7 @@ END_VAR
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <o>
-                            <v n="Operand">"IO.MotorLiftingDirection"</v>
+                            <v n="Operand">"IO.MotorRotationDirection"</v>
                             <v n="Type">"BOOL"</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
@@ -939,7 +940,7 @@ END_VAR
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"LowerLeft"</v>
+                              <v n="Operand">"LowerRight"</v>
                               <v n="Type">"BOOL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -958,7 +959,7 @@ END_VAR
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"LowerRight"</v>
+                              <v n="Operand">"LowerLeft"</v>
                               <v n="Type">"BOOL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -1078,7 +1079,7 @@ END_VAR
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <o>
-                            <v n="Operand">"IO.MotorLifting"</v>
+                            <v n="Operand">"IO.MotorRotation"</v>
                             <v n="Type">"BOOL"</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
@@ -1188,7 +1189,7 @@ END_VAR
                                 <l2 n="InputItems" cet="BoxTreeOperand">
                                   <o>
                                     <o n="Operand" t="Operand">
-                                      <v n="Operand">"LowerRight"</v>
+                                      <v n="Operand">"LowerLeft"</v>
                                       <v n="Type">"BOOL"</v>
                                       <v n="Comment">""</v>
                                       <v n="SymbolComment">""</v>
@@ -1207,7 +1208,7 @@ END_VAR
                                   </o>
                                   <o>
                                     <o n="Operand" t="Operand">
-                                      <v n="Operand">"LowerLeft"</v>
+                                      <v n="Operand">"LowerRight"</v>
                                       <v n="Type">"BOOL"</v>
                                       <v n="Comment">""</v>
                                       <v n="SymbolComment">""</v>
@@ -1226,7 +1227,7 @@ END_VAR
                                   </o>
                                   <o>
                                     <o n="Operand" t="Operand">
-                                      <v n="Operand">"IO.EndLiftingSensor"</v>
+                                      <v n="Operand">"IO.EndRotationSensor"</v>
                                       <v n="Type">"BOOL"</v>
                                       <v n="Comment">""</v>
                                       <v n="SymbolComment">""</v>
@@ -1290,7 +1291,7 @@ END_VAR
                                 <l2 n="InputItems" cet="BoxTreeOperand">
                                   <o>
                                     <o n="Operand" t="Operand">
-                                      <v n="Operand">"LowerRight"</v>
+                                      <v n="Operand">"LowerLeft"</v>
                                       <v n="Type">"BOOL"</v>
                                       <v n="Comment">""</v>
                                       <v n="SymbolComment">""</v>
@@ -1309,7 +1310,7 @@ END_VAR
                                   </o>
                                   <o>
                                     <o n="Operand" t="Operand">
-                                      <v n="Operand">"LowerLeft"</v>
+                                      <v n="Operand">"LowerRight"</v>
                                       <v n="Type">"BOOL"</v>
                                       <v n="Comment">""</v>
                                       <v n="SymbolComment">""</v>
@@ -1435,7 +1436,7 @@ END_VAR
                   <v n="ILValid">false</v>
                   <l2 n="ILLines" />
                   <v n="Comment">""</v>
-                  <v n="Title">"Movement Rotation"</v>
+                  <v n="Title">"Movement Lifting"</v>
                   <v n="Label">""</v>
                   <v n="OutCommented">false</v>
                   <l2 n="NetworkItems">
@@ -1559,7 +1560,7 @@ END_VAR
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <o>
-                            <v n="Operand">"IO.MotorRotationDirection"</v>
+                            <v n="Operand">"IO.MotorLiftingDirection"</v>
                             <v n="Type">"BOOL"</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
@@ -1675,7 +1676,7 @@ END_VAR
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <o>
-                            <v n="Operand">"IO.MotorRotationDirection"</v>
+                            <v n="Operand">"IO.MotorLiftingDirection"</v>
                             <v n="Type">"BOOL"</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
@@ -1871,7 +1872,7 @@ END_VAR
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <o>
-                            <v n="Operand">"IO.MotorRotation"</v>
+                            <v n="Operand">"IO.MotorLifting"</v>
                             <v n="Type">"BOOL"</v>
                             <v n="Comment">""</v>
                             <v n="SymbolComment">""</v>
@@ -1981,7 +1982,7 @@ END_VAR
                                 <l2 n="InputItems" cet="BoxTreeOperand">
                                   <o>
                                     <o n="Operand" t="Operand">
-                                      <v n="Operand">"LowerRight"</v>
+                                      <v n="Operand">"LowerLeft"</v>
                                       <v n="Type">"BOOL"</v>
                                       <v n="Comment">""</v>
                                       <v n="SymbolComment">""</v>
@@ -2000,7 +2001,7 @@ END_VAR
                                   </o>
                                   <o>
                                     <o n="Operand" t="Operand">
-                                      <v n="Operand">"LowerLeft"</v>
+                                      <v n="Operand">"LowerRight"</v>
                                       <v n="Type">"BOOL"</v>
                                       <v n="Comment">""</v>
                                       <v n="SymbolComment">""</v>
@@ -2016,25 +2017,6 @@ END_VAR
                                       <v n="Id">503L</v>
                                     </o>
                                     <v n="Id">502L</v>
-                                  </o>
-                                  <o>
-                                    <o n="Operand" t="Operand">
-                                      <v n="Operand">"IO.EndRotationSensor"</v>
-                                      <v n="Type">"BOOL"</v>
-                                      <v n="Comment">""</v>
-                                      <v n="SymbolComment">""</v>
-                                      <v n="Address">""</v>
-                                      <o n="Flags" t="Flags">
-                                        <v n="Flags">1</v>
-                                        <v n="Fixed">true</v>
-                                        <v n="Extensible">false</v>
-                                      </o>
-                                      <v n="LValue">false</v>
-                                      <v n="Boolean">true</v>
-                                      <v n="IsInstance">false</v>
-                                      <v n="Id">1051L</v>
-                                    </o>
-                                    <v n="Id">1050L</v>
                                   </o>
                                 </l2>
                                 <o n="InputParam" t="ParamList">
@@ -2083,7 +2065,7 @@ END_VAR
                                 <l2 n="InputItems" cet="BoxTreeOperand">
                                   <o>
                                     <o n="Operand" t="Operand">
-                                      <v n="Operand">"LowerRight"</v>
+                                      <v n="Operand">"LowerLeft"</v>
                                       <v n="Type">"BOOL"</v>
                                       <v n="Comment">""</v>
                                       <v n="SymbolComment">""</v>
@@ -2102,7 +2084,7 @@ END_VAR
                                   </o>
                                   <o>
                                     <o n="Operand" t="Operand">
-                                      <v n="Operand">"LowerLeft"</v>
+                                      <v n="Operand">"LowerRight"</v>
                                       <v n="Type">"BOOL"</v>
                                       <v n="Comment">""</v>
                                       <v n="SymbolComment">""</v>
@@ -2118,6 +2100,25 @@ END_VAR
                                       <v n="Id">507L</v>
                                     </o>
                                     <v n="Id">506L</v>
+                                  </o>
+                                  <o>
+                                    <o n="Operand" t="Operand">
+                                      <v n="Operand">"IO.EndLiftingSensor"</v>
+                                      <v n="Type">"BOOL"</v>
+                                      <v n="Comment">""</v>
+                                      <v n="SymbolComment">""</v>
+                                      <v n="Address">""</v>
+                                      <o n="Flags" t="Flags">
+                                        <v n="Flags">1</v>
+                                        <v n="Fixed">true</v>
+                                        <v n="Extensible">false</v>
+                                      </o>
+                                      <v n="LValue">false</v>
+                                      <v n="Boolean">true</v>
+                                      <v n="IsInstance">false</v>
+                                      <v n="Id">1136L</v>
+                                    </o>
+                                    <v n="Id">1135L</v>
                                   </o>
                                 </l2>
                                 <o n="InputParam" t="ParamList">
@@ -3202,7 +3203,7 @@ END_VAR
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"LowerLeft"</v>
+                              <v n="Operand">"LowerRight"</v>
                               <v n="Type">"BOOL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -3221,7 +3222,7 @@ END_VAR
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"LowerRight"</v>
+                              <v n="Operand">"LowerLeft"</v>
                               <v n="Type">"BOOL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -3318,7 +3319,7 @@ END_VAR
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"LowerRight"</v>
+                              <v n="Operand">"LowerLeft"</v>
                               <v n="Type">"BOOL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -3337,7 +3338,7 @@ END_VAR
                           </o>
                           <o t="BoxTreeOperand">
                             <o n="Operand" t="Operand">
-                              <v n="Operand">"LowerLeft"</v>
+                              <v n="Operand">"LowerRight"</v>
                               <v n="Type">"BOOL"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
@@ -3603,6 +3604,25 @@ END_VAR
                                     </o>
                                     <v n="Id">533L</v>
                                   </o>
+                                  <o>
+                                    <o n="Operand" t="Operand">
+                                      <v n="Operand">"IO.EndGripSensor"</v>
+                                      <v n="Type">"BOOL"</v>
+                                      <v n="Comment">""</v>
+                                      <v n="SymbolComment">""</v>
+                                      <v n="Address">""</v>
+                                      <o n="Flags" t="Flags">
+                                        <v n="Flags">1</v>
+                                        <v n="Fixed">true</v>
+                                        <v n="Extensible">false</v>
+                                      </o>
+                                      <v n="LValue">false</v>
+                                      <v n="Boolean">true</v>
+                                      <v n="IsInstance">false</v>
+                                      <v n="Id">1134L</v>
+                                    </o>
+                                    <v n="Id">1133L</v>
+                                  </o>
                                 </l2>
                                 <o n="InputParam" t="ParamList">
                                   <l2 n="Names" />
@@ -3685,25 +3705,6 @@ END_VAR
                                       <v n="Id">540L</v>
                                     </o>
                                     <v n="Id">539L</v>
-                                  </o>
-                                  <o>
-                                    <o n="Operand" t="Operand">
-                                      <v n="Operand">"IO.EndGripSensor"</v>
-                                      <v n="Type">"BOOL"</v>
-                                      <v n="Comment">""</v>
-                                      <v n="SymbolComment">""</v>
-                                      <v n="Address">""</v>
-                                      <o n="Flags" t="Flags">
-                                        <v n="Flags">1</v>
-                                        <v n="Fixed">true</v>
-                                        <v n="Extensible">false</v>
-                                      </o>
-                                      <v n="LValue">false</v>
-                                      <v n="Boolean">true</v>
-                                      <v n="IsInstance">false</v>
-                                      <v n="Id">1041L</v>
-                                    </o>
-                                    <v n="Id">1040L</v>
                                   </o>
                                 </l2>
                                 <o n="InputParam" t="ParamList">
@@ -3809,7 +3810,7 @@ END_VAR
                   <v n="Id">526L</v>
                 </o>
               </l2>
-              <v n="BranchCounter">78</v>
+              <v n="BranchCounter">79</v>
               <v n="ValidIds">true</v>
             </o>
           </Data>
