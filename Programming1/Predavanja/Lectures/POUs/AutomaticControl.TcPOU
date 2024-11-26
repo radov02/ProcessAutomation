@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="AutomaticControl" Id="{f9244839-88dd-4f0f-95ab-d4274120fb90}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC AutomaticControl
+VAR_INPUT
+	Switch: BOOL;
+END_VAR
+VAR
+	SwitchedManualAuto: BOOL := FALSE;
+	Rotation: Motors;
+	Lifting: Motors;
+	Extension: Motors;
+	Grip: Motors;
+	initialized: BOOL := FALSE;
+END_VAR
+VAR_OUTPUT
+	Output: BOOL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// recipe is sequence of moves to execute the task
+
+IF IO.ButtonRed THEN
+	IO.Initialized := FALSE;
+END_IF
+// Initially go to position (0,0,0,0) and initialize motors
+IF NOT IO.Initialized THEN
+	Initialize();
+END_IF
+
+// safety:
+SafetyEnding();
+
+// counting:
+IF NOT IO.Switch THEN
+	SwitchedManualAuto := TRUE;
+END_IF
+IF IO.StepRotatonSwitch = 1 AND IO.MotorRotation AND IO.Initialized THEN
+	IF IO.MotorRotationDirection = 0 THEN
+		Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent + 1;
+		IF NOT SwitchedManualAuto THEN
+			Automatic.RotationPositionAuto := Automatic.RotationPositionAuto + 1;
+		END_IF
+	ELSE
+		Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent - 1;
+		IF NOT SwitchedManualAuto THEN
+			Automatic.RotationPositionAuto := Automatic.RotationPositionAuto - 1;
+		END_IF
+	END_IF
+END_IF
+
+// reset the position:
+IF Automatic.RotationPositionAuto <> Automatic.RotationPositionCurrent AND SwitchedManualAuto THEN
+	IF Automatic.RotationPositionAuto - Automatic.RotationPositionCurrent > 0 THEN
+		IO.MotorRotationDirection := 1;
+	ELSE
+		IO.MotorRotationDirection := 0;
+	END_IF
+	IO.MotorRotation := 1;
+ELSE 
+	IF SwitchedManualAuto THEN
+		IO.MotorRotation := 0;
+		SwitchedManualAuto := FALSE;
+	END_IF
+END_IF
+
+
+
+
+
+IF IO.Initialized AND NOT IO.Switch THEN
+	Recipe1();
+END_IF
+
+RETURN;]]></ST>
+    </Implementation>
+    <LineIds Name="AutomaticControl">
+      <LineId Id="9" Count="0" />
+      <LineId Id="197" Count="2" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="250" Count="0" />
+      <LineId Id="234" Count="0" />
+      <LineId Id="246" Count="0" />
+      <LineId Id="274" Count="0" />
+      <LineId Id="288" Count="0" />
+      <LineId Id="322" Count="2" />
+      <LineId Id="219" Count="0" />
+      <LineId Id="223" Count="0" />
+      <LineId Id="287" Count="0" />
+      <LineId Id="300" Count="2" />
+      <LineId Id="226" Count="1" />
+      <LineId Id="304" Count="1" />
+      <LineId Id="303" Count="0" />
+      <LineId Id="221" Count="1" />
+      <LineId Id="278" Count="1" />
+      <LineId Id="297" Count="1" />
+      <LineId Id="308" Count="0" />
+      <LineId Id="310" Count="1" />
+      <LineId Id="307" Count="0" />
+      <LineId Id="312" Count="1" />
+      <LineId Id="319" Count="0" />
+      <LineId Id="314" Count="0" />
+      <LineId Id="321" Count="0" />
+      <LineId Id="320" Count="0" />
+      <LineId Id="299" Count="0" />
+      <LineId Id="280" Count="3" />
+      <LineId Id="217" Count="0" />
+      <LineId Id="201" Count="0" />
+      <LineId Id="200" Count="0" />
+      <LineId Id="218" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="38" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="Motors" Id="{a60a75ec-7bee-40de-97f9-a42bfc7b267c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC Motors
+VAR_INPUT
+	ACPosition: INT;
+	CurrentPosition: INT;
+	Movement: BOOL;
+	Direction: BOOL;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <LineIds Name="Motors">
+      <LineId Id="71" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="InitMotors" Id="{7fc36455-eee4-4b95-b6cf-e7b44cbc3396}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION InitMotors: BOOL
+VAR_INPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Automatic.MotorRot.ACPosition := 0;
+Automatic.MotorRot.CurrentPosition := 0;
+Automatic.MotorRot.Movement := FALSE;
+Automatic.MotorRot.Direction := IO.MotorRotationDirection;
+
+Automatic.MotorLif.ACPosition := 0;
+Automatic.MotorLif.CurrentPosition := 0;
+Automatic.MotorLif.Movement := FALSE;
+Automatic.MotorLif.Direction := IO.MotorLiftingDirection;
+
+Automatic.MotorExt.ACPosition := 0;
+Automatic.MotorExt.CurrentPosition := 0;
+Automatic.MotorExt.Movement := FALSE;
+Automatic.MotorExt.Direction := IO.MotorExtensionDirection;
+
+Automatic.MotorGri.ACPosition := 0;
+Automatic.MotorGri.CurrentPosition := 0;
+Automatic.MotorGri.Movement := FALSE;
+Automatic.MotorGri.Direction := IO.MotorGripDirection;]]></ST>
+    </Implementation>
+    <LineIds Name="InitMotors">
+      <LineId Id="81" Count="3" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="124" Count="3" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="128" Count="3" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="132" Count="2" />
+      <LineId Id="120" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

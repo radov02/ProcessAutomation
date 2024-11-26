@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="SafetyEnding" Id="{8bf2167f-22d8-4543-8367-d7ef70615958}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM SafetyEnding
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF Automatic.RotationPositionCurrent >= 570 AND NOT IO.ButtonLowerLeft THEN
+	IO.MotorRotation := 0;
+END_IF
+
+IF IO.EndRotationSensor THEN	// intermediate reset for accuracy
+	Automatic.RotationPositionCurrent := 0;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="SafetyEnding">
+      <LineId Id="6" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="25" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

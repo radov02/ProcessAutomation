@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="MotorControl" Id="{14ccf3d2-27f3-4cd8-9f85-3d1a66a71ce9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC MotorControl
+VAR_INPUT
+	CW_Automatic: BOOL;
+	CCW_Automatic: BOOL;
+	
+	
+	
+	CW_STOP_POS: BOOL;
+	CCW_STOP_POS: BOOL;
+	
+	CURRENT_COUNTROL: INT;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	CW: BOOL;
+	CCW: BOOL;
+	Direction: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//IF CW THEN
+//	Direction := TRUE;
+//END_IF
+
+//IF CCW THEN
+//	Direction := FALSE;
+//END_IF
+
+//CW_Timer((),);]]></ST>
+    </Implementation>
+    <LineIds Name="MotorControl">
+      <LineId Id="29" Count="0" />
+      <LineId Id="95" Count="1" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="100" Count="1" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="104" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

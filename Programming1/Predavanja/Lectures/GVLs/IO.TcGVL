@@ -31,6 +31,8 @@ VAR_GLOBAL
 	MotorLifting AT %Q*: BOOL;
 	MotorGripDirection AT %Q*: BOOL;
 	MotorGrip AT %Q*: BOOL;
+	Initialized: BOOL;
+	MotorDirection: INT;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

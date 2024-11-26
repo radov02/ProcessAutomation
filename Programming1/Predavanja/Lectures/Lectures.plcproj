@@ -18,6 +18,16 @@
     <LibraryReferences>{0c6116ab-87cf-4da7-bdc5-37b2eea03a31}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DUTs\Item.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Location.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GVLs\Automatic.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="GVLs\IO.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
@@ -25,55 +35,80 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\p11_logicalFunction.TcPOU">
+    <Compile Include="POUs\AutomaticControl.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Initialize.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\InitMotors.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lectures%27 programs\p00_true_false.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lectures%27 programs\p01_sequential.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lectures%27 programs\p02_clock.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lectures%27 programs\p03_SR1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lectures%27 programs\p04_latch.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lectures%27 programs\p05_posEdge.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lectures%27 programs\p06_frontDetection.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lectures%27 programs\p07_memoryCell.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lectures%27 programs\p08_counter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lectures%27 programs\p09_timers.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lectures%27 programs\p10_directionalInterlock.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lectures%27 programs\p11_logicalFunction.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Lectures%27 programs\p12_controlLight.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\ManualControl.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\MotorControl.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Motors.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\p00_true_false.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\p01_sequential.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\p02_clock.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\p03_SR1.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\p04_latch.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\p05_posEdge.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\p06_frontDetection.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\p07_memoryCell.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\p08_counter.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\p09_timers.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\p10_directionalInterlock.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\p12_controlLight.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\MotorSelection.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Recipe1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\SafetyEnding.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
+    <Folder Include="POUs\Lectures%27 programs" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>

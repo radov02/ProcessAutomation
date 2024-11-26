@@ -36,11 +36,14 @@
 				<Task Id="4" Priority="21" CycleTime="100000" AmsPort="351" AdtTasks="true">
 					<Name>PlcTask1</Name>
 				</Task>
+				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
+					<Name>PlcTask</Name>
+				</Task>
 			</Tasks>
 		</System>
 		<Plc>
 			<Project GUID="{D2CAF1B5-1C4B-43C4-9DBE-2FD911699716}" Name="Lectures" PrjFilePath="Lectures\Lectures.plcproj" TmcFilePath="Lectures\Lectures.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Lectures\Lectures.tmc" TmcHash="{57AF3BE4-0843-7B0E-5FCD-C039EB33912D}">
+				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Lectures\Lectures.tmc" TmcHash="{FB90EDD8-A8CF-0A48-5864-DCE812138DB0}">
 					<Name>Lectures Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -382,7 +385,7 @@
 				</Box>
 				<EtherCAT/>
 			</Device>
-			<Device Id="2" DevType="10">
+			<Device Id="2" Disabled="true" DevType="10">
 				<Name>Device 2 (NOV-DP-RAM)</Name>
 				<AddressInfo>
 					<Io_Ccat>
@@ -635,8 +638,8 @@
 		</Io>
 	</Project>
 	<Mappings>
-		<MappingInfo Identifier="{00000000-2041-0850-4020-500810000403}" Id="#x02030020"/>
-		<MappingInfo Identifier="{00000000-2041-0850-4020-500840000403}" Id="#x02030010"/>
+		<MappingInfo Identifier="{00000000-2041-0850-4020-500810000403}" Id="#x02030010"/>
+		<MappingInfo Identifier="{00000000-2041-0850-4020-500840000403}" Id="#x02030020"/>
 		<OwnerA Name="TIPC^Lectures^Lectures Instance">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 2 (EL1859)">
 				<Link VarA="PlcTask Inputs^IO.EndExtensionSensor" VarB="Channel 3^Input"/>
