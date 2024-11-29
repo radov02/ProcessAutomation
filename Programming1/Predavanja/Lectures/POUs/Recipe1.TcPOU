@@ -1,17 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
-  <POU Name="Recipe1" Id="{636c2b86-e873-4fd4-89c1-9012cc559e47}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION Recipe1 : BOOL
-VAR_INPUT
-END_VAR
+  <POU Name="Recipe1" Id="{f8183289-6e8d-4e31-9979-1875ef80169a}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Recipe1
 VAR
+	State: INT := 0;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[IF IO.Initialized AND NOT IO.Switch THEN
+	// WOOD:
+	IF State = 0 THEN
+		IF Automatic.ExtensionPositionCurrent < 400 THEN
+			IO.MotorExtensionDirection := 1;	// ?
+			IO.MotorExtension := 1;
+		ELSE
+			IO.MotorExtensionDirection := 0;	// ?
+			IO.MotorExtension := 0;
+		END_IF
+	ELSIF State = 1 THEN
+		IF Automatic.GripPositionCurrent < 140 THEN
+			IO.MotorGripDirection := 1;		// ?
+			IO.MotorGrip := 1;
+		ELSE
+			IO.MotorGripDirection := 1;		// ?
+			IO.MotorGrip := 0;
+		END_IF
+	ELSIF State = 2 THEN
+		IF Automatic.ExtensionPositionCurrent > 125 THEN
+			IO.MotorExtensionDirection := 0;	// ?
+			IO.MotorExtension := 1;
+		ELSE
+			IO.MotorExtensionDirection := 1;	// ?
+			IO.MotorExtension := 0;
+		END_IF
+	ELSIF State = 3 THEN
+		IF Automatic.RotationPositionCurrent < 190 THEN
+			IO.MotorRotationDirection := 1;		// ?
+			IO.MotorRotation := 1;
+		ELSE
+			IO.MotorRotationDirection := 0;		// ?
+			IO.MotorRotation := 0;
+		END_IF
+	ELSIF State = 4 THEN
+		IF Automatic.ExtensionPositionCurrent > 0 THEN
+			IO.MotorExtensionDirection := 1;	// ?
+			IO.MotorExtension := 1;
+		ELSE
+			IO.MotorExtensionDirection := 0;	// ?
+			IO.MotorExtension := 0;
+		END_IF
+	ELSIF State = 5 THEN
+		IF Automatic.RotationPositionCurrent > 0 THEN
+			IO.MotorRotationDirection := 1;		// ?
+			IO.MotorRotation := 1;
+		ELSE
+			IO.MotorRotationDirection := 0;		// ?
+			IO.MotorRotation := 0;
+		END_IF
+	END_IF
+	
+	// PLASTICS:
+	// METAL:
+END_IF]]></ST>
     </Implementation>
     <LineIds Name="Recipe1">
-      <LineId Id="11" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="27" Count="1" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="37" Count="1" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="39" Count="1" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="51" Count="6" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="59" Count="6" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="67" Count="6" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="75" Count="2" />
+      <LineId Id="13" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

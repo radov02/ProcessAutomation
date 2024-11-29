@@ -89,9 +89,6 @@
     <Compile Include="POUs\MotorControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Motors.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -101,7 +98,7 @@
     <Compile Include="POUs\Recipe1.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\SafetyEnding.TcPOU">
+    <Compile Include="POUs\Safety.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

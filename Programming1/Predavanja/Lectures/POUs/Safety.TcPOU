@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="Safety" Id="{8bf2167f-22d8-4543-8367-d7ef70615958}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Safety
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Safety for Rotation:
+IF Automatic.RotationPositionCurrent >= 570 AND NOT IO.ButtonLowerLeft THEN
+	IO.MotorRotation := 0;
+END_IF
+IF IO.EndRotationSensor THEN
+	Automatic.RotationPositionCurrent := 0;
+END_IF
+
+// Safety for Lifting:
+IF Automatic.LiftingPositionCurrent >= 355 AND NOT IO.ButtonLowerLeft THEN
+	IO.MotorLifting := 0;
+END_IF
+IF IO.EndLiftingSensor THEN
+	Automatic.LiftingPositionCurrent := 0;
+END_IF
+
+// Safety for Extension:
+IF Automatic.ExtensionPositionCurrent >= 445 AND NOT IO.ButtonLowerLeft THEN
+	IO.MotorExtension := 0;
+END_IF
+IF IO.EndExtensionSensor THEN
+	Automatic.ExtensionPositionCurrent := 0;
+END_IF
+
+// Safety for Grip:
+IF Automatic.GripPositionCurrent >= 160 AND NOT IO.ButtonLowerLeft THEN
+	IO.MotorGrip := 0;
+END_IF
+IF IO.EndGripSensor THEN
+	Automatic.GripPositionCurrent := 0;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="Safety">
+      <LineId Id="56" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="33" Count="4" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="39" Count="4" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="45" Count="4" />
+      <LineId Id="44" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

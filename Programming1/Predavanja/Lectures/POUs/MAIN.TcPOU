@@ -6,7 +6,8 @@ VAR
 	ManualControl_0: ManualControl;
 	AutomaticControl_0: AutomaticControl;
 END_VAR
-]]></Declaration>
+
+//Functions should ideally avoid changing global or external variables, though this is technically allowed in some cases.]]></Declaration>
     <Implementation>
       <NWL>
         <XmlArchive>
@@ -201,7 +202,7 @@ END_VAR
                         <v n="LValue">false</v>
                         <v n="Boolean">false</v>
                         <v n="IsInstance">true</v>
-                        <v n="Id">1243L</v>
+                        <v n="Id">1298L</v>
                       </o>
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems">
@@ -215,7 +216,7 @@ END_VAR
                       </o>
                       <l2 n="InputFlags" cet="Flags">
                         <o>
-                          <v n="Flags">16</v>
+                          <v n="Flags">0</v>
                           <v n="Fixed">true</v>
                           <v n="Extensible">false</v>
                         </o>
@@ -238,7 +239,7 @@ END_VAR
                                 <v n="LValue">true</v>
                                 <v n="Boolean">true</v>
                                 <v n="IsInstance">false</v>
-                                <v n="Id">1252L</v>
+                                <v n="Id">1300L</v>
                               </o>
                             </l2>
                           </o>
@@ -262,11 +263,11 @@ END_VAR
                               <v n="LValue">false</v>
                               <v n="Boolean">true</v>
                               <v n="IsInstance">false</v>
-                              <v n="Id">1242L</v>
+                              <v n="Id">1295L</v>
                             </o>
-                            <v n="Id">1241L</v>
+                            <v n="Id">1294L</v>
                           </o>
-                          <v n="Id">1253L</v>
+                          <v n="Id">1301L</v>
                         </o>
                       </l2>
                       <o n="InputParam" t="ParamList">
@@ -291,11 +292,11 @@ END_VAR
                       <n n="STSnippet" />
                       <v n="ContainsExtensibleInputs">false</v>
                       <v n="ProvidesSTSnippet">false</v>
-                      <v n="Id">1244L</v>
+                      <v n="Id">1299L</v>
                     </o>
                   </l2>
                   <l2 n="Connectors" />
-                  <v n="Id">1240L</v>
+                  <v n="Id">1293L</v>
                 </o>
               </l2>
               <v n="BranchCounter">0</v>

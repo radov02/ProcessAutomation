@@ -6,44 +6,53 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// we want to go to the predetermined initial position (0,0,0,0)
+      <ST><![CDATA[// go to the initial position (0,0,0,0)
 IF IO.EndRotationSensor THEN
 	IO.MotorRotation := 0;
 	IO.MotorRotationDirection := 0;
-	ELSE 
-		IO.MotorRotationDirection := 1;
-		IO.MotorRotation := 1;
-	END_IF
-	IF IO.EndLiftingSensor THEN
-		IO.MotorLifting := 0;
-		IO.MotorLiftingDirection := 0;
-	ELSE 
-		IO.MotorLiftingDirection := 1;
-		IO.MotorLifting := 1;
-	END_IF
-	IF IO.EndExtensionSensor THEN
-		IO.MotorExtension := 0;
-		IO.MotorExtensionDirection := 0;
-	ELSE 
-		IO.MotorExtensionDirection := 1;
-		IO.MotorExtension := 1;
-	END_IF
-	IF IO.EndGripSensor THEN
-		IO.MotorGrip := 0;
-		IO.MotorGripDirection := 0;
-	ELSE 
-		IO.MotorGripDirection := 1;
-		IO.MotorGrip := 1;
-	END_IF
+ELSE 
+	IO.MotorRotationDirection := 1;
+	IO.MotorRotation := 1;
+END_IF
+
+IF IO.EndLiftingSensor THEN
+	IO.MotorLifting := 0;
+	IO.MotorLiftingDirection := 0;
+ELSE 
+	IO.MotorLiftingDirection := 1;
+	IO.MotorLifting := 1;
+END_IF
+
+IF IO.EndExtensionSensor THEN
+	IO.MotorExtension := 0;
+	IO.MotorExtensionDirection := 0;
+ELSE 
+	IO.MotorExtensionDirection := 1;
+	IO.MotorExtension := 1;
+END_IF
+
+IF IO.EndGripSensor THEN
+	IO.MotorGrip := 0;
+	IO.MotorGripDirection := 0;
+ELSE 
+	IO.MotorGripDirection := 1;
+	IO.MotorGrip := 1;
+END_IF
 	
 IF IO.EndRotationSensor AND IO.EndLiftingSensor AND IO.EndExtensionSensor AND IO.EndGripSensor THEN
 	IO.Initialized := TRUE;
-	//InitMotors();
+	InitMotors();	// !!!
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="Initialize">
       <LineId Id="5" Count="0" />
-      <LineId Id="32" Count="26" />
+      <LineId Id="32" Count="6" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="39" Count="6" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="46" Count="6" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="53" Count="5" />
       <LineId Id="15" Count="0" />
       <LineId Id="63" Count="0" />
       <LineId Id="59" Count="0" />

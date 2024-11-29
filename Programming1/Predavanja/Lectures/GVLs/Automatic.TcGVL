@@ -14,6 +14,18 @@ VAR_GLOBAL
 	RotationPositionAuto: INT;
 	RotationPositionCurrent: INT;
 	RotationMovement: BOOL;
+	
+	LiftingPositionAuto: INT;
+	LiftingPositionCurrent: INT;
+	LiftingMovement: BOOL;
+	
+	ExtensionPositionAuto: INT;
+	ExtensionPositionCurrent: INT;
+	ExtensionMovement: BOOL;
+	
+	GripPositionAuto: INT;
+	GripPositionCurrent: INT;
+	GripMovement: BOOL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
