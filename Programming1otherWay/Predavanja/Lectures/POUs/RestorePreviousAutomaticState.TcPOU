@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="RestorePreviousAutomaticState" Id="{bf2e792f-bc3c-4ce2-afd6-05125fa35279}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC RestorePreviousAutomaticState
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	RotationRestored: BOOL := FALSE;
+	LiftingRestored: BOOL := FALSE;
+	ExtensionRestored: BOOL := FALSE;
+	GripRestored: BOOL := FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// reset rotation:
+IF Automatic.RotationPositionAuto - Automatic.RotationPositionCurrent > 25 THEN
+	IO.MotorRotationDirection := 0;
+	Automatic.MotorR.CurrentlyMoving := TRUE;
+	IO.MotorRotation := 1;
+ELSIF Automatic.RotationPositionCurrent - Automatic.RotationPositionAuto > 25 THEN
+	IO.MotorRotationDirection := 0;
+	Automatic.MotorR.CurrentlyMoving := TRUE;
+	IO.MotorRotation := 1;
+ELSE
+	IO.MotorRotation := 0;
+	Automatic.MotorR.CurrentlyMoving := FALSE;
+END_IF
+// reset lifting:
+IF Automatic.LiftingPositionAuto - Automatic.LiftingPositionCurrent > 25 THEN
+	IO.MotorLiftingDirection := 0;
+	Automatic.MotorL.CurrentlyMoving := TRUE;
+	IO.MotorLifting := 1;
+ELSIF Automatic.LiftingPositionCurrent - Automatic.LiftingPositionAuto > 25 THEN
+	IO.MotorLiftingDirection := 0;
+	Automatic.MotorL.CurrentlyMoving := TRUE;
+	IO.MotorLifting := 1;
+ELSE
+	IO.MotorLifting := 0;
+	Automatic.MotorL.CurrentlyMoving := FALSE;
+END_IF
+// reset extension:
+IF Automatic.ExtensionPositionAuto - Automatic.ExtensionPositionCurrent > 25 THEN
+	IO.MotorExtensionDirection := 0;
+	Automatic.MotorE.CurrentlyMoving := TRUE;
+	IO.MotorExtension := 1;
+ELSIF Automatic.ExtensionPositionCurrent - Automatic.ExtensionPositionAuto > 25 THEN
+	IO.MotorExtensionDirection := 0;
+	Automatic.MotorE.CurrentlyMoving := TRUE;
+	IO.MotorExtension := 1;
+ELSE
+	IO.MotorExtension := 0;
+	Automatic.MotorE.CurrentlyMoving := FALSE;
+END_IF
+// reset grip:
+IF Automatic.GripPositionAuto - Automatic.GripPositionCurrent > 25 THEN
+	IO.MotorGripDirection := 0;
+	Automatic.MotorG.CurrentlyMoving := TRUE;
+	IO.MotorGrip := 1;
+ELSIF Automatic.GripPositionCurrent - Automatic.GripPositionAuto > 25 THEN
+	IO.MotorGripDirection := 0;
+	Automatic.MotorG.CurrentlyMoving := TRUE;
+	IO.MotorGrip := 1;
+ELSE
+	IO.MotorGrip := 0;
+	Automatic.MotorG.CurrentlyMoving := FALSE;
+END_IF
+
+// if all restored then go on to exeecute recipes in AutomaticControl:
+IF RotationRestored AND LiftingRestored AND ExtensionRestored AND GripRestored THEN
+	IO.SwitchedToAutomatic := FALSE;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="RestorePreviousAutomaticState">
+      <LineId Id="17" Count="5" />
+      <LineId Id="49" Count="1" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="23" Count="2" />
+      <LineId Id="56" Count="11" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="69" Count="11" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="82" Count="11" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="36" Count="1" />
+      <LineId Id="53" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

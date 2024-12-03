@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Refactors>
+  <Renames>
+    <RenamedType>
+      <Type guid="f8183289-6e8d-4e31-9979-1875ef80169a">RECIPE1</Type>
+      <From>Recipe1</From>
+      <To>Recipe11</To>
+    </RenamedType>
+    <RenamedType>
+      <Type guid="fcbf1a5f-2104-468f-8130-2225a29b74f8">RECIPE1</Type>
+      <From>Recipe1</From>
+      <To>Recipe11</To>
+    </RenamedType>
+    <RenamedType>
+      <Type guid="06bcc36b-ddd8-4343-b650-67f5009c2b91">RECIPE1</Type>
+      <From>Recip1</From>
+      <To>Recipe11</To>
+    </RenamedType>
+  </Renames>
+</Refactors>

@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="CountCurrentPosition" Id="{80975f91-8736-487a-b4c3-c190ec7e08bf}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM CountCurrentPosition
+VAR
+END_VAR
+
+// ONLY COUNTING, NO SETTING MOTORS ON/OFF]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// COUNT ROTATION:
+IF IO.Initialized AND Automatic.MotorR.CurrentlyMoving AND IO.StepRotatonSwitch = 1 THEN
+	IO.LEDGreen := 0;
+	IF IO.MotorRotationDirection = 0 THEN
+		Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent + 1;
+		Automatic.RotationPositionAuto := Automatic.RotationPositionAuto + 1;
+	ELSE
+		Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent - 1;
+		Automatic.RotationPositionAuto := Automatic.RotationPositionAuto - 1;
+	END_IF
+ELSE
+	IO.LEDGreen := 1;
+END_IF
+
+// COUNT Extension:
+IF IO.Initialized AND Automatic.MotorE.CurrentlyMoving AND IO.StepExtensionSwitch = 1 THEN
+	IO.LEDGreen := 0;
+	IF IO.MotorExtensionDirection = 0 THEN
+		Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent + 1;
+		Automatic.ExtensionPositionAuto := Automatic.ExtensionPositionAuto + 1;
+	ELSE
+		Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent - 1;
+		Automatic.ExtensionPositionAuto := Automatic.ExtensionPositionAuto - 1;
+	END_IF
+ELSE
+	IO.LEDGreen := 1;
+END_IF
+
+// COUNT Lifting:
+IF IO.Initialized AND Automatic.MotorL.CurrentlyMoving AND IO.StepLiftingSwitch = 1 THEN
+	IO.LEDGreen := 0;
+	IF IO.MotorLiftingDirection = 0 THEN
+		Automatic.LiftingPositionCurrent := Automatic.LiftingPositionCurrent + 1;
+		Automatic.LiftingPositionAuto := Automatic.LiftingPositionAuto + 1;
+	ELSE
+		Automatic.LiftingPositionCurrent := Automatic.LiftingPositionCurrent - 1;
+		Automatic.LiftingPositionAuto := Automatic.LiftingPositionAuto - 1;
+	END_IF
+ELSE
+	IO.LEDGreen := 1;
+END_IF
+
+// COUNT Grip:
+IF IO.Initialized AND Automatic.MotorG.CurrentlyMoving AND IO.StepGripSwitch = 1 THEN
+	IO.LEDGreen := 0;
+	IF IO.MotorGripDirection = 0 THEN
+		Automatic.GripPositionCurrent := Automatic.GripPositionCurrent + 1;
+		Automatic.GripPositionAuto := Automatic.GripPositionAuto + 1;
+	ELSE
+		Automatic.GripPositionCurrent := Automatic.GripPositionCurrent - 1;
+		Automatic.GripPositionAuto := Automatic.GripPositionAuto - 1;
+	END_IF
+ELSE
+	IO.LEDGreen := 1;
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="CountCurrentPosition">
+      <LineId Id="92" Count="0" />
+      <LineId Id="6" Count="2" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="22" Count="3" />
+      <LineId Id="95" Count="12" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="109" Count="12" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="122" Count="12" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="135" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

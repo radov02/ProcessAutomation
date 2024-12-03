@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="Recipe1" Id="{3098573e-c5b9-45cc-a6c2-48fae2f326e0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC Recipe1
+VAR_INPUT
+	ExecutingRecipe1: BOOL;
+END_VAR
+VAR_OUTPUT
+	SuccesfullyEnded: BOOL := FALSE;
+END_VAR
+VAR
+	State: INT := 0;
+END_VAR
+
+// Recipe is sequence of moves to execute the task.
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF ExecutingRecipe1 THEN	// we start executing recipe1 (again)
+	SuccesfullyEnded := FALSE;
+END_IF
+
+IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
+	// WOOD:
+	IF State = 0 THEN
+		IF Automatic.LiftingPositionAuto < 50 THEN
+			IO.MotorLiftingDirection := 0;
+			Automatic.MotorL.CurrentlyMoving := TRUE;
+			IO.MotorLifting := 1;
+		ELSE
+			State := 1;
+			IO.MotorLifting := 0;
+			Automatic.MotorL.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 1 THEN
+		IF Automatic.ExtensionPositionAuto < 388 THEN
+			IO.MotorExtensionDirection := 0;
+			Automatic.MotorE.CurrentlyMoving := TRUE;
+			IO.MotorExtension := 1;
+		ELSE
+			State := 2;
+			IO.MotorExtension := 0;
+			Automatic.MotorE.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 2 THEN
+		IF Automatic.GripPositionAuto < 160 THEN
+			IO.MotorGripDirection := 0;
+			Automatic.MotorG.CurrentlyMoving := TRUE;
+			IO.MotorGrip := 1;
+		ELSE
+			State := 3;
+			IO.MotorGrip := 0;
+			Automatic.MotorG.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 3 THEN
+		IF NOT IO.EndLiftingSensor THEN
+			IO.MotorLiftingDirection := 0;
+			Automatic.MotorG.CurrentlyMoving := TRUE;
+			IO.MotorLifting := 1;
+		ELSE
+			State := 4;
+			IO.MotorLifting := 0;
+			Automatic.MotorG.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 4 THEN
+		IF Automatic.RotationPositionAuto < 300 THEN
+			IO.MotorRotationDirection := 0;
+			Automatic.MotorR.CurrentlyMoving := TRUE;
+			IO.MotorRotation := 1;
+		ELSE
+			State := 5;
+			IO.MotorRotation := 0;
+			Automatic.MotorR.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 5 THEN
+		IF NOT IO.EndExtensionSensor THEN	// it drops wood in the nearest bin
+			IO.MotorExtensionDirection := 1;
+			Automatic.MotorE.CurrentlyMoving := TRUE;
+			IO.MotorExtension := 1;
+		ELSE
+			State := 6;
+			IO.MotorExtension := 0;
+			Automatic.MotorE.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 6 THEN
+		IF NOT IO.EndGripSensor THEN
+			IO.MotorGripDirection := 1;
+			Automatic.MotorG.CurrentlyMoving := TRUE;
+			IO.MotorGrip := 1;
+		ELSE
+			State := 7;
+			IO.MotorGrip := 0;
+			Automatic.MotorG.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 7 THEN
+		IF NOT IO.EndRotationSensor THEN
+			IO.MotorRotationDirection := 1;
+			Automatic.MotorR.CurrentlyMoving := TRUE;
+			IO.MotorRotation := 1;
+		ELSE
+			State := 8;
+			IO.MotorRotation := 0;
+			Automatic.MotorR.CurrentlyMoving := FALSE;
+		END_IF
+	END_IF
+	
+	// PLASTICS:
+	IF State = 8 THEN
+		IF Automatic.LiftingPositionAuto < 250 THEN
+			IO.MotorLiftingDirection := 0;
+			Automatic.MotorL.CurrentlyMoving := TRUE;
+			IO.MotorLifting := 1;
+		ELSE
+			State := 9;
+			IO.MotorLifting := 0;
+			Automatic.MotorL.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 9 THEN
+		IF Automatic.ExtensionPositionAuto < 388 THEN
+			IO.MotorExtensionDirection := 0;
+			Automatic.MotorE.CurrentlyMoving := TRUE;
+			IO.MotorExtension := 1;
+		ELSE
+			State := 10;
+			IO.MotorExtension := 0;
+			Automatic.MotorE.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 10 THEN
+		IF Automatic.GripPositionAuto < 160 THEN
+			IO.MotorGripDirection := 0;
+			Automatic.MotorG.CurrentlyMoving := TRUE;
+			IO.MotorGrip := 1;
+		ELSE
+			State := 11;
+			IO.MotorGrip := 0;
+			Automatic.MotorG.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 11 THEN
+		IF NOT IO.EndLiftingSensor THEN
+			IO.MotorLiftingDirection := 1;
+			Automatic.MotorL.CurrentlyMoving := TRUE;
+			IO.MotorLifting := 1;
+		ELSE
+			State := 12;
+			IO.MotorLifting := 0;
+			Automatic.MotorL.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 12 THEN
+		IF Automatic.RotationPositionAuto < 300 THEN
+			IO.MotorRotationDirection := 0;
+			Automatic.MotorR.CurrentlyMoving := TRUE;
+			IO.MotorRotation := 1;
+		ELSE
+			State := 13;
+			IO.MotorRotation := 0;
+			Automatic.MotorR.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 13 THEN
+		IF Automatic.ExtensionPositionAuto > 300 THEN	// it drops plastics into second nearest bin
+			IO.MotorExtensionDirection := 1;
+			Automatic.MotorE.CurrentlyMoving := TRUE;
+			IO.MotorExtension := 1;
+		ELSE
+			State := 14;
+			IO.MotorExtensionDirection := 0;
+			IO.MotorExtension := 0;
+			Automatic.MotorE.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 14 THEN
+		IF NOT IO.EndGripSensor THEN
+			IO.MotorGripDirection := 1;
+			Automatic.MotorG.CurrentlyMoving := TRUE;
+			IO.MotorGrip := 1;
+		ELSE
+			State := 15;
+			IO.MotorGrip := 0;
+			Automatic.MotorG.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 15 THEN
+		IF NOT IO.EndRotationSensor THEN
+			IO.MotorRotationDirection := 1;
+			Automatic.MotorR.CurrentlyMoving := TRUE;
+			IO.MotorRotation := 1;
+		ELSE
+			State := 16;
+			IO.MotorRotation := 0;
+			Automatic.MotorR.CurrentlyMoving := FALSE;
+		END_IF
+	END_IF
+	
+	// METAL:
+	IF State = 16 THEN
+		IF Automatic.LiftingPositionAuto < 400 THEN
+			IO.MotorLiftingDirection := 0;
+			Automatic.MotorL.CurrentlyMoving := TRUE;
+			IO.MotorLifting := 1;
+		ELSE
+			State := 17;
+			IO.MotorLifting := 0;
+			Automatic.MotorL.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 17 THEN
+		IF Automatic.ExtensionPositionAuto < 388 THEN
+			IO.MotorExtensionDirection := 0;
+			Automatic.MotorE.CurrentlyMoving := TRUE;
+			IO.MotorExtension := 1;
+		ELSE
+			State := 18;
+			IO.MotorExtension := 0;
+			Automatic.MotorE.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 18 THEN
+		IF Automatic.GripPositionAuto < 160 THEN
+			IO.MotorGripDirection := 0;
+			Automatic.MotorG.CurrentlyMoving := TRUE;
+			IO.MotorGrip := 1;
+		ELSE
+			State := 19;
+			IO.MotorGrip := 0;
+			Automatic.MotorG.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 19 THEN
+		IF NOT IO.EndLiftingSensor THEN
+			IO.MotorLiftingDirection := 1;
+			Automatic.MotorL.CurrentlyMoving := TRUE;
+			IO.MotorLifting := 1;
+		ELSE
+			State := 20;
+			IO.MotorLifting := 0;
+			Automatic.MotorL.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 20 THEN
+		IF Automatic.RotationPositionAuto < 300 THEN
+			IO.MotorRotationDirection := 0;
+			Automatic.MotorR.CurrentlyMoving := TRUE;
+			IO.MotorRotation := 1;
+		ELSE
+			State := 21;
+			IO.MotorRotation := 0;
+			Automatic.MotorR.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 21 THEN
+		IF Automatic.ExtensionPositionAuto > 500 THEN	// it drops metal into farthest bin
+			IO.MotorExtensionDirection := 1;
+			Automatic.MotorE.CurrentlyMoving := TRUE;
+			IO.MotorExtension := 1;
+		ELSE
+			State := 22;
+			IO.MotorExtension := 0;
+			Automatic.MotorE.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 22 THEN
+		IF NOT IO.EndGripSensor THEN
+			IO.MotorGripDirection := 1;
+			Automatic.MotorG.CurrentlyMoving := TRUE;
+			IO.MotorGrip := 1;
+		ELSE
+			State := 23;
+			IO.MotorGrip := 0;
+			Automatic.MotorG.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 23 THEN
+		IF NOT IO.EndRotationSensor THEN
+			IO.MotorRotationDirection := 1;
+			Automatic.MotorR.CurrentlyMoving := TRUE;
+			IO.MotorRotation := 1;
+		ELSE
+			State := 24;
+			IO.MotorRotation := 0;
+			Automatic.MotorR.CurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 24 THEN
+		SuccesfullyEnded := TRUE;
+		State := 0;
+		RETURN;
+	END_IF
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="Recipe1">
+      <LineId Id="283" Count="3" />
+      <LineId Id="23" Count="248" />
+      <LineId Id="278" Count="3" />
+      <LineId Id="274" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

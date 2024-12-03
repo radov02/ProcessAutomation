@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="AutomaticControl" Id="{f9244839-88dd-4f0f-95ab-d4274120fb90}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC AutomaticControl
+VAR_INPUT
+	Switch: BOOL;
+END_VAR
+VAR
+	State: INT := 0;
+	ExecutingRecipe1: BOOL;
+	ExecutingRecipe2: BOOL;
+END_VAR
+VAR_OUTPUT
+	Output: BOOL := TRUE;
+END_VAR
+
+// TwinCAT ensures that all POUs, including your AutomaticControl program 
+// and Recipe1() Function Block, are executed once per cycle.]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF IO.SwitchedToAutomatic THEN
+	RestorePreviousAutomaticState();
+ELSE
+	IF IO.ButtonUpperLeft OR ExecutingRecipe1 THEN
+		ExecutingRecipe1 := NOT Recipe1(ExecutingRecipe1 := ExecutingRecipe1);
+	ELSIF NOT ExecutingRecipe1 AND (IO.ButtonUpperRight OR ExecutingRecipe2) THEN
+		ExecutingRecipe2 := NOT Recipe2(ExecutingRecipe2 := ExecutingRecipe2);
+	END_IF
+END_IF
+
+
+// for debugging purposes:
+IF IO.ButtonRed THEN
+	IO.Initialized := FALSE;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="AutomaticControl">
+      <LineId Id="976" Count="2" />
+      <LineId Id="980" Count="0" />
+      <LineId Id="992" Count="0" />
+      <LineId Id="982" Count="0" />
+      <LineId Id="997" Count="0" />
+      <LineId Id="996" Count="0" />
+      <LineId Id="986" Count="5" />
+      <LineId Id="805" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

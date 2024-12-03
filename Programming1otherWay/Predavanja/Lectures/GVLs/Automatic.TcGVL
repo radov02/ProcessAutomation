@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <GVL Name="Automatic" Id="{7e4bdbd1-b96b-4df8-905c-fcd22461ac06}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	SwitchedON: BOOL;
+	CurrentLocation: Location;
+	CurrentSelection: INT;
+	
+	RotationPositionAuto: INT;
+	RotationPositionCurrent: INT;
+	RotationMovement: BOOL;
+	
+	LiftingPositionAuto: INT;
+	LiftingPositionCurrent: INT;
+	LiftingMovement: BOOL;
+	
+	ExtensionPositionAuto: INT;
+	ExtensionPositionCurrent: INT;
+	ExtensionMovement: BOOL;
+	
+	GripPositionAuto: INT;
+	GripPositionCurrent: INT;
+	GripMovement: BOOL;
+	
+	MotorR: Motor;
+	MotorE: Motor;
+	MotorL: Motor;
+	MotorG: Motor;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

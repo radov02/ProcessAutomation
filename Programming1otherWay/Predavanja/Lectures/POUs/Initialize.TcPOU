@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="Initialize" Id="{acc585e9-1428-4ae4-802a-0f449af0d289}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Initialize
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// go to the initial position (0,0,0,0)
+IF NOT IO.Initialized THEN
+	IF IO.EndRotationSensor THEN
+		IO.MotorRotation := 0;
+		IO.MotorRotationDirection := 0;
+	ELSE 
+		IO.MotorRotationDirection := 1;
+		IO.MotorRotation := 1;
+	END_IF
+	
+	IF IO.EndLiftingSensor THEN
+		IO.MotorLifting := 0;
+		IO.MotorLiftingDirection := 0;
+	ELSE 
+		IO.MotorLiftingDirection := 1;
+		IO.MotorLifting := 1;
+	END_IF
+	
+	IF IO.EndExtensionSensor THEN
+		IO.MotorExtension := 0;
+		IO.MotorExtensionDirection := 0;
+	ELSE 
+		IO.MotorExtensionDirection := 1;
+		IO.MotorExtension := 1;
+	END_IF
+	
+	IF IO.EndGripSensor THEN
+		IO.MotorGrip := 0;
+		IO.MotorGripDirection := 0;
+	ELSE 
+		IO.MotorGripDirection := 1;
+		IO.MotorGrip := 1;
+	END_IF
+		
+	IF IO.EndRotationSensor AND IO.EndLiftingSensor AND IO.EndExtensionSensor AND IO.EndGripSensor THEN
+		Automatic.MotorR.CurrentlyMoving := FALSE;
+		Automatic.MotorE.CurrentlyMoving := FALSE;
+		Automatic.MotorL.CurrentlyMoving := FALSE;
+		Automatic.MotorG.CurrentlyMoving := FALSE;
+		IO.Initialized := TRUE;
+	END_IF
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="Initialize">
+      <LineId Id="5" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="81" Count="32" />
+      <LineId Id="118" Count="3" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="79" Count="1" />
+      <LineId Id="62" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="Location" Id="{d5c3982f-e12e-462b-b7b4-79df28502ca1}">
+    <Declaration><![CDATA[TYPE Location:
+STRUCT
+	rotation: REAL;	// need to get full circle number...
+	lifting: REAL;	// need to get the full lift number...
+	extension: REAL; // need to get the full extension number...
+	grip: REAL;	// need to get the full grip number...
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>
