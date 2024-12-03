@@ -8,7 +8,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[// Safety for Rotation:
 IF Automatic.RotationPositionCurrent >= 570 AND NOT IO.ButtonLowerLeft THEN
-	IO.MotorRotation := 0;
+	//IO.MotorRotation := 0;
 END_IF
 IF IO.EndRotationSensor THEN
 	Automatic.RotationPositionCurrent := 0;
@@ -16,7 +16,7 @@ END_IF
 
 // Safety for Lifting:
 IF Automatic.LiftingPositionCurrent >= 355 AND NOT IO.ButtonLowerLeft THEN
-	IO.MotorLifting := 0;
+	//IO.MotorLifting := 0;
 END_IF
 IF IO.EndLiftingSensor THEN
 	Automatic.LiftingPositionCurrent := 0;
@@ -24,15 +24,15 @@ END_IF
 
 // Safety for Extension:
 IF Automatic.ExtensionPositionCurrent >= 445 AND NOT IO.ButtonLowerLeft THEN
-	IO.MotorExtension := 0;
+	//IO.MotorExtension := 0;
 END_IF
 IF IO.EndExtensionSensor THEN
 	Automatic.ExtensionPositionCurrent := 0;
 END_IF
 
 // Safety for Grip:
-IF Automatic.GripPositionCurrent >= 160 AND NOT IO.ButtonLowerLeft THEN
-	IO.MotorGrip := 0;
+IF Automatic.GripPositionCurrent >= 80 AND NOT IO.ButtonLowerLeft THEN
+	//IO.MotorGrip := 0;
 END_IF
 IF IO.EndGripSensor THEN
 	Automatic.GripPositionCurrent := 0;

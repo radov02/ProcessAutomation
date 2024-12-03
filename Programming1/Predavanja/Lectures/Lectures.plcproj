@@ -38,10 +38,10 @@
     <Compile Include="POUs\AutomaticControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Initialize.TcPOU">
+    <Compile Include="POUs\CountPosition.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\InitMotors.TcPOU">
+    <Compile Include="POUs\Initialize.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Lectures%27 programs\p00_true_false.TcPOU">

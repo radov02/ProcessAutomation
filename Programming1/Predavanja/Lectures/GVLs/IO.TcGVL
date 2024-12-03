@@ -33,6 +33,7 @@ VAR_GLOBAL
 	MotorGrip AT %Q*: BOOL;
 	Initialized: BOOL;
 	MotorDirection: INT;
+	SwitchedToAutomatic: BOOL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

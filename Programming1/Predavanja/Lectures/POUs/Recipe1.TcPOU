@@ -8,90 +8,329 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF IO.Initialized AND NOT IO.Switch THEN
+	
+	// ponovno zazeni ob tipki...
+	// delay...
+	// vrni se v stanje ob preklopu...
+	// malo spusti, primi, dvigni potem ko ga prime...
+	
 	// WOOD:
 	IF State = 0 THEN
-		IF Automatic.ExtensionPositionCurrent < 400 THEN
-			IO.MotorExtensionDirection := 1;	// ?
+		IF Automatic.ExtensionPositionAuto < 388 THEN
+			IO.MotorExtensionDirection := 0;
 			IO.MotorExtension := 1;
+			Automatic.ExtensionPositionAuto := Automatic.ExtensionPositionAuto + 1;
+			Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent + 1;
 		ELSE
-			IO.MotorExtensionDirection := 0;	// ?
+			State := 1;
 			IO.MotorExtension := 0;
 		END_IF
 	ELSIF State = 1 THEN
-		IF Automatic.GripPositionCurrent < 140 THEN
-			IO.MotorGripDirection := 1;		// ?
+		IF Automatic.GripPositionAuto < 160 THEN
+			IO.MotorGripDirection := 0;
 			IO.MotorGrip := 1;
+			Automatic.GripPositionAuto := Automatic.GripPositionAuto + 1;
+			Automatic.GripPositionCurrent := Automatic.GripPositionCurrent + 1;
 		ELSE
-			IO.MotorGripDirection := 1;		// ?
+			State := 2;
+			IO.MotorGripDirection := 1;
 			IO.MotorGrip := 0;
 		END_IF
 	ELSIF State = 2 THEN
-		IF Automatic.ExtensionPositionCurrent > 125 THEN
-			IO.MotorExtensionDirection := 0;	// ?
-			IO.MotorExtension := 1;
+		IF NOT IO.EndLiftingSensor THEN
+			IO.MotorLiftingDirection := 0;
+			IO.MotorLifting := 1;
+			Automatic.LiftingPositionAuto := Automatic.LiftingPositionAuto - 1;
+			Automatic.LiftingPositionCurrent := Automatic.LiftingPositionCurrent - 1;
 		ELSE
-			IO.MotorExtensionDirection := 1;	// ?
-			IO.MotorExtension := 0;
+			State := 3;
+			IO.MotorRotationDirection := 1;
+			IO.MotorRotation := 0;
 		END_IF
 	ELSIF State = 3 THEN
-		IF Automatic.RotationPositionCurrent < 190 THEN
-			IO.MotorRotationDirection := 1;		// ?
+		IF Automatic.RotationPositionAuto < 300 THEN
+			IO.MotorRotationDirection := 0;
 			IO.MotorRotation := 1;
+			Automatic.RotationPositionAuto := Automatic.RotationPositionAuto + 1;
+			Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent + 1;
 		ELSE
-			IO.MotorRotationDirection := 0;		// ?
+			State := 4;
+			IO.MotorRotationDirection := 1;
 			IO.MotorRotation := 0;
 		END_IF
 	ELSIF State = 4 THEN
-		IF Automatic.ExtensionPositionCurrent > 0 THEN
-			IO.MotorExtensionDirection := 1;	// ?
+		IF NOT IO.EndExtensionSensor THEN
+			IO.MotorExtensionDirection := 1;
 			IO.MotorExtension := 1;
+			Automatic.ExtensionPositionAuto := Automatic.ExtensionPositionAuto - 1;
+			Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent - 1;
 		ELSE
-			IO.MotorExtensionDirection := 0;	// ?
+			State := 5;
+			IO.MotorExtensionDirection := 0;
 			IO.MotorExtension := 0;
 		END_IF
 	ELSIF State = 5 THEN
-		IF Automatic.RotationPositionCurrent > 0 THEN
-			IO.MotorRotationDirection := 1;		// ?
-			IO.MotorRotation := 1;
+		IF NOT IO.EndGripSensor THEN
+			IO.MotorGripDirection := 1;
+			IO.MotorGrip := 1;
+			Automatic.GripPositionAuto := Automatic.GripPositionAuto - 1;
+			Automatic.GripPositionCurrent := Automatic.GripPositionCurrent - 1;
 		ELSE
-			IO.MotorRotationDirection := 0;		// ?
+			State := 6;
+			IO.MotorRotationDirection := 0;
+			IO.MotorRotation := 0;
+		END_IF
+	ELSIF State = 6 THEN
+		IF NOT IO.EndRotationSensor THEN
+			IO.MotorRotationDirection := 1;
+			IO.MotorRotation := 1;
+			Automatic.RotationPositionAuto := Automatic.RotationPositionAuto - 1;
+			Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent - 1;
+		ELSE
+			State := 7;
+			IO.MotorRotationDirection := 0;
 			IO.MotorRotation := 0;
 		END_IF
 	END_IF
 	
 	// PLASTICS:
+	IF State = 7 THEN
+		IF Automatic.LiftingPositionAuto < 250 THEN
+			IO.MotorLiftingDirection := 0;
+			IO.MotorLifting := 1;
+			Automatic.LiftingPositionAuto := Automatic.LiftingPositionAuto + 1;
+			Automatic.LiftingPositionCurrent := Automatic.LiftingPositionCurrent + 1;
+		ELSE
+			State := 8;
+			IO.MotorExtension := 0;
+		END_IF
+	ELSIF State = 8 THEN
+		IF Automatic.ExtensionPositionAuto < 388 THEN
+			IO.MotorExtensionDirection := 0;
+			IO.MotorExtension := 1;
+			Automatic.ExtensionPositionAuto := Automatic.ExtensionPositionAuto + 1;
+			Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent + 1;
+		ELSE
+			State := 9;
+			IO.MotorExtension := 0;
+		END_IF
+	ELSIF State = 9 THEN
+		IF Automatic.GripPositionAuto < 160 THEN
+			IO.MotorGripDirection := 0;
+			IO.MotorGrip := 1;
+			Automatic.GripPositionAuto := Automatic.GripPositionAuto + 1;
+			Automatic.GripPositionCurrent := Automatic.GripPositionCurrent + 1;
+		ELSE
+			State := 10;
+			IO.MotorGripDirection := 1;
+			IO.MotorGrip := 0;
+		END_IF
+	ELSIF State = 10 THEN
+		IF NOT IO.EndLiftingSensor THEN
+			IO.MotorLiftingDirection := 1;
+			IO.MotorLifting := 1;
+			Automatic.LiftingPositionAuto := Automatic.LiftingPositionAuto - 1;
+			Automatic.LiftingPositionCurrent := Automatic.LiftingPositionCurrent - 1;
+		ELSE
+			State := 11;
+			IO.MotorRotationDirection := 1;
+			IO.MotorRotation := 0;
+		END_IF
+	ELSIF State = 11 THEN
+		IF Automatic.RotationPositionAuto < 300 THEN
+			IO.MotorRotationDirection := 0;
+			IO.MotorRotation := 1;
+			Automatic.RotationPositionAuto := Automatic.RotationPositionAuto + 1;
+			Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent + 1;
+		ELSE
+			State := 12;
+			IO.MotorRotationDirection := 1;
+			IO.MotorRotation := 0;
+		END_IF
+	ELSIF State = 12 THEN
+		IF Automatic.ExtensionPositionAuto > 300 THEN
+			IO.MotorExtensionDirection := 1;
+			IO.MotorExtension := 1;
+			Automatic.ExtensionPositionAuto := Automatic.ExtensionPositionAuto - 1;
+			Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent - 1;
+		ELSE
+			State := 13;
+			IO.MotorExtensionDirection := 0;
+			IO.MotorExtension := 0;
+		END_IF
+	ELSIF State = 13 THEN
+		IF NOT IO.EndGripSensor THEN
+			IO.MotorGripDirection := 1;
+			IO.MotorGrip := 1;
+			Automatic.GripPositionAuto := Automatic.GripPositionAuto - 1;
+			Automatic.GripPositionCurrent := Automatic.GripPositionCurrent - 1;
+		ELSE
+			State := 14;
+			IO.MotorRotationDirection := 0;
+			IO.MotorRotation := 0;
+		END_IF
+	ELSIF State = 14 THEN
+		IF NOT IO.EndRotationSensor THEN
+			IO.MotorRotationDirection := 1;
+			IO.MotorRotation := 1;
+			Automatic.RotationPositionAuto := Automatic.RotationPositionAuto - 1;
+			Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent - 1;
+		ELSE
+			State := 15;
+			IO.MotorRotationDirection := 0;
+			IO.MotorRotation := 0;
+		END_IF
+	END_IF
+	
 	// METAL:
+	IF State = 15 THEN
+		IF Automatic.LiftingPositionAuto < 400 THEN
+			IO.MotorLiftingDirection := 0;
+			IO.MotorLifting := 1;
+			Automatic.LiftingPositionAuto := Automatic.LiftingPositionAuto + 1;
+			Automatic.LiftingPositionCurrent := Automatic.LiftingPositionCurrent + 1;
+		ELSE
+			State := 16;
+			IO.MotorExtension := 0;
+		END_IF
+	ELSIF State = 16 THEN
+		IF Automatic.ExtensionPositionAuto < 388 THEN
+			IO.MotorExtensionDirection := 0;
+			IO.MotorExtension := 1;
+			Automatic.ExtensionPositionAuto := Automatic.ExtensionPositionAuto + 1;
+			Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent + 1;
+		ELSE
+			State := 17;
+			IO.MotorExtension := 0;
+		END_IF
+	ELSIF State = 17 THEN
+		IF Automatic.GripPositionAuto < 160 THEN
+			IO.MotorGripDirection := 0;
+			IO.MotorGrip := 1;
+			Automatic.GripPositionAuto := Automatic.GripPositionAuto + 1;
+			Automatic.GripPositionCurrent := Automatic.GripPositionCurrent + 1;
+		ELSE
+			State := 18;
+			IO.MotorGripDirection := 1;
+			IO.MotorGrip := 0;
+		END_IF
+	ELSIF State = 18 THEN
+		IF NOT IO.EndLiftingSensor THEN
+			IO.MotorLiftingDirection := 1;
+			IO.MotorLifting := 1;
+			Automatic.LiftingPositionAuto := Automatic.LiftingPositionAuto - 1;
+			Automatic.LiftingPositionCurrent := Automatic.LiftingPositionCurrent - 1;
+		ELSE
+			State := 19;
+			IO.MotorRotationDirection := 1;
+			IO.MotorRotation := 0;
+		END_IF
+	ELSIF State = 19 THEN
+		IF Automatic.RotationPositionAuto < 300 THEN
+			IO.MotorRotationDirection := 0;
+			IO.MotorRotation := 1;
+			Automatic.RotationPositionAuto := Automatic.RotationPositionAuto + 1;
+			Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent + 1;
+		ELSE
+			State := 20;
+			IO.MotorRotationDirection := 1;
+			IO.MotorRotation := 0;
+		END_IF
+	ELSIF State = 20 THEN
+		IF Automatic.ExtensionPositionAuto > 500 THEN
+			IO.MotorExtensionDirection := 1;
+			IO.MotorExtension := 1;
+			Automatic.ExtensionPositionAuto := Automatic.ExtensionPositionAuto - 1;
+			Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent - 1;
+		ELSE
+			State := 21;
+			IO.MotorExtensionDirection := 0;
+			IO.MotorExtension := 0;
+		END_IF
+	ELSIF State = 21 THEN
+		IF NOT IO.EndGripSensor THEN
+			IO.MotorGripDirection := 1;
+			IO.MotorGrip := 1;
+			Automatic.GripPositionAuto := Automatic.GripPositionAuto - 1;
+			Automatic.GripPositionCurrent := Automatic.GripPositionCurrent - 1;
+		ELSE
+			State := 22;
+			IO.MotorRotationDirection := 0;
+			IO.MotorRotation := 0;
+		END_IF
+	ELSIF State = 22 THEN
+		IF NOT IO.EndRotationSensor THEN
+			IO.MotorRotationDirection := 1;
+			IO.MotorRotation := 1;
+			Automatic.RotationPositionAuto := Automatic.RotationPositionAuto - 1;
+			Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent - 1;
+		ELSE
+			State := 23;
+			IO.MotorRotationDirection := 0;
+			IO.MotorRotation := 0;
+		END_IF
+	END_IF
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="Recipe1">
       <LineId Id="22" Count="0" />
+      <LineId Id="360" Count="4" />
+      <LineId Id="83" Count="0" />
       <LineId Id="74" Count="0" />
       <LineId Id="23" Count="1" />
       <LineId Id="42" Count="0" />
-      <LineId Id="25" Count="1" />
-      <LineId Id="43" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="132" Count="1" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="107" Count="0" />
       <LineId Id="27" Count="1" />
       <LineId Id="30" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="44" Count="0" />
-      <LineId Id="33" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="134" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="108" Count="0" />
       <LineId Id="45" Count="0" />
       <LineId Id="35" Count="0" />
       <LineId Id="31" Count="0" />
-      <LineId Id="37" Count="1" />
-      <LineId Id="49" Count="0" />
-      <LineId Id="39" Count="1" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="36" Count="0" />
-      <LineId Id="51" Count="6" />
+      <LineId Id="328" Count="9" />
+      <LineId Id="317" Count="0" />
+      <LineId Id="51" Count="3" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="56" Count="1" />
       <LineId Id="50" Count="0" />
-      <LineId Id="59" Count="6" />
+      <LineId Id="59" Count="3" />
+      <LineId Id="137" Count="1" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="64" Count="1" />
       <LineId Id="58" Count="0" />
-      <LineId Id="67" Count="6" />
-      <LineId Id="66" Count="0" />
+      <LineId Id="123" Count="3" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="127" Count="3" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="145" Count="9" />
+      <LineId Id="144" Count="0" />
       <LineId Id="29" Count="0" />
-      <LineId Id="75" Count="2" />
+      <LineId Id="75" Count="1" />
+      <LineId Id="231" Count="9" />
+      <LineId Id="166" Count="20" />
+      <LineId Id="339" Count="9" />
+      <LineId Id="338" Count="0" />
+      <LineId Id="187" Count="43" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="242" Count="30" />
+      <LineId Id="350" Count="9" />
+      <LineId Id="349" Count="0" />
+      <LineId Id="273" Count="43" />
+      <LineId Id="241" Count="0" />
       <LineId Id="13" Count="0" />
     </LineIds>
   </POU>

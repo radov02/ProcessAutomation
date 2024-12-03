@@ -7,10 +7,6 @@ VAR_INPUT
 END_VAR
 VAR
 	SwitchedManualAuto: BOOL := FALSE;
-	Rotation: Motors;
-	Lifting: Motors;
-	Extension: Motors;
-	Grip: Motors;
 	initialized: BOOL := FALSE;
 	State: INT := 0;
 END_VAR
@@ -22,36 +18,37 @@ END_VAR]]></Declaration>
 IF NOT IO.Initialized THEN
 	Initialize();
 ELSE
-	Safety();	// to stop when out of range
+	//Safety();	// to stop when out of range
 	
 	// COUNTING (POSITION):
-	IF IO.Initialized AND IO.MotorRotation AND IO.StepRotatonSwitch = 1 THEN
-		IF IO.MotorRotationDirection = 0 THEN
-			Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent + 1;
-			IF NOT IO.Switch THEN
-				Automatic.RotationPositionAuto := Automatic.RotationPositionAuto + 1;
-			END_IF
-		ELSE
-			Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent - 1;
-			IF NOT IO.Switch THEN
-				Automatic.RotationPositionAuto := Automatic.RotationPositionAuto - 1;
-			END_IF
-		END_IF
-	END_IF
+	CountPosition();	// FOR MANUAL MODE
 	
 	// RESET THE POSITION:
-	IF Automatic.RotationPositionAuto <> Automatic.RotationPositionCurrent AND NOT IO.Switch THEN
-		IF Automatic.RotationPositionAuto - Automatic.RotationPositionCurrent > 0 THEN
+	IF (Automatic.RotationPositionAuto - Automatic.RotationPositionCurrent > 20 OR Automatic.RotationPositionAuto - Automatic.RotationPositionCurrent > 20) AND IO.SwitchedToAutomatic THEN
+		IF Automatic.RotationPositionAuto - Automatic.RotationPositionCurrent > 20 THEN
 			IO.MotorRotationDirection := 0;
 		ELSE
 			IO.MotorRotationDirection := 1;
 		END_IF
 		IO.MotorRotation := 1;
 	ELSE 
-		IF NOT IO.Switch THEN
-			IO.MotorRotation := 0;
-		END_IF
+		IO.MotorRotation := 0;
+		IO.SwitchedToAutomatic := 0;
 	END_IF
+	(*IF Automatic.ExtensionPositionAuto <> Automatic.ExtensionPositionCurrent AND NOT IO.Switch THEN
+		IF Automatic.ExtensionPositionAuto - Automatic.ExtensionPositionCurrent > 0 THEN
+			IO.MotorExtensionDirection := 0;
+		ELSE
+			IO.MotorExtensionDirection := 1;
+		END_IF
+		IO.MotorExtension := 1;
+	ELSE 
+		IF NOT IO.Switch THEN
+			IO.MotorExtension := 0;
+		END_IF
+	END_IF*)
+	
+	
 	
 	// RECIPES (recipe is sequence of moves to execute the task):
 	Recipe1();
@@ -67,10 +64,17 @@ RETURN;]]></ST>
     </Implementation>
     <LineIds Name="AutomaticControl">
       <LineId Id="652" Count="3" />
-      <LineId Id="657" Count="15" />
-      <LineId Id="711" Count="0" />
-      <LineId Id="713" Count="12" />
+      <LineId Id="657" Count="2" />
+      <LineId Id="876" Count="0" />
+      <LineId Id="822" Count="0" />
+      <LineId Id="713" Count="8" />
+      <LineId Id="723" Count="0" />
+      <LineId Id="882" Count="0" />
+      <LineId Id="725" Count="0" />
+      <LineId Id="849" Count="10" />
+      <LineId Id="848" Count="0" />
       <LineId Id="761" Count="0" />
+      <LineId Id="877" Count="1" />
       <LineId Id="779" Count="0" />
       <LineId Id="810" Count="0" />
       <LineId Id="778" Count="0" />
