@@ -21,9 +21,9 @@ END_VAR
 	RestorePreviousAutomaticState();
 ELSE
 	IF IO.ButtonUpperLeft OR ExecutingRecipe1 THEN
-		ExecutingRecipe1 := NOT Recipe1(ExecutingRecipe1 := ExecutingRecipe1);
+		ExecutingRecipe1 := NOT Recipe1(ExecutingRecipe1 := TRUE);
 	ELSIF NOT ExecutingRecipe1 AND (IO.ButtonUpperRight OR ExecutingRecipe2) THEN
-		ExecutingRecipe2 := NOT Recipe2(ExecutingRecipe2 := ExecutingRecipe2);
+		ExecutingRecipe2 := NOT Recipe2(ExecutingRecipe2 := TRUE);
 	END_IF
 END_IF
 

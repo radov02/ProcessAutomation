@@ -10,6 +10,14 @@ VAR_OUTPUT
 END_VAR
 VAR
 	State: INT := 0;
+	WoodInitialLiftingPosition: INT := 50;
+	InitialExtensionPosition: INT := 388;
+	MaxGripPosition: INT := 160;
+	RotationDropOffPosition: INT := 300;
+	PlasticsInitialLiftingPosition: INT := 250;
+	PlasticsDropOffExtensionPosition: INT := 300;
+	MetalInitialLiftingPosition: INT := 400;
+	MetalDropOffExtensionPosition: INT := 500;
 END_VAR
 
 // Recipe is sequence of moves to execute the task.
@@ -22,30 +30,36 @@ END_IF
 IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 	// WOOD:
 	IF State = 0 THEN
-		IF Automatic.LiftingPositionAuto < 50 THEN
+		IF Automatic.LiftingPositionAuto < WoodInitialLiftingPosition THEN
 			IO.MotorLiftingDirection := 0;
-			Automatic.MotorL.CurrentlyMoving := TRUE;
-			IO.MotorLifting := 1;
+			IF NOT Automatic.SafetyLON THEN
+				Automatic.MotorL.CurrentlyMoving := TRUE;
+				IO.MotorLifting := 1;
+			END_IF
 		ELSE
 			State := 1;
 			IO.MotorLifting := 0;
 			Automatic.MotorL.CurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 1 THEN
-		IF Automatic.ExtensionPositionAuto < 388 THEN
+		IF Automatic.ExtensionPositionAuto < InitialExtensionPosition THEN
 			IO.MotorExtensionDirection := 0;
-			Automatic.MotorE.CurrentlyMoving := TRUE;
-			IO.MotorExtension := 1;
+			IF NOT Automatic.SafetyEON THEN
+				Automatic.MotorE.CurrentlyMoving := TRUE;
+				IO.MotorExtension := 1;
+			END_IF
 		ELSE
 			State := 2;
 			IO.MotorExtension := 0;
 			Automatic.MotorE.CurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 2 THEN
-		IF Automatic.GripPositionAuto < 160 THEN
+		IF Automatic.GripPositionAuto < MaxGripPosition THEN
 			IO.MotorGripDirection := 0;
-			Automatic.MotorG.CurrentlyMoving := TRUE;
-			IO.MotorGrip := 1;
+			IF NOT Automatic.SafetyGON THEN
+				Automatic.MotorG.CurrentlyMoving := TRUE;
+				IO.MotorGrip := 1;
+			END_IF
 		ELSE
 			State := 3;
 			IO.MotorGrip := 0;
@@ -54,18 +68,22 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 	ELSIF State = 3 THEN
 		IF NOT IO.EndLiftingSensor THEN
 			IO.MotorLiftingDirection := 0;
-			Automatic.MotorG.CurrentlyMoving := TRUE;
-			IO.MotorLifting := 1;
+			IF NOT Automatic.SafetyLON THEN
+				Automatic.MotorG.CurrentlyMoving := TRUE;
+				IO.MotorLifting := 1;
+			END_IF
 		ELSE
 			State := 4;
 			IO.MotorLifting := 0;
 			Automatic.MotorG.CurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 4 THEN
-		IF Automatic.RotationPositionAuto < 300 THEN
+		IF Automatic.RotationPositionAuto < RotationDropOffPosition THEN
 			IO.MotorRotationDirection := 0;
-			Automatic.MotorR.CurrentlyMoving := TRUE;
-			IO.MotorRotation := 1;
+			IF NOT Automatic.SafetyRON THEN
+				Automatic.MotorR.CurrentlyMoving := TRUE;
+				IO.MotorRotation := 1;
+			END_IF
 		ELSE
 			State := 5;
 			IO.MotorRotation := 0;
@@ -74,8 +92,10 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 	ELSIF State = 5 THEN
 		IF NOT IO.EndExtensionSensor THEN	// it drops wood in the nearest bin
 			IO.MotorExtensionDirection := 1;
-			Automatic.MotorE.CurrentlyMoving := TRUE;
-			IO.MotorExtension := 1;
+			IF NOT Automatic.SafetyEON THEN
+				Automatic.MotorE.CurrentlyMoving := TRUE;
+				IO.MotorExtension := 1;
+			END_IF
 		ELSE
 			State := 6;
 			IO.MotorExtension := 0;
@@ -84,8 +104,10 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 	ELSIF State = 6 THEN
 		IF NOT IO.EndGripSensor THEN
 			IO.MotorGripDirection := 1;
-			Automatic.MotorG.CurrentlyMoving := TRUE;
-			IO.MotorGrip := 1;
+			IF NOT Automatic.SafetyGON THEN
+				Automatic.MotorG.CurrentlyMoving := TRUE;
+				IO.MotorGrip := 1;
+			END_IF
 		ELSE
 			State := 7;
 			IO.MotorGrip := 0;
@@ -94,8 +116,10 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 	ELSIF State = 7 THEN
 		IF NOT IO.EndRotationSensor THEN
 			IO.MotorRotationDirection := 1;
-			Automatic.MotorR.CurrentlyMoving := TRUE;
-			IO.MotorRotation := 1;
+			IF NOT Automatic.SafetyRON THEN
+				Automatic.MotorR.CurrentlyMoving := TRUE;
+				IO.MotorRotation := 1;
+			END_IF
 		ELSE
 			State := 8;
 			IO.MotorRotation := 0;
@@ -105,30 +129,36 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 	
 	// PLASTICS:
 	IF State = 8 THEN
-		IF Automatic.LiftingPositionAuto < 250 THEN
+		IF Automatic.LiftingPositionAuto < PlasticsInitialLiftingPosition THEN
 			IO.MotorLiftingDirection := 0;
-			Automatic.MotorL.CurrentlyMoving := TRUE;
-			IO.MotorLifting := 1;
+			IF NOT Automatic.SafetyLON THEN
+				Automatic.MotorL.CurrentlyMoving := TRUE;
+				IO.MotorLifting := 1;
+			END_IF
 		ELSE
 			State := 9;
 			IO.MotorLifting := 0;
 			Automatic.MotorL.CurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 9 THEN
-		IF Automatic.ExtensionPositionAuto < 388 THEN
+		IF Automatic.ExtensionPositionAuto < InitialExtensionPosition THEN
 			IO.MotorExtensionDirection := 0;
-			Automatic.MotorE.CurrentlyMoving := TRUE;
-			IO.MotorExtension := 1;
+			IF NOT Automatic.SafetyEON THEN
+				Automatic.MotorE.CurrentlyMoving := TRUE;
+				IO.MotorExtension := 1;
+			END_IF
 		ELSE
 			State := 10;
 			IO.MotorExtension := 0;
 			Automatic.MotorE.CurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 10 THEN
-		IF Automatic.GripPositionAuto < 160 THEN
+		IF Automatic.GripPositionAuto < MaxGripPosition THEN
 			IO.MotorGripDirection := 0;
-			Automatic.MotorG.CurrentlyMoving := TRUE;
-			IO.MotorGrip := 1;
+			IF NOT Automatic.SafetyGON THEN
+				Automatic.MotorG.CurrentlyMoving := TRUE;
+				IO.MotorGrip := 1;
+			END_IF
 		ELSE
 			State := 11;
 			IO.MotorGrip := 0;
@@ -137,39 +167,46 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 	ELSIF State = 11 THEN
 		IF NOT IO.EndLiftingSensor THEN
 			IO.MotorLiftingDirection := 1;
-			Automatic.MotorL.CurrentlyMoving := TRUE;
-			IO.MotorLifting := 1;
+			IF NOT Automatic.SafetyLON THEN
+				Automatic.MotorL.CurrentlyMoving := TRUE;
+				IO.MotorLifting := 1;
+			END_IF
 		ELSE
 			State := 12;
 			IO.MotorLifting := 0;
 			Automatic.MotorL.CurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 12 THEN
-		IF Automatic.RotationPositionAuto < 300 THEN
+		IF Automatic.RotationPositionAuto < RotationDropOffPosition THEN
 			IO.MotorRotationDirection := 0;
-			Automatic.MotorR.CurrentlyMoving := TRUE;
-			IO.MotorRotation := 1;
+			IF NOT Automatic.SafetyRON THEN
+				Automatic.MotorR.CurrentlyMoving := TRUE;
+				IO.MotorRotation := 1;
+			END_IF
 		ELSE
 			State := 13;
 			IO.MotorRotation := 0;
 			Automatic.MotorR.CurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 13 THEN
-		IF Automatic.ExtensionPositionAuto > 300 THEN	// it drops plastics into second nearest bin
+		IF Automatic.ExtensionPositionAuto > PlasticsDropOffExtensionPosition THEN	// it drops plastics into second nearest bin
 			IO.MotorExtensionDirection := 1;
-			Automatic.MotorE.CurrentlyMoving := TRUE;
-			IO.MotorExtension := 1;
+			IF NOT Automatic.SafetyEON THEN
+				Automatic.MotorE.CurrentlyMoving := TRUE;
+				IO.MotorExtension := 1;
+			END_IF
 		ELSE
 			State := 14;
-			IO.MotorExtensionDirection := 0;
 			IO.MotorExtension := 0;
 			Automatic.MotorE.CurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 14 THEN
 		IF NOT IO.EndGripSensor THEN
 			IO.MotorGripDirection := 1;
-			Automatic.MotorG.CurrentlyMoving := TRUE;
-			IO.MotorGrip := 1;
+			IF NOT Automatic.SafetyGON THEN
+				Automatic.MotorG.CurrentlyMoving := TRUE;
+				IO.MotorGrip := 1;
+			END_IF
 		ELSE
 			State := 15;
 			IO.MotorGrip := 0;
@@ -178,8 +215,10 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 	ELSIF State = 15 THEN
 		IF NOT IO.EndRotationSensor THEN
 			IO.MotorRotationDirection := 1;
-			Automatic.MotorR.CurrentlyMoving := TRUE;
-			IO.MotorRotation := 1;
+			IF NOT Automatic.SafetyRON THEN
+				Automatic.MotorR.CurrentlyMoving := TRUE;
+				IO.MotorRotation := 1;
+			END_IF
 		ELSE
 			State := 16;
 			IO.MotorRotation := 0;
@@ -189,30 +228,36 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 	
 	// METAL:
 	IF State = 16 THEN
-		IF Automatic.LiftingPositionAuto < 400 THEN
+		IF Automatic.LiftingPositionAuto < MetalInitialLiftingPosition THEN
 			IO.MotorLiftingDirection := 0;
-			Automatic.MotorL.CurrentlyMoving := TRUE;
-			IO.MotorLifting := 1;
+			IF NOT Automatic.SafetyLON THEN
+				Automatic.MotorL.CurrentlyMoving := TRUE;
+				IO.MotorLifting := 1;
+			END_IF
 		ELSE
 			State := 17;
 			IO.MotorLifting := 0;
 			Automatic.MotorL.CurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 17 THEN
-		IF Automatic.ExtensionPositionAuto < 388 THEN
+		IF Automatic.ExtensionPositionAuto < InitialExtensionPosition THEN
 			IO.MotorExtensionDirection := 0;
-			Automatic.MotorE.CurrentlyMoving := TRUE;
-			IO.MotorExtension := 1;
+			IF NOT Automatic.SafetyEON THEN
+				Automatic.MotorE.CurrentlyMoving := TRUE;
+				IO.MotorExtension := 1;
+			END_IF
 		ELSE
 			State := 18;
 			IO.MotorExtension := 0;
 			Automatic.MotorE.CurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 18 THEN
-		IF Automatic.GripPositionAuto < 160 THEN
+		IF Automatic.GripPositionAuto < MaxGripPosition THEN
 			IO.MotorGripDirection := 0;
-			Automatic.MotorG.CurrentlyMoving := TRUE;
-			IO.MotorGrip := 1;
+			IF NOT Automatic.SafetyGON THEN
+				Automatic.MotorG.CurrentlyMoving := TRUE;
+				IO.MotorGrip := 1;
+			END_IF
 		ELSE
 			State := 19;
 			IO.MotorGrip := 0;
@@ -221,28 +266,34 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 	ELSIF State = 19 THEN
 		IF NOT IO.EndLiftingSensor THEN
 			IO.MotorLiftingDirection := 1;
-			Automatic.MotorL.CurrentlyMoving := TRUE;
-			IO.MotorLifting := 1;
+			IF NOT Automatic.SafetyLON THEN
+				Automatic.MotorL.CurrentlyMoving := TRUE;
+				IO.MotorLifting := 1;
+			END_IF
 		ELSE
 			State := 20;
 			IO.MotorLifting := 0;
 			Automatic.MotorL.CurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 20 THEN
-		IF Automatic.RotationPositionAuto < 300 THEN
+		IF Automatic.RotationPositionAuto < RotationDropOffPosition THEN
 			IO.MotorRotationDirection := 0;
-			Automatic.MotorR.CurrentlyMoving := TRUE;
-			IO.MotorRotation := 1;
+			IF NOT Automatic.SafetyRON THEN
+				Automatic.MotorR.CurrentlyMoving := TRUE;
+				IO.MotorRotation := 1;
+			END_IF
 		ELSE
 			State := 21;
 			IO.MotorRotation := 0;
 			Automatic.MotorR.CurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 21 THEN
-		IF Automatic.ExtensionPositionAuto > 500 THEN	// it drops metal into farthest bin
+		IF Automatic.ExtensionPositionAuto > MetalDropOffExtensionPosition THEN	// it drops metal into farthest bin
 			IO.MotorExtensionDirection := 1;
-			Automatic.MotorE.CurrentlyMoving := TRUE;
-			IO.MotorExtension := 1;
+			IF NOT Automatic.SafetyEON THEN
+				Automatic.MotorE.CurrentlyMoving := TRUE;
+				IO.MotorExtension := 1;
+			END_IF
 		ELSE
 			State := 22;
 			IO.MotorExtension := 0;
@@ -251,8 +302,10 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 	ELSIF State = 22 THEN
 		IF NOT IO.EndGripSensor THEN
 			IO.MotorGripDirection := 1;
-			Automatic.MotorG.CurrentlyMoving := TRUE;
-			IO.MotorGrip := 1;
+			IF NOT Automatic.SafetyGON THEN
+				Automatic.MotorG.CurrentlyMoving := TRUE;
+				IO.MotorGrip := 1;
+			END_IF
 		ELSE
 			State := 23;
 			IO.MotorGrip := 0;
@@ -261,8 +314,10 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 	ELSIF State = 23 THEN
 		IF NOT IO.EndRotationSensor THEN
 			IO.MotorRotationDirection := 1;
-			Automatic.MotorR.CurrentlyMoving := TRUE;
-			IO.MotorRotation := 1;
+			IF NOT Automatic.SafetyRON THEN
+				Automatic.MotorR.CurrentlyMoving := TRUE;
+				IO.MotorRotation := 1;
+			END_IF
 		ELSE
 			State := 24;
 			IO.MotorRotation := 0;
@@ -273,14 +328,113 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 		State := 0;
 		RETURN;
 	END_IF
-END_IF]]></ST>
+END_IF
+RETURN;]]></ST>
     </Implementation>
     <LineIds Name="Recipe1">
       <LineId Id="283" Count="3" />
-      <LineId Id="23" Count="248" />
+      <LineId Id="23" Count="4" />
+      <LineId Id="300" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="301" Count="0" />
+      <LineId Id="30" Count="7" />
+      <LineId Id="302" Count="0" />
+      <LineId Id="38" Count="1" />
+      <LineId Id="303" Count="0" />
+      <LineId Id="40" Count="7" />
+      <LineId Id="304" Count="0" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="305" Count="0" />
+      <LineId Id="50" Count="7" />
+      <LineId Id="306" Count="0" />
+      <LineId Id="58" Count="1" />
+      <LineId Id="307" Count="0" />
+      <LineId Id="60" Count="7" />
+      <LineId Id="308" Count="0" />
+      <LineId Id="68" Count="1" />
+      <LineId Id="309" Count="0" />
+      <LineId Id="70" Count="7" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="311" Count="0" />
+      <LineId Id="80" Count="7" />
+      <LineId Id="312" Count="0" />
+      <LineId Id="88" Count="1" />
+      <LineId Id="313" Count="0" />
+      <LineId Id="90" Count="7" />
+      <LineId Id="314" Count="0" />
+      <LineId Id="98" Count="1" />
+      <LineId Id="315" Count="0" />
+      <LineId Id="100" Count="10" />
+      <LineId Id="316" Count="0" />
+      <LineId Id="111" Count="1" />
+      <LineId Id="317" Count="0" />
+      <LineId Id="113" Count="7" />
+      <LineId Id="318" Count="0" />
+      <LineId Id="121" Count="1" />
+      <LineId Id="319" Count="0" />
+      <LineId Id="123" Count="7" />
+      <LineId Id="320" Count="0" />
+      <LineId Id="131" Count="1" />
+      <LineId Id="321" Count="0" />
+      <LineId Id="133" Count="7" />
+      <LineId Id="322" Count="0" />
+      <LineId Id="141" Count="1" />
+      <LineId Id="323" Count="0" />
+      <LineId Id="143" Count="7" />
+      <LineId Id="324" Count="0" />
+      <LineId Id="151" Count="1" />
+      <LineId Id="325" Count="0" />
+      <LineId Id="153" Count="7" />
+      <LineId Id="326" Count="0" />
+      <LineId Id="161" Count="1" />
+      <LineId Id="327" Count="0" />
+      <LineId Id="163" Count="1" />
+      <LineId Id="166" Count="5" />
+      <LineId Id="328" Count="0" />
+      <LineId Id="172" Count="1" />
+      <LineId Id="329" Count="0" />
+      <LineId Id="174" Count="7" />
+      <LineId Id="330" Count="0" />
+      <LineId Id="182" Count="1" />
+      <LineId Id="331" Count="0" />
+      <LineId Id="184" Count="10" />
+      <LineId Id="332" Count="0" />
+      <LineId Id="195" Count="1" />
+      <LineId Id="333" Count="0" />
+      <LineId Id="197" Count="7" />
+      <LineId Id="334" Count="0" />
+      <LineId Id="205" Count="1" />
+      <LineId Id="335" Count="0" />
+      <LineId Id="207" Count="7" />
+      <LineId Id="336" Count="0" />
+      <LineId Id="215" Count="1" />
+      <LineId Id="337" Count="0" />
+      <LineId Id="217" Count="7" />
+      <LineId Id="338" Count="1" />
+      <LineId Id="341" Count="0" />
+      <LineId Id="340" Count="0" />
+      <LineId Id="227" Count="7" />
+      <LineId Id="342" Count="0" />
+      <LineId Id="235" Count="1" />
+      <LineId Id="343" Count="0" />
+      <LineId Id="237" Count="7" />
+      <LineId Id="344" Count="0" />
+      <LineId Id="245" Count="1" />
+      <LineId Id="345" Count="0" />
+      <LineId Id="247" Count="7" />
+      <LineId Id="346" Count="0" />
+      <LineId Id="255" Count="1" />
+      <LineId Id="347" Count="0" />
+      <LineId Id="257" Count="7" />
+      <LineId Id="348" Count="0" />
+      <LineId Id="265" Count="1" />
+      <LineId Id="349" Count="0" />
+      <LineId Id="267" Count="4" />
       <LineId Id="278" Count="3" />
       <LineId Id="274" Count="0" />
       <LineId Id="9" Count="0" />
+      <LineId Id="299" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

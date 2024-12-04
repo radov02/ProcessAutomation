@@ -3,30 +3,25 @@
   <GVL Name="Automatic" Id="{7e4bdbd1-b96b-4df8-905c-fcd22461ac06}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
-	SwitchedON: BOOL;
-	CurrentLocation: Location;
-	CurrentSelection: INT;
-	
+	MotorR: Motor;
 	RotationPositionAuto: INT;
 	RotationPositionCurrent: INT;
-	RotationMovement: BOOL;
+	SafetyRON: BOOL;
 	
+	MotorL: Motor;
 	LiftingPositionAuto: INT;
 	LiftingPositionCurrent: INT;
-	LiftingMovement: BOOL;
+	SafetyLON: BOOL;
 	
+	MotorE: Motor;
 	ExtensionPositionAuto: INT;
 	ExtensionPositionCurrent: INT;
-	ExtensionMovement: BOOL;
+	SafetyEON: BOOL;
 	
+	MotorG: Motor;
 	GripPositionAuto: INT;
 	GripPositionCurrent: INT;
-	GripMovement: BOOL;
-	
-	MotorR: Motor;
-	MotorE: Motor;
-	MotorL: Motor;
-	MotorG: Motor;
+	SafetyGON: BOOL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

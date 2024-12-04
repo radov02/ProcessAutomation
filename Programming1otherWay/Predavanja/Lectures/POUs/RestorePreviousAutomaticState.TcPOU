@@ -20,7 +20,7 @@ IF Automatic.RotationPositionAuto - Automatic.RotationPositionCurrent > 25 THEN
 	Automatic.MotorR.CurrentlyMoving := TRUE;
 	IO.MotorRotation := 1;
 ELSIF Automatic.RotationPositionCurrent - Automatic.RotationPositionAuto > 25 THEN
-	IO.MotorRotationDirection := 0;
+	IO.MotorRotationDirection := 1;
 	Automatic.MotorR.CurrentlyMoving := TRUE;
 	IO.MotorRotation := 1;
 ELSE

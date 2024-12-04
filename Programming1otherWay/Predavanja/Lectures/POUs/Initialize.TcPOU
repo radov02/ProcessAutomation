@@ -11,32 +11,40 @@ IF NOT IO.Initialized THEN
 	IF IO.EndRotationSensor THEN
 		IO.MotorRotation := 0;
 		IO.MotorRotationDirection := 0;
+		Automatic.MotorR.CurrentlyMoving := FALSE;
 	ELSE 
 		IO.MotorRotationDirection := 1;
+		Automatic.MotorR.CurrentlyMoving := TRUE;
 		IO.MotorRotation := 1;
 	END_IF
 	
 	IF IO.EndLiftingSensor THEN
 		IO.MotorLifting := 0;
 		IO.MotorLiftingDirection := 0;
+		Automatic.MotorL.CurrentlyMoving := FALSE;
 	ELSE 
 		IO.MotorLiftingDirection := 1;
+		Automatic.MotorL.CurrentlyMoving := TRUE;
 		IO.MotorLifting := 1;
 	END_IF
 	
 	IF IO.EndExtensionSensor THEN
 		IO.MotorExtension := 0;
 		IO.MotorExtensionDirection := 0;
+		Automatic.MotorE.CurrentlyMoving := FALSE;
 	ELSE 
 		IO.MotorExtensionDirection := 1;
+		Automatic.MotorE.CurrentlyMoving := TRUE;
 		IO.MotorExtension := 1;
 	END_IF
 	
 	IF IO.EndGripSensor THEN
 		IO.MotorGrip := 0;
 		IO.MotorGripDirection := 0;
+		Automatic.MotorG.CurrentlyMoving := FALSE;
 	ELSE 
 		IO.MotorGripDirection := 1;
+		Automatic.MotorG.CurrentlyMoving := TRUE;
 		IO.MotorGrip := 1;
 	END_IF
 		
@@ -53,7 +61,23 @@ END_IF
     <LineIds Name="Initialize">
       <LineId Id="5" Count="0" />
       <LineId Id="78" Count="0" />
-      <LineId Id="81" Count="32" />
+      <LineId Id="81" Count="2" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="84" Count="1" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="86" Count="5" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="92" Count="1" />
+      <LineId Id="129" Count="0" />
+      <LineId Id="94" Count="5" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="100" Count="1" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="102" Count="5" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="108" Count="1" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="110" Count="3" />
       <LineId Id="118" Count="3" />
       <LineId Id="114" Count="0" />
       <LineId Id="79" Count="1" />

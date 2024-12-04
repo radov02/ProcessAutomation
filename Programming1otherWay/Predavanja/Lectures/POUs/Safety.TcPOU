@@ -7,75 +7,125 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Safety for Rotation:
-IF Automatic.RotationPositionCurrent >= 570 AND NOT IO.ButtonLowerLeft THEN
-	//IO.MotorRotation := 0;
-	//Automatic.MotorR.CurrentlyMoving := FALSE;
+IF Automatic.RotationPositionCurrent >= 570 AND NOT IO.ButtonLowerLeft AND NOT IO.MotorRotationDirection = 1 THEN
+	Automatic.SafetyRON := TRUE;
+	IO.MotorRotation := 0;
+	Automatic.MotorR.CurrentlyMoving := FALSE;
+ELSIF IO.MotorRotationDirection = 0 THEN
+	Automatic.SafetyRON := FALSE;
 END_IF
 IF IO.EndRotationSensor THEN
-	Automatic.RotationPositionCurrent := 0;
-	Automatic.MotorR.CurrentlyMoving := FALSE;
+	IF IO.MotorRotationDirection = 1 THEN
+		Automatic.SafetyRON := FALSE;
+	ELSE
+		Automatic.SafetyRON := TRUE;
+		Automatic.RotationPositionCurrent := 0;
+		Automatic.MotorR.CurrentlyMoving := FALSE;
+	END_IF
 END_IF
 
 // Safety for Lifting:
-IF Automatic.LiftingPositionCurrent >= 355 AND NOT IO.ButtonLowerLeft THEN
-	//IO.MotorLifting := 0;
-	// Automatic.MotorL.CurrentlyMoving := FALSE;
+IF Automatic.LiftingPositionCurrent >= 355 AND NOT IO.ButtonLowerLeft AND NOT IO.MotorLiftingDirection = 1 THEN
+	Automatic.SafetyLON := TRUE;	
+	IO.MotorLifting := 0;
+	Automatic.MotorL.CurrentlyMoving := FALSE;
+ELSIF IO.MotorLiftingDirection = 0 THEN
+	Automatic.SafetyLON := FALSE;
 END_IF
 IF IO.EndLiftingSensor THEN
-	Automatic.LiftingPositionCurrent := 0;
-	Automatic.MotorL.CurrentlyMoving := FALSE;
+	IF IO.MotorLiftingDirection = 1 THEN
+		Automatic.SafetyLON := FALSE;
+	ELSE
+		Automatic.SafetyLON := TRUE;
+		Automatic.LiftingPositionCurrent := 0;
+		Automatic.MotorL.CurrentlyMoving := FALSE;
+	END_IF
 END_IF
 
 // Safety for Extension:
-IF Automatic.ExtensionPositionCurrent >= 445 AND NOT IO.ButtonLowerLeft THEN
-	//IO.MotorExtension := 0;
-	//Automatic.MotorE.CurrentlyMoving := FALSE;
+IF Automatic.ExtensionPositionCurrent >= 445 AND NOT IO.ButtonLowerLeft AND NOT IO.MotorExtensionDirection = 1 THEN
+	Automatic.SafetyEON := TRUE;
+	IO.MotorExtension := 0;
+	Automatic.MotorE.CurrentlyMoving := FALSE;
+ELSIF IO.MotorExtensionDirection = 0 THEN
+	Automatic.SafetyEON := FALSE;
 END_IF
 IF IO.EndExtensionSensor THEN
-	Automatic.ExtensionPositionCurrent := 0;
-	Automatic.MotorE.CurrentlyMoving := FALSE;
+	IF IO.MotorExtensionDirection = 1 THEN
+		Automatic.SafetyEON := FALSE;
+	ELSE
+		Automatic.SafetyEON := TRUE;
+		Automatic.ExtensionPositionCurrent := 0;
+		Automatic.MotorE.CurrentlyMoving := FALSE;
+	END_IF
 END_IF
 
 // Safety for Grip:
-IF Automatic.GripPositionCurrent >= 80 AND NOT IO.ButtonLowerLeft THEN
-	//IO.MotorGrip := 0;
-	// Automatic.MotorG.CurrentlyMoving := FALSE;
+IF Automatic.GripPositionCurrent >= 80 AND NOT IO.ButtonLowerLeft AND NOT IO.MotorGripDirection = 1 THEN
+	Automatic.SafetyGON := TRUE;
+	IO.MotorGrip := 0;
+	Automatic.MotorG.CurrentlyMoving := FALSE;
+ELSIF IO.MotorGripDirection = 0 THEN
+	Automatic.SafetyGON := FALSE;
 END_IF
 IF IO.EndGripSensor THEN
-	Automatic.GripPositionCurrent := 0;
-	Automatic.MotorG.CurrentlyMoving := FALSE;
+	IF IO.MotorGripDirection = 1 THEN
+		Automatic.SafetyGON := FALSE;
+	ELSE
+		Automatic.SafetyGON := TRUE;
+		Automatic.GripPositionCurrent := 0;
+		Automatic.MotorG.CurrentlyMoving := FALSE;
+	END_IF
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="Safety">
       <LineId Id="56" Count="0" />
       <LineId Id="6" Count="0" />
       <LineId Id="21" Count="0" />
+      <LineId Id="91" Count="0" />
       <LineId Id="64" Count="0" />
+      <LineId Id="75" Count="1" />
       <LineId Id="9" Count="0" />
       <LineId Id="5" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="63" Count="0" />
+      <LineId Id="83" Count="1" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="87" Count="1" />
+      <LineId Id="82" Count="0" />
       <LineId Id="26" Count="0" />
       <LineId Id="57" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="33" Count="1" />
+      <LineId Id="92" Count="0" />
       <LineId Id="67" Count="0" />
-      <LineId Id="35" Count="2" />
-      <LineId Id="66" Count="0" />
+      <LineId Id="94" Count="1" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="97" Count="4" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="96" Count="0" />
       <LineId Id="31" Count="0" />
       <LineId Id="58" Count="0" />
       <LineId Id="51" Count="0" />
       <LineId Id="39" Count="1" />
+      <LineId Id="104" Count="0" />
       <LineId Id="69" Count="0" />
-      <LineId Id="41" Count="2" />
-      <LineId Id="68" Count="0" />
+      <LineId Id="106" Count="1" />
+      <LineId Id="41" Count="1" />
+      <LineId Id="109" Count="4" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="108" Count="0" />
       <LineId Id="38" Count="0" />
       <LineId Id="59" Count="0" />
       <LineId Id="52" Count="0" />
       <LineId Id="45" Count="1" />
+      <LineId Id="116" Count="0" />
       <LineId Id="71" Count="0" />
-      <LineId Id="47" Count="2" />
-      <LineId Id="70" Count="0" />
+      <LineId Id="117" Count="1" />
+      <LineId Id="47" Count="1" />
+      <LineId Id="120" Count="4" />
+      <LineId Id="126" Count="0" />
+      <LineId Id="119" Count="0" />
       <LineId Id="44" Count="0" />
     </LineIds>
   </POU>
