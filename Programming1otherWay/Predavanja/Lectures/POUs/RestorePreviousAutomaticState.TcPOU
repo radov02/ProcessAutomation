@@ -26,6 +26,7 @@ ELSIF Automatic.RotationPositionCurrent - Automatic.RotationPositionAuto > 25 TH
 ELSE
 	IO.MotorRotation := 0;
 	Automatic.MotorR.CurrentlyMoving := FALSE;
+	RotationRestored := TRUE;
 END_IF
 // reset lifting:
 IF Automatic.LiftingPositionAuto - Automatic.LiftingPositionCurrent > 25 THEN
@@ -39,6 +40,7 @@ ELSIF Automatic.LiftingPositionCurrent - Automatic.LiftingPositionAuto > 25 THEN
 ELSE
 	IO.MotorLifting := 0;
 	Automatic.MotorL.CurrentlyMoving := FALSE;
+	LiftingRestored := TRUE;
 END_IF
 // reset extension:
 IF Automatic.ExtensionPositionAuto - Automatic.ExtensionPositionCurrent > 25 THEN
@@ -52,6 +54,7 @@ ELSIF Automatic.ExtensionPositionCurrent - Automatic.ExtensionPositionAuto > 25 
 ELSE
 	IO.MotorExtension := 0;
 	Automatic.MotorE.CurrentlyMoving := FALSE;
+	ExtensionRestored := TRUE;
 END_IF
 // reset grip:
 IF Automatic.GripPositionAuto - Automatic.GripPositionCurrent > 25 THEN
@@ -65,6 +68,7 @@ ELSIF Automatic.GripPositionCurrent - Automatic.GripPositionAuto > 25 THEN
 ELSE
 	IO.MotorGrip := 0;
 	Automatic.MotorG.CurrentlyMoving := FALSE;
+	GripRestored := TRUE;
 END_IF
 
 // if all restored then go on to exeecute recipes in AutomaticControl:
@@ -77,12 +81,17 @@ END_IF]]></ST>
       <LineId Id="49" Count="1" />
       <LineId Id="47" Count="0" />
       <LineId Id="51" Count="0" />
-      <LineId Id="23" Count="2" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="25" Count="0" />
       <LineId Id="56" Count="11" />
+      <LineId Id="107" Count="0" />
       <LineId Id="55" Count="0" />
       <LineId Id="69" Count="11" />
+      <LineId Id="108" Count="0" />
       <LineId Id="68" Count="0" />
       <LineId Id="82" Count="11" />
+      <LineId Id="109" Count="0" />
       <LineId Id="81" Count="0" />
       <LineId Id="94" Count="0" />
       <LineId Id="36" Count="1" />

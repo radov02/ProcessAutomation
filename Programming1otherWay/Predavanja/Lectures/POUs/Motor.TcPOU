@@ -3,12 +3,13 @@
   <POU Name="Motor" Id="{c9894c91-c290-4e55-869d-cafa71223417}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC Motor
 VAR_INPUT
+	CurrentlyMoving: BOOL;	// we need this because stepSwitches can be 1 and we should not move
+	// Current position is currently stored in the Automatic GVLs.
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	CurrentlyMoving: BOOL;	// we need this because stepSwitches can be 1 and we should not move
-	// Current position is currently stored in the Automatic GVLs.
+	
 END_VAR
 ]]></Declaration>
     <Implementation>

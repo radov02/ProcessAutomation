@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
-  <POU Name="Recipe1" Id="{5d219c28-f5d8-4531-a7b6-25bb4e49e9af}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM Recipe1
+  <POU Name="Recipe11" Id="{3098573e-c5b9-45cc-a6c2-48fae2f326e0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC Recipe11
 VAR_INPUT
 	ExecutingRecipe1: BOOL;
 END_VAR
@@ -18,14 +18,16 @@ VAR
 	PlasticsDropOffExtensionPosition: INT := 300;
 	MetalInitialLiftingPosition: INT := 400;
 	MetalDropOffExtensionPosition: INT := 500;
-END_VAR]]></Declaration>
+END_VAR
+
+// Recipe is sequence of moves to execute the task.
+]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF ExecutingRecipe1 THEN	// we start executing recipe1 (again)
 	SuccesfullyEnded := FALSE;
 END_IF
 
 IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
-	IO.LEDGreen := 1;
 	// WOOD:
 	IF State = 0 THEN
 		IF Automatic.LiftingPositionAuto < WoodInitialLiftingPosition THEN
@@ -65,7 +67,7 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 		END_IF
 	ELSIF State = 3 THEN
 		IF NOT IO.EndLiftingSensor THEN
-			IO.MotorLiftingDirection := 1;
+			IO.MotorLiftingDirection := 0;
 			IF NOT Automatic.SafetyLON THEN
 				Automatic.MotorG.CurrentlyMoving := TRUE;
 				IO.MotorLifting := 1;
@@ -73,7 +75,7 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 		ELSE
 			State := 4;
 			IO.MotorLifting := 0;
-			Automatic.MotorL.CurrentlyMoving := FALSE;
+			Automatic.MotorG.CurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 4 THEN
 		IF Automatic.RotationPositionAuto < RotationDropOffPosition THEN
@@ -329,11 +331,110 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 END_IF
 RETURN;]]></ST>
     </Implementation>
-    <LineIds Name="Recipe1">
-      <LineId Id="19" Count="4" />
+    <LineIds Name="Recipe11">
+      <LineId Id="283" Count="3" />
+      <LineId Id="23" Count="4" />
+      <LineId Id="300" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="301" Count="0" />
+      <LineId Id="30" Count="7" />
+      <LineId Id="302" Count="0" />
+      <LineId Id="38" Count="1" />
+      <LineId Id="303" Count="0" />
+      <LineId Id="40" Count="7" />
+      <LineId Id="304" Count="0" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="305" Count="0" />
+      <LineId Id="50" Count="7" />
+      <LineId Id="306" Count="0" />
+      <LineId Id="58" Count="1" />
+      <LineId Id="307" Count="0" />
+      <LineId Id="60" Count="7" />
+      <LineId Id="308" Count="0" />
+      <LineId Id="68" Count="1" />
+      <LineId Id="309" Count="0" />
+      <LineId Id="70" Count="7" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="311" Count="0" />
+      <LineId Id="80" Count="7" />
+      <LineId Id="312" Count="0" />
+      <LineId Id="88" Count="1" />
+      <LineId Id="313" Count="0" />
+      <LineId Id="90" Count="7" />
+      <LineId Id="314" Count="0" />
+      <LineId Id="98" Count="1" />
+      <LineId Id="315" Count="0" />
+      <LineId Id="100" Count="10" />
+      <LineId Id="316" Count="0" />
+      <LineId Id="111" Count="1" />
+      <LineId Id="317" Count="0" />
+      <LineId Id="113" Count="7" />
+      <LineId Id="318" Count="0" />
+      <LineId Id="121" Count="1" />
+      <LineId Id="319" Count="0" />
+      <LineId Id="123" Count="7" />
+      <LineId Id="320" Count="0" />
+      <LineId Id="131" Count="1" />
+      <LineId Id="321" Count="0" />
+      <LineId Id="133" Count="7" />
+      <LineId Id="322" Count="0" />
+      <LineId Id="141" Count="1" />
+      <LineId Id="323" Count="0" />
+      <LineId Id="143" Count="7" />
+      <LineId Id="324" Count="0" />
+      <LineId Id="151" Count="1" />
+      <LineId Id="325" Count="0" />
+      <LineId Id="153" Count="7" />
+      <LineId Id="326" Count="0" />
+      <LineId Id="161" Count="1" />
+      <LineId Id="327" Count="0" />
+      <LineId Id="163" Count="1" />
+      <LineId Id="166" Count="5" />
       <LineId Id="328" Count="0" />
-      <LineId Id="24" Count="300" />
-      <LineId Id="5" Count="0" />
+      <LineId Id="172" Count="1" />
+      <LineId Id="329" Count="0" />
+      <LineId Id="174" Count="7" />
+      <LineId Id="330" Count="0" />
+      <LineId Id="182" Count="1" />
+      <LineId Id="331" Count="0" />
+      <LineId Id="184" Count="10" />
+      <LineId Id="332" Count="0" />
+      <LineId Id="195" Count="1" />
+      <LineId Id="333" Count="0" />
+      <LineId Id="197" Count="7" />
+      <LineId Id="334" Count="0" />
+      <LineId Id="205" Count="1" />
+      <LineId Id="335" Count="0" />
+      <LineId Id="207" Count="7" />
+      <LineId Id="336" Count="0" />
+      <LineId Id="215" Count="1" />
+      <LineId Id="337" Count="0" />
+      <LineId Id="217" Count="7" />
+      <LineId Id="338" Count="1" />
+      <LineId Id="341" Count="0" />
+      <LineId Id="340" Count="0" />
+      <LineId Id="227" Count="7" />
+      <LineId Id="342" Count="0" />
+      <LineId Id="235" Count="1" />
+      <LineId Id="343" Count="0" />
+      <LineId Id="237" Count="7" />
+      <LineId Id="344" Count="0" />
+      <LineId Id="245" Count="1" />
+      <LineId Id="345" Count="0" />
+      <LineId Id="247" Count="7" />
+      <LineId Id="346" Count="0" />
+      <LineId Id="255" Count="1" />
+      <LineId Id="347" Count="0" />
+      <LineId Id="257" Count="7" />
+      <LineId Id="348" Count="0" />
+      <LineId Id="265" Count="1" />
+      <LineId Id="349" Count="0" />
+      <LineId Id="267" Count="4" />
+      <LineId Id="278" Count="3" />
+      <LineId Id="274" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="299" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

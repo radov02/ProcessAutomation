@@ -8,17 +8,21 @@ END_VAR
 // ONLY COUNTING, NO SETTING MOTORS ON/OFF]]></Declaration>
     <Implementation>
       <ST><![CDATA[// COUNT ROTATION:
-IF IO.Initialized AND Automatic.MotorR.CurrentlyMoving AND IO.StepRotatonSwitch = 1 THEN
+IF IO.Initialized AND IO.StepRotatonSwitch = 1 THEN
 	IO.LEDGreen := 0;
 	IF IO.MotorRotationDirection = 0 THEN
-		Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent + 1;
-		IF NOT IO.Switch THEN
+		IF Automatic.MotorR.CurrentlyMoving THEN
+			Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent + 1;
+		ELSIF NOT IO.Switch THEN
 			Automatic.RotationPositionAuto := Automatic.RotationPositionAuto + 1;
+			Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent + 1;
 		END_IF
 	ELSE
-		Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent - 1;
-		IF NOT IO.Switch THEN
+		IF Automatic.MotorR.CurrentlyMoving THEN
+			Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent - 1;
+		ELSIF NOT IO.Switch THEN
 			Automatic.RotationPositionAuto := Automatic.RotationPositionAuto - 1;
+			Automatic.RotationPositionCurrent := Automatic.RotationPositionCurrent - 1;
 		END_IF
 	END_IF
 ELSE
@@ -26,17 +30,21 @@ ELSE
 END_IF
 
 // COUNT Extension:
-IF IO.Initialized AND Automatic.MotorE.CurrentlyMoving AND IO.StepExtensionSwitch = 1 THEN
+IF IO.Initialized AND IO.StepExtensionSwitch = 1 THEN
 	IO.LEDGreen := 0;
 	IF IO.MotorExtensionDirection = 0 THEN
-		Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent + 1;
-		IF NOT IO.Switch THEN
+		IF Automatic.MotorE.CurrentlyMoving THEN
+			Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent + 1;
+		ELSIF NOT IO.Switch THEN
 			Automatic.ExtensionPositionAuto := Automatic.ExtensionPositionAuto + 1;
+			Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent + 1;
 		END_IF
 	ELSE
-		Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent - 1;
-		IF NOT IO.Switch THEN
+		IF Automatic.MotorE.CurrentlyMoving THEN
+			Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent - 1;
+		ELSIF NOT IO.Switch THEN
 			Automatic.ExtensionPositionAuto := Automatic.ExtensionPositionAuto - 1;
+			Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent - 1;
 		END_IF
 	END_IF
 ELSE
@@ -44,17 +52,21 @@ ELSE
 END_IF
 
 // COUNT Lifting:
-IF IO.Initialized AND Automatic.MotorL.CurrentlyMoving AND IO.StepLiftingSwitch = 1 THEN
+IF IO.Initialized AND IO.StepLiftingSwitch = 1 THEN
 	IO.LEDGreen := 0;
 	IF IO.MotorLiftingDirection = 0 THEN
-		Automatic.LiftingPositionCurrent := Automatic.LiftingPositionCurrent + 1;
-		IF NOT IO.Switch THEN
+		IF Automatic.MotorL.CurrentlyMoving THEN
+			Automatic.LiftingPositionCurrent := Automatic.LiftingPositionCurrent + 1;
+		ELSIF NOT IO.Switch THEN
 			Automatic.LiftingPositionAuto := Automatic.LiftingPositionAuto + 1;
+			Automatic.LiftingPositionCurrent := Automatic.LiftingPositionCurrent + 1;
 		END_IF
 	ELSE
-		Automatic.LiftingPositionCurrent := Automatic.LiftingPositionCurrent - 1;
-		IF NOT IO.Switch THEN
+		IF Automatic.MotorL.CurrentlyMoving THEN
+			Automatic.LiftingPositionCurrent := Automatic.LiftingPositionCurrent - 1;
+		ELSIF NOT IO.Switch THEN
 			Automatic.LiftingPositionAuto := Automatic.LiftingPositionAuto - 1;
+			Automatic.LiftingPositionCurrent := Automatic.LiftingPositionCurrent - 1;
 		END_IF
 	END_IF
 ELSE
@@ -62,17 +74,21 @@ ELSE
 END_IF
 
 // COUNT Grip:
-IF IO.Initialized AND Automatic.MotorG.CurrentlyMoving AND IO.StepGripSwitch = 1 THEN
+IF IO.Initialized AND IO.StepGripSwitch = 1 THEN
 	IO.LEDGreen := 0;
-	IF IO.MotorGripDirection = 0 THEN
-		Automatic.GripPositionCurrent := Automatic.GripPositionCurrent + 1;
-		IF NOT IO.Switch THEN
+	IF NOT IO.MotorGripDirection THEN
+		IF NOT IO.Switch AND Automatic.MotorG.CurrentlyMoving THEN
 			Automatic.GripPositionAuto := Automatic.GripPositionAuto + 1;
+			Automatic.GripPositionCurrent := Automatic.GripPositionCurrent + 1;
+		ELSIF Automatic.MotorG.CurrentlyMoving THEN
+			Automatic.GripPositionCurrent := Automatic.GripPositionCurrent + 1;
 		END_IF
 	ELSE
-		Automatic.GripPositionCurrent := Automatic.GripPositionCurrent - 1;
-		IF NOT IO.Switch THEN
+		IF NOT IO.Switch AND Automatic.MotorG.CurrentlyMoving THEN
 			Automatic.GripPositionAuto := Automatic.GripPositionAuto - 1;
+			Automatic.GripPositionCurrent := Automatic.GripPositionCurrent - 1;
+		ELSIF Automatic.MotorG.CurrentlyMoving THEN
+			Automatic.GripPositionCurrent := Automatic.GripPositionCurrent - 1;
 		END_IF
 	END_IF
 ELSE
@@ -83,46 +99,63 @@ END_IF
     <LineIds Name="CountCurrentPosition">
       <LineId Id="92" Count="0" />
       <LineId Id="6" Count="2" />
+      <LineId Id="174" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="141" Count="0" />
       <LineId Id="93" Count="0" />
+      <LineId Id="175" Count="0" />
       <LineId Id="142" Count="0" />
       <LineId Id="15" Count="0" />
+      <LineId Id="176" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="143" Count="0" />
       <LineId Id="20" Count="0" />
+      <LineId Id="177" Count="0" />
       <LineId Id="144" Count="0" />
       <LineId Id="22" Count="3" />
-      <LineId Id="95" Count="5" />
+      <LineId Id="95" Count="4" />
+      <LineId Id="170" Count="0" />
+      <LineId Id="100" Count="0" />
       <LineId Id="145" Count="0" />
       <LineId Id="101" Count="0" />
+      <LineId Id="171" Count="0" />
       <LineId Id="147" Count="0" />
-      <LineId Id="102" Count="1" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="172" Count="0" />
+      <LineId Id="103" Count="0" />
       <LineId Id="146" Count="0" />
       <LineId Id="104" Count="0" />
+      <LineId Id="173" Count="0" />
       <LineId Id="148" Count="0" />
       <LineId Id="105" Count="2" />
       <LineId Id="94" Count="0" />
-      <LineId Id="109" Count="5" />
-      <LineId Id="149" Count="0" />
+      <LineId Id="109" Count="4" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="162" Count="0" />
       <LineId Id="115" Count="0" />
+      <LineId Id="163" Count="0" />
       <LineId Id="151" Count="0" />
-      <LineId Id="116" Count="1" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="117" Count="0" />
       <LineId Id="150" Count="0" />
       <LineId Id="118" Count="0" />
+      <LineId Id="165" Count="0" />
       <LineId Id="152" Count="0" />
       <LineId Id="119" Count="2" />
       <LineId Id="108" Count="0" />
-      <LineId Id="122" Count="5" />
-      <LineId Id="153" Count="0" />
-      <LineId Id="128" Count="0" />
-      <LineId Id="155" Count="0" />
-      <LineId Id="129" Count="1" />
-      <LineId Id="154" Count="0" />
-      <LineId Id="131" Count="0" />
-      <LineId Id="156" Count="0" />
-      <LineId Id="132" Count="2" />
-      <LineId Id="26" Count="0" />
+      <LineId Id="122" Count="1" />
+      <LineId Id="181" Count="2" />
+      <LineId Id="204" Count="1" />
+      <LineId Id="203" Count="0" />
+      <LineId Id="184" Count="1" />
+      <LineId Id="189" Count="1" />
+      <LineId Id="201" Count="1" />
+      <LineId Id="200" Count="0" />
+      <LineId Id="191" Count="1" />
+      <LineId Id="196" Count="3" />
+      <LineId Id="180" Count="0" />
       <LineId Id="135" Count="0" />
     </LineIds>
   </POU>
