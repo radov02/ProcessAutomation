@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
-  <POU Name="Recipe1" Id="{f8183289-6e8d-4e31-9979-1875ef80169a}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM Recipe1
+  <POU Name="Recipe2" Id="{930ee78d-730a-40ec-8472-7051a438ce0e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Recipe2
 VAR
-	State: INT := 0;
+	State: INT := 8;
 	Ended: BOOL := FALSE;
 END_VAR
 ]]></Declaration>
@@ -14,7 +14,6 @@ END_VAR
 END_IF
 
 IF IO.Initialized AND NOT IO.Switch THEN
-
 	
 	// WOOD:
 	IF State = 0 THEN
@@ -265,98 +264,15 @@ IF IO.Initialized AND NOT IO.Switch THEN
 			IO.MotorRotation := 0;
 		END_IF
 	ELSIF State = 24 THEN
-		State := 0;
-		Initialize();
+		State := 8;
 		Ended := TRUE;
 	END_IF
 END_IF]]></ST>
     </Implementation>
-    <LineIds Name="Recipe1">
-      <LineId Id="391" Count="0" />
-      <LineId Id="397" Count="0" />
-      <LineId Id="393" Count="1" />
-      <LineId Id="392" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="396" Count="0" />
-      <LineId Id="83" Count="0" />
-      <LineId Id="74" Count="0" />
-      <LineId Id="370" Count="0" />
-      <LineId Id="380" Count="6" />
-      <LineId Id="388" Count="0" />
-      <LineId Id="379" Count="0" />
-      <LineId Id="369" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="132" Count="1" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="107" Count="0" />
-      <LineId Id="27" Count="1" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="134" Count="1" />
-      <LineId Id="34" Count="0" />
-      <LineId Id="108" Count="0" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="328" Count="7" />
-      <LineId Id="337" Count="0" />
-      <LineId Id="317" Count="0" />
-      <LineId Id="51" Count="3" />
-      <LineId Id="131" Count="0" />
-      <LineId Id="136" Count="0" />
-      <LineId Id="55" Count="0" />
-      <LineId Id="110" Count="0" />
-      <LineId Id="57" Count="0" />
-      <LineId Id="50" Count="0" />
-      <LineId Id="59" Count="3" />
-      <LineId Id="137" Count="1" />
-      <LineId Id="63" Count="0" />
-      <LineId Id="111" Count="0" />
-      <LineId Id="65" Count="0" />
-      <LineId Id="58" Count="0" />
-      <LineId Id="123" Count="3" />
-      <LineId Id="139" Count="0" />
-      <LineId Id="141" Count="0" />
-      <LineId Id="127" Count="1" />
-      <LineId Id="130" Count="0" />
-      <LineId Id="122" Count="0" />
-      <LineId Id="145" Count="7" />
-      <LineId Id="154" Count="0" />
-      <LineId Id="144" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="75" Count="1" />
-      <LineId Id="231" Count="9" />
-      <LineId Id="166" Count="17" />
-      <LineId Id="185" Count="1" />
-      <LineId Id="339" Count="7" />
-      <LineId Id="348" Count="0" />
-      <LineId Id="338" Count="0" />
-      <LineId Id="187" Count="7" />
-      <LineId Id="196" Count="20" />
-      <LineId Id="218" Count="9" />
-      <LineId Id="229" Count="1" />
-      <LineId Id="165" Count="0" />
-      <LineId Id="164" Count="0" />
-      <LineId Id="77" Count="0" />
-      <LineId Id="242" Count="27" />
-      <LineId Id="271" Count="1" />
-      <LineId Id="350" Count="7" />
-      <LineId Id="359" Count="0" />
-      <LineId Id="349" Count="0" />
-      <LineId Id="273" Count="7" />
-      <LineId Id="282" Count="9" />
-      <LineId Id="293" Count="9" />
-      <LineId Id="304" Count="9" />
-      <LineId Id="315" Count="1" />
-      <LineId Id="403" Count="0" />
-      <LineId Id="410" Count="0" />
-      <LineId Id="415" Count="0" />
-      <LineId Id="413" Count="0" />
-      <LineId Id="241" Count="0" />
-      <LineId Id="13" Count="0" />
+    <LineIds Name="Recipe2">
+      <LineId Id="128" Count="5" />
+      <LineId Id="139" Count="252" />
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

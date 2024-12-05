@@ -95,6 +95,9 @@
     <Compile Include="POUs\Recipe1.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Recipe2.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Safety.TcPOU">
       <SubType>Code</SubType>
     </Compile>

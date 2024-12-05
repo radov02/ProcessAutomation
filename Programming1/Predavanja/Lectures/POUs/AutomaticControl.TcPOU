@@ -6,6 +6,8 @@ VAR_INPUT
 	Switch: BOOL;
 END_VAR
 VAR
+	ExecutingRecipe1: BOOL := FALSE;
+	ExecutingRecipe2: BOOL := FALSE;
 	SwitchedManualAuto: BOOL := FALSE;
 	initialized: BOOL := FALSE;
 	State: INT := 0;
@@ -24,7 +26,7 @@ ELSE
 	CountPosition();	// FOR MANUAL MODE
 	
 	// RESET THE POSITION:
-	IF (Automatic.RotationPositionAuto - Automatic.RotationPositionCurrent > 20 OR Automatic.RotationPositionAuto - Automatic.RotationPositionCurrent > 20) AND IO.SwitchedToAutomatic THEN
+	(*IF (Automatic.RotationPositionAuto - Automatic.RotationPositionCurrent > 20 OR Automatic.RotationPositionAuto - Automatic.RotationPositionCurrent > 20) AND IO.SwitchedToAutomatic THEN
 		IF Automatic.RotationPositionAuto - Automatic.RotationPositionCurrent > 20 THEN
 			IO.MotorRotationDirection := 0;
 		ELSE
@@ -34,7 +36,7 @@ ELSE
 	ELSE 
 		IO.MotorRotation := 0;
 		IO.SwitchedToAutomatic := 0;
-	END_IF
+	END_IF*)
 	(*IF Automatic.ExtensionPositionAuto <> Automatic.ExtensionPositionCurrent AND NOT IO.Switch THEN
 		IF Automatic.ExtensionPositionAuto - Automatic.ExtensionPositionCurrent > 0 THEN
 			IO.MotorExtensionDirection := 0;
@@ -51,7 +53,15 @@ ELSE
 	
 	
 	// RECIPES (recipe is sequence of moves to execute the task):
-	Recipe1();
+	IF ExecutingRecipe1 OR IO.ButtonUpperLeft THEN
+		ExecutingRecipe1 := TRUE;
+		Recipe1();
+		ExecutingRecipe1 := NOT Recipe1.Ended;
+	ELSIF NOT ExecutingRecipe1 AND (IO.ButtonUpperRight OR ExecutingRecipe2) THEN
+		ExecutingRecipe2 := TRUE;
+		Recipe2();
+		ExecutingRecipe2 := NOT Recipe2.Ended;
+	END_IF
 	
 END_IF
 
@@ -77,6 +87,11 @@ RETURN;]]></ST>
       <LineId Id="877" Count="1" />
       <LineId Id="779" Count="0" />
       <LineId Id="810" Count="0" />
+      <LineId Id="897" Count="0" />
+      <LineId Id="895" Count="0" />
+      <LineId Id="898" Count="0" />
+      <LineId Id="904" Count="3" />
+      <LineId Id="896" Count="0" />
       <LineId Id="778" Count="0" />
       <LineId Id="768" Count="0" />
       <LineId Id="806" Count="3" />
