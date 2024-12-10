@@ -4,24 +4,30 @@
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
 	MotorR: Motor;
+	RCurrentlyMoving: BOOL;
 	RotationPositionAuto: INT;
 	RotationPositionCurrent: INT;
 	SafetyRON: BOOL;
 	
 	MotorL: Motor;
+	LCurrentlyMoving: BOOL;
 	LiftingPositionAuto: INT;
 	LiftingPositionCurrent: INT;
 	SafetyLON: BOOL;
 	
 	MotorE: Motor;
+	ECurrentlyMoving: BOOL;
 	ExtensionPositionAuto: INT;
 	ExtensionPositionCurrent: INT;
 	SafetyEON: BOOL;
 	
 	MotorG: Motor;
+	GCurrentlyMoving: BOOL;
 	GripPositionAuto: INT;
 	GripPositionCurrent: INT;
 	SafetyGON: BOOL;
+	
+	AllRestored: BOOL;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

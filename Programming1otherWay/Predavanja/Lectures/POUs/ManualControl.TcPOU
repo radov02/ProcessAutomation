@@ -884,7 +884,7 @@ END_VAR
                   <v n="OutCommented">false</v>
                   <l2 n="NetworkItems">
                     <o t="BoxTreeDemux">
-                      <v n="VarId">19</v>
+                      <v n="VarId">72</v>
                       <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"EQ"</v>
                         <o n="Instance" t="Operand">
@@ -1265,7 +1265,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">19</v>
+                            <v n="VarId">72</v>
                             <n n="Input" />
                             <v n="Id">421L</v>
                           </o>
@@ -1307,33 +1307,9 @@ END_VAR
                       </o>
                       <v n="Id">132L</v>
                     </o>
-                    <o t="BoxTreeAssign">
-                      <o n="OutputItems" t="OutputItemList">
-                        <l2 n="OutputItems" cet="Operand">
-                          <o>
-                            <v n="Operand">"Automatic.MotorR.CurrentlyMoving"</v>
-                            <v n="Type">"BOOL"</v>
-                            <v n="Comment">""</v>
-                            <v n="SymbolComment">""</v>
-                            <v n="Address">""</v>
-                            <o n="Flags" t="Flags">
-                              <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
-                              <v n="Extensible">false</v>
-                            </o>
-                            <v n="LValue">true</v>
-                            <v n="Boolean">true</v>
-                            <v n="IsInstance">false</v>
-                            <v n="Id">423L</v>
-                          </o>
-                        </l2>
-                      </o>
-                      <o n="Flags" t="Flags">
-                        <v n="Flags">0</v>
-                        <v n="Fixed">false</v>
-                        <v n="Extensible">false</v>
-                      </o>
-                      <o n="RValue" t="BoxTreeBox">
+                    <o t="BoxTreeDemux">
+                      <v n="VarId">73</v>
+                      <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"AND"</v>
                         <o n="Instance" t="Operand">
                           <n n="Operand" />
@@ -1362,7 +1338,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">19</v>
+                            <v n="VarId">72</v>
                             <n n="Input" />
                             <v n="Id">422L</v>
                           </o>
@@ -1402,7 +1378,73 @@ END_VAR
                         <v n="ProvidesSTSnippet">false</v>
                         <v n="Id">466L</v>
                       </o>
+                      <v n="Id">534L</v>
+                    </o>
+                    <o t="BoxTreeAssign">
+                      <o n="OutputItems" t="OutputItemList">
+                        <l2 n="OutputItems" cet="Operand">
+                          <o>
+                            <v n="Operand">"Automatic.RCurrentlyMoving"</v>
+                            <v n="Type">"BOOL"</v>
+                            <v n="Comment">""</v>
+                            <v n="SymbolComment">""</v>
+                            <v n="Address">""</v>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">2</v>
+                              <v n="Fixed">true</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <v n="LValue">true</v>
+                            <v n="Boolean">false</v>
+                            <v n="IsInstance">false</v>
+                            <v n="Id">518L</v>
+                          </o>
+                        </l2>
+                      </o>
+                      <o n="Flags" t="Flags">
+                        <v n="Flags">16</v>
+                        <v n="Fixed">true</v>
+                        <v n="Extensible">false</v>
+                      </o>
+                      <o n="RValue" t="BoxTreeDemux">
+                        <v n="VarId">73</v>
+                        <n n="Input" />
+                        <v n="Id">535L</v>
+                      </o>
                       <v n="Id">424L</v>
+                    </o>
+                    <o t="BoxTreeAssign">
+                      <o n="OutputItems" t="OutputItemList">
+                        <l2 n="OutputItems" cet="Operand">
+                          <o>
+                            <v n="Operand">"Automatic.RCurrentlyMoving"</v>
+                            <v n="Type">"BOOL"</v>
+                            <v n="Comment">""</v>
+                            <v n="SymbolComment">""</v>
+                            <v n="Address">""</v>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">3</v>
+                              <v n="Fixed">true</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <v n="LValue">true</v>
+                            <v n="Boolean">true</v>
+                            <v n="IsInstance">false</v>
+                            <v n="Id">537L</v>
+                          </o>
+                        </l2>
+                      </o>
+                      <o n="Flags" t="Flags">
+                        <v n="Flags">32</v>
+                        <v n="Fixed">true</v>
+                        <v n="Extensible">false</v>
+                      </o>
+                      <o n="RValue" t="BoxTreeDemux">
+                        <v n="VarId">73</v>
+                        <n n="Input" />
+                        <v n="Id">536L</v>
+                      </o>
+                      <v n="Id">538L</v>
                     </o>
                   </l2>
                   <l2 n="Connectors" />
@@ -1847,7 +1889,7 @@ END_VAR
                   <v n="OutCommented">false</v>
                   <l2 n="NetworkItems">
                     <o t="BoxTreeDemux">
-                      <v n="VarId">21</v>
+                      <v n="VarId">62</v>
                       <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"EQ"</v>
                         <o n="Instance" t="Operand">
@@ -2228,7 +2270,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">21</v>
+                            <v n="VarId">62</v>
                             <n n="Input" />
                             <v n="Id">426L</v>
                           </o>
@@ -2270,33 +2312,9 @@ END_VAR
                       </o>
                       <v n="Id">191L</v>
                     </o>
-                    <o t="BoxTreeAssign">
-                      <o n="OutputItems" t="OutputItemList">
-                        <l2 n="OutputItems" cet="Operand">
-                          <o>
-                            <v n="Operand">"Automatic.MotorL.CurrentlyMoving"</v>
-                            <v n="Type">"BOOL"</v>
-                            <v n="Comment">""</v>
-                            <v n="SymbolComment">""</v>
-                            <v n="Address">""</v>
-                            <o n="Flags" t="Flags">
-                              <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
-                              <v n="Extensible">false</v>
-                            </o>
-                            <v n="LValue">true</v>
-                            <v n="Boolean">true</v>
-                            <v n="IsInstance">false</v>
-                            <v n="Id">428L</v>
-                          </o>
-                        </l2>
-                      </o>
-                      <o n="Flags" t="Flags">
-                        <v n="Flags">0</v>
-                        <v n="Fixed">false</v>
-                        <v n="Extensible">false</v>
-                      </o>
-                      <o n="RValue" t="BoxTreeBox">
+                    <o t="BoxTreeDemux">
+                      <v n="VarId">63</v>
+                      <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"AND"</v>
                         <o n="Instance" t="Operand">
                           <n n="Operand" />
@@ -2325,7 +2343,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">21</v>
+                            <v n="VarId">62</v>
                             <n n="Input" />
                             <v n="Id">427L</v>
                           </o>
@@ -2365,7 +2383,73 @@ END_VAR
                         <v n="ProvidesSTSnippet">false</v>
                         <v n="Id">474L</v>
                       </o>
+                      <v n="Id">529L</v>
+                    </o>
+                    <o t="BoxTreeAssign">
+                      <o n="OutputItems" t="OutputItemList">
+                        <l2 n="OutputItems" cet="Operand">
+                          <o>
+                            <v n="Operand">"Automatic.LCurrentlyMoving"</v>
+                            <v n="Type">"BOOL"</v>
+                            <v n="Comment">""</v>
+                            <v n="SymbolComment">""</v>
+                            <v n="Address">""</v>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">2</v>
+                              <v n="Fixed">true</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <v n="LValue">true</v>
+                            <v n="Boolean">true</v>
+                            <v n="IsInstance">false</v>
+                            <v n="Id">428L</v>
+                          </o>
+                        </l2>
+                      </o>
+                      <o n="Flags" t="Flags">
+                        <v n="Flags">16</v>
+                        <v n="Fixed">true</v>
+                        <v n="Extensible">false</v>
+                      </o>
+                      <o n="RValue" t="BoxTreeDemux">
+                        <v n="VarId">63</v>
+                        <n n="Input" />
+                        <v n="Id">530L</v>
+                      </o>
                       <v n="Id">429L</v>
+                    </o>
+                    <o t="BoxTreeAssign">
+                      <o n="OutputItems" t="OutputItemList">
+                        <l2 n="OutputItems" cet="Operand">
+                          <o>
+                            <v n="Operand">"Automatic.LCurrentlyMoving"</v>
+                            <v n="Type">"BOOL"</v>
+                            <v n="Comment">""</v>
+                            <v n="SymbolComment">""</v>
+                            <v n="Address">""</v>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">3</v>
+                              <v n="Fixed">true</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <v n="LValue">true</v>
+                            <v n="Boolean">true</v>
+                            <v n="IsInstance">false</v>
+                            <v n="Id">532L</v>
+                          </o>
+                        </l2>
+                      </o>
+                      <o n="Flags" t="Flags">
+                        <v n="Flags">32</v>
+                        <v n="Fixed">true</v>
+                        <v n="Extensible">false</v>
+                      </o>
+                      <o n="RValue" t="BoxTreeDemux">
+                        <v n="VarId">63</v>
+                        <n n="Input" />
+                        <v n="Id">531L</v>
+                      </o>
+                      <v n="Id">533L</v>
                     </o>
                   </l2>
                   <l2 n="Connectors" />
@@ -2810,7 +2894,7 @@ END_VAR
                   <v n="OutCommented">false</v>
                   <l2 n="NetworkItems">
                     <o t="BoxTreeDemux">
-                      <v n="VarId">25</v>
+                      <v n="VarId">52</v>
                       <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"EQ"</v>
                         <o n="Instance" t="Operand">
@@ -3191,7 +3275,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">25</v>
+                            <v n="VarId">52</v>
                             <n n="Input" />
                             <v n="Id">431L</v>
                           </o>
@@ -3233,33 +3317,9 @@ END_VAR
                       </o>
                       <v n="Id">250L</v>
                     </o>
-                    <o t="BoxTreeAssign">
-                      <o n="OutputItems" t="OutputItemList">
-                        <l2 n="OutputItems" cet="Operand">
-                          <o>
-                            <v n="Operand">"Automatic.MotorE.CurrentlyMoving"</v>
-                            <v n="Type">"BOOL"</v>
-                            <v n="Comment">""</v>
-                            <v n="SymbolComment">""</v>
-                            <v n="Address">""</v>
-                            <o n="Flags" t="Flags">
-                              <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
-                              <v n="Extensible">false</v>
-                            </o>
-                            <v n="LValue">true</v>
-                            <v n="Boolean">true</v>
-                            <v n="IsInstance">false</v>
-                            <v n="Id">433L</v>
-                          </o>
-                        </l2>
-                      </o>
-                      <o n="Flags" t="Flags">
-                        <v n="Flags">0</v>
-                        <v n="Fixed">false</v>
-                        <v n="Extensible">false</v>
-                      </o>
-                      <o n="RValue" t="BoxTreeBox">
+                    <o t="BoxTreeDemux">
+                      <v n="VarId">53</v>
+                      <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"AND"</v>
                         <o n="Instance" t="Operand">
                           <n n="Operand" />
@@ -3288,7 +3348,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">25</v>
+                            <v n="VarId">52</v>
                             <n n="Input" />
                             <v n="Id">432L</v>
                           </o>
@@ -3328,7 +3388,73 @@ END_VAR
                         <v n="ProvidesSTSnippet">false</v>
                         <v n="Id">486L</v>
                       </o>
+                      <v n="Id">524L</v>
+                    </o>
+                    <o t="BoxTreeAssign">
+                      <o n="OutputItems" t="OutputItemList">
+                        <l2 n="OutputItems" cet="Operand">
+                          <o>
+                            <v n="Operand">"Automatic.ECurrentlyMoving"</v>
+                            <v n="Type">"BOOL"</v>
+                            <v n="Comment">""</v>
+                            <v n="SymbolComment">""</v>
+                            <v n="Address">""</v>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">2</v>
+                              <v n="Fixed">true</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <v n="LValue">true</v>
+                            <v n="Boolean">true</v>
+                            <v n="IsInstance">false</v>
+                            <v n="Id">433L</v>
+                          </o>
+                        </l2>
+                      </o>
+                      <o n="Flags" t="Flags">
+                        <v n="Flags">16</v>
+                        <v n="Fixed">true</v>
+                        <v n="Extensible">false</v>
+                      </o>
+                      <o n="RValue" t="BoxTreeDemux">
+                        <v n="VarId">53</v>
+                        <n n="Input" />
+                        <v n="Id">525L</v>
+                      </o>
                       <v n="Id">434L</v>
+                    </o>
+                    <o t="BoxTreeAssign">
+                      <o n="OutputItems" t="OutputItemList">
+                        <l2 n="OutputItems" cet="Operand">
+                          <o>
+                            <v n="Operand">"Automatic.ECurrentlyMoving"</v>
+                            <v n="Type">"BOOL"</v>
+                            <v n="Comment">""</v>
+                            <v n="SymbolComment">""</v>
+                            <v n="Address">""</v>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">3</v>
+                              <v n="Fixed">true</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <v n="LValue">true</v>
+                            <v n="Boolean">true</v>
+                            <v n="IsInstance">false</v>
+                            <v n="Id">527L</v>
+                          </o>
+                        </l2>
+                      </o>
+                      <o n="Flags" t="Flags">
+                        <v n="Flags">32</v>
+                        <v n="Fixed">true</v>
+                        <v n="Extensible">false</v>
+                      </o>
+                      <o n="RValue" t="BoxTreeDemux">
+                        <v n="VarId">53</v>
+                        <n n="Input" />
+                        <v n="Id">526L</v>
+                      </o>
+                      <v n="Id">528L</v>
                     </o>
                   </l2>
                   <l2 n="Connectors" />
@@ -3773,7 +3899,7 @@ END_VAR
                   <v n="OutCommented">false</v>
                   <l2 n="NetworkItems">
                     <o t="BoxTreeDemux">
-                      <v n="VarId">28</v>
+                      <v n="VarId">42</v>
                       <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"EQ"</v>
                         <o n="Instance" t="Operand">
@@ -4154,7 +4280,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">28</v>
+                            <v n="VarId">42</v>
                             <n n="Input" />
                             <v n="Id">436L</v>
                           </o>
@@ -4196,33 +4322,9 @@ END_VAR
                       </o>
                       <v n="Id">309L</v>
                     </o>
-                    <o t="BoxTreeAssign">
-                      <o n="OutputItems" t="OutputItemList">
-                        <l2 n="OutputItems" cet="Operand">
-                          <o>
-                            <v n="Operand">"Automatic.MotorG.CurrentlyMoving"</v>
-                            <v n="Type">"BOOL"</v>
-                            <v n="Comment">""</v>
-                            <v n="SymbolComment">""</v>
-                            <v n="Address">""</v>
-                            <o n="Flags" t="Flags">
-                              <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
-                              <v n="Extensible">false</v>
-                            </o>
-                            <v n="LValue">true</v>
-                            <v n="Boolean">true</v>
-                            <v n="IsInstance">false</v>
-                            <v n="Id">438L</v>
-                          </o>
-                        </l2>
-                      </o>
-                      <o n="Flags" t="Flags">
-                        <v n="Flags">0</v>
-                        <v n="Fixed">false</v>
-                        <v n="Extensible">false</v>
-                      </o>
-                      <o n="RValue" t="BoxTreeBox">
+                    <o t="BoxTreeDemux">
+                      <v n="VarId">43</v>
+                      <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"AND"</v>
                         <o n="Instance" t="Operand">
                           <n n="Operand" />
@@ -4251,7 +4353,7 @@ END_VAR
                         <n n="InputFlags" />
                         <l2 n="InputItems">
                           <o t="BoxTreeDemux">
-                            <v n="VarId">28</v>
+                            <v n="VarId">42</v>
                             <n n="Input" />
                             <v n="Id">437L</v>
                           </o>
@@ -4291,7 +4393,73 @@ END_VAR
                         <v n="ProvidesSTSnippet">false</v>
                         <v n="Id">496L</v>
                       </o>
+                      <v n="Id">519L</v>
+                    </o>
+                    <o t="BoxTreeAssign">
+                      <o n="OutputItems" t="OutputItemList">
+                        <l2 n="OutputItems" cet="Operand">
+                          <o>
+                            <v n="Operand">"Automatic.GCurrentlyMoving"</v>
+                            <v n="Type">"BOOL"</v>
+                            <v n="Comment">""</v>
+                            <v n="SymbolComment">""</v>
+                            <v n="Address">""</v>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">2</v>
+                              <v n="Fixed">true</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <v n="LValue">true</v>
+                            <v n="Boolean">true</v>
+                            <v n="IsInstance">false</v>
+                            <v n="Id">438L</v>
+                          </o>
+                        </l2>
+                      </o>
+                      <o n="Flags" t="Flags">
+                        <v n="Flags">16</v>
+                        <v n="Fixed">true</v>
+                        <v n="Extensible">false</v>
+                      </o>
+                      <o n="RValue" t="BoxTreeDemux">
+                        <v n="VarId">43</v>
+                        <n n="Input" />
+                        <v n="Id">520L</v>
+                      </o>
                       <v n="Id">439L</v>
+                    </o>
+                    <o t="BoxTreeAssign">
+                      <o n="OutputItems" t="OutputItemList">
+                        <l2 n="OutputItems" cet="Operand">
+                          <o>
+                            <v n="Operand">"Automatic.GCurrentlyMoving"</v>
+                            <v n="Type">"BOOL"</v>
+                            <v n="Comment">""</v>
+                            <v n="SymbolComment">""</v>
+                            <v n="Address">""</v>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">3</v>
+                              <v n="Fixed">true</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <v n="LValue">true</v>
+                            <v n="Boolean">true</v>
+                            <v n="IsInstance">false</v>
+                            <v n="Id">522L</v>
+                          </o>
+                        </l2>
+                      </o>
+                      <o n="Flags" t="Flags">
+                        <v n="Flags">32</v>
+                        <v n="Fixed">true</v>
+                        <v n="Extensible">false</v>
+                      </o>
+                      <o n="RValue" t="BoxTreeDemux">
+                        <v n="VarId">43</v>
+                        <n n="Input" />
+                        <v n="Id">521L</v>
+                      </o>
+                      <v n="Id">523L</v>
                     </o>
                   </l2>
                   <l2 n="Connectors" />
@@ -4359,7 +4527,7 @@ END_VAR
                   <v n="Id">323L</v>
                 </o>
               </l2>
-              <v n="BranchCounter">28</v>
+              <v n="BranchCounter">72</v>
               <v n="ValidIds">true</v>
             </o>
           </Data>

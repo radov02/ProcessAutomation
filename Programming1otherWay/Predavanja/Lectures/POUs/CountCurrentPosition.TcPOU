@@ -76,7 +76,7 @@ END_IF
 // COUNT Grip:
 IF IO.Initialized AND IO.StepGripSwitch = 1 THEN
 	IO.LEDGreen := 0;
-	IF NOT IO.MotorGripDirection THEN
+	IF IO.MotorGripDirection = 0 THEN
 		IF NOT IO.Switch AND Automatic.MotorG.CurrentlyMoving THEN
 			Automatic.GripPositionAuto := Automatic.GripPositionAuto + 1;
 			Automatic.GripPositionCurrent := Automatic.GripPositionCurrent + 1;

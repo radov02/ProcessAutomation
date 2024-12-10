@@ -42,6 +42,9 @@
     <Compile Include="POUs\CountCurrentPosition.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\CountCurrentPosition1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Initialize.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -102,13 +105,16 @@
     <Compile Include="POUs\Recipe11.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Recipe13.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Recipe2.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\RestorePreviousAutomaticState.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Safety.TcPOU">
+    <Compile Include="POUs\Safety1.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

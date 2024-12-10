@@ -37,34 +37,10 @@ END_VAR
                   <v n="Title">"Automatic/manual mode"</v>
                   <v n="Label">""</v>
                   <v n="OutCommented">false</v>
-                  <l2 n="NetworkItems" cet="BoxTreeAssign">
-                    <o>
-                      <o n="OutputItems" t="OutputItemList">
-                        <l2 n="OutputItems" cet="Operand">
-                          <o>
-                            <v n="Operand">"IO.LEDGreen"</v>
-                            <v n="Type">"BOOL"</v>
-                            <v n="Comment">""</v>
-                            <v n="SymbolComment">""</v>
-                            <v n="Address">""</v>
-                            <o n="Flags" t="Flags">
-                              <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
-                              <v n="Extensible">false</v>
-                            </o>
-                            <v n="LValue">true</v>
-                            <v n="Boolean">true</v>
-                            <v n="IsInstance">false</v>
-                            <v n="Id">1221L</v>
-                          </o>
-                        </l2>
-                      </o>
-                      <o n="Flags" t="Flags">
-                        <v n="Flags">0</v>
-                        <v n="Fixed">false</v>
-                        <v n="Extensible">false</v>
-                      </o>
-                      <o n="RValue" t="BoxTreeBox">
+                  <l2 n="NetworkItems">
+                    <o t="BoxTreeDemux">
+                      <v n="VarId">22</v>
+                      <o n="Input" t="BoxTreeBox">
                         <v n="BoxType">"ManualControl"</v>
                         <o n="Instance" t="Operand">
                           <v n="Operand">"ManualControl_0"</v>
@@ -182,7 +158,73 @@ END_VAR
                         <v n="ProvidesSTSnippet">false</v>
                         <v n="Id">1342L</v>
                       </o>
+                      <v n="Id">1399L</v>
+                    </o>
+                    <o t="BoxTreeAssign">
+                      <o n="OutputItems" t="OutputItemList">
+                        <l2 n="OutputItems" cet="Operand">
+                          <o>
+                            <v n="Operand">"IO.LEDGreen"</v>
+                            <v n="Type">"BOOL"</v>
+                            <v n="Comment">""</v>
+                            <v n="SymbolComment">""</v>
+                            <v n="Address">""</v>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">0</v>
+                              <v n="Fixed">false</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <v n="LValue">true</v>
+                            <v n="Boolean">true</v>
+                            <v n="IsInstance">false</v>
+                            <v n="Id">1221L</v>
+                          </o>
+                        </l2>
+                      </o>
+                      <o n="Flags" t="Flags">
+                        <v n="Flags">0</v>
+                        <v n="Fixed">false</v>
+                        <v n="Extensible">false</v>
+                      </o>
+                      <o n="RValue" t="BoxTreeDemux">
+                        <v n="VarId">22</v>
+                        <n n="Input" />
+                        <v n="Id">1400L</v>
+                      </o>
                       <v n="Id">1222L</v>
+                    </o>
+                    <o t="BoxTreeAssign">
+                      <o n="OutputItems" t="OutputItemList">
+                        <l2 n="OutputItems" cet="Operand">
+                          <o>
+                            <v n="Operand">"IO.PreviousManualMode"</v>
+                            <v n="Type">"BOOL"</v>
+                            <v n="Comment">""</v>
+                            <v n="SymbolComment">""</v>
+                            <v n="Address">""</v>
+                            <o n="Flags" t="Flags">
+                              <v n="Flags">2</v>
+                              <v n="Fixed">true</v>
+                              <v n="Extensible">false</v>
+                            </o>
+                            <v n="LValue">true</v>
+                            <v n="Boolean">true</v>
+                            <v n="IsInstance">false</v>
+                            <v n="Id">1402L</v>
+                          </o>
+                        </l2>
+                      </o>
+                      <o n="Flags" t="Flags">
+                        <v n="Flags">0</v>
+                        <v n="Fixed">false</v>
+                        <v n="Extensible">false</v>
+                      </o>
+                      <o n="RValue" t="BoxTreeDemux">
+                        <v n="VarId">22</v>
+                        <n n="Input" />
+                        <v n="Id">1401L</v>
+                      </o>
+                      <v n="Id">1403L</v>
                     </o>
                   </l2>
                   <l2 n="Connectors" />
@@ -197,31 +239,8 @@ END_VAR
                   <v n="Title">""</v>
                   <v n="Label">""</v>
                   <v n="OutCommented">false</v>
-                  <l2 n="NetworkItems">
-                    <o t="BoxTreeDemux">
-                      <v n="VarId">17</v>
-                      <o n="Input" t="BoxTreeOperand">
-                        <o n="Operand" t="Operand">
-                          <v n="Operand">"IO.Switch"</v>
-                          <v n="Type">"BOOL"</v>
-                          <v n="Comment">""</v>
-                          <v n="SymbolComment">""</v>
-                          <v n="Address">""</v>
-                          <o n="Flags" t="Flags">
-                            <v n="Flags">1</v>
-                            <v n="Fixed">true</v>
-                            <v n="Extensible">false</v>
-                          </o>
-                          <v n="LValue">false</v>
-                          <v n="Boolean">true</v>
-                          <v n="IsInstance">false</v>
-                          <v n="Id">1295L</v>
-                        </o>
-                        <v n="Id">1294L</v>
-                      </o>
-                      <v n="Id">1343L</v>
-                    </o>
-                    <o t="BoxTreeAssign">
+                  <l2 n="NetworkItems" cet="BoxTreeAssign">
+                    <o>
                       <o n="OutputItems" t="OutputItemList">
                         <l2 n="OutputItems" cet="Operand">
                           <o>
@@ -282,11 +301,25 @@ END_VAR
                             <v n="Extensible">false</v>
                           </o>
                         </l2>
-                        <l2 n="InputItems" cet="BoxTreeDemux">
+                        <l2 n="InputItems" cet="BoxTreeOperand">
                           <o>
-                            <v n="VarId">17</v>
-                            <n n="Input" />
-                            <v n="Id">1344L</v>
+                            <o n="Operand" t="Operand">
+                              <v n="Operand">"IO.Switch"</v>
+                              <v n="Type">"BOOL"</v>
+                              <v n="Comment">""</v>
+                              <v n="SymbolComment">""</v>
+                              <v n="Address">""</v>
+                              <o n="Flags" t="Flags">
+                                <v n="Flags">1</v>
+                                <v n="Fixed">true</v>
+                                <v n="Extensible">false</v>
+                              </o>
+                              <v n="LValue">false</v>
+                              <v n="Boolean">true</v>
+                              <v n="IsInstance">false</v>
+                              <v n="Id">1295L</v>
+                            </o>
+                            <v n="Id">1294L</v>
                           </o>
                         </l2>
                         <o n="InputParam" t="ParamList">
@@ -314,39 +347,6 @@ END_VAR
                         <v n="Id">1299L</v>
                       </o>
                       <v n="Id">1349L</v>
-                    </o>
-                    <o t="BoxTreeAssign">
-                      <o n="OutputItems" t="OutputItemList">
-                        <l2 n="OutputItems" cet="Operand">
-                          <o>
-                            <v n="Operand">"IO.SwitchedToAutomatic"</v>
-                            <v n="Type">"BOOL"</v>
-                            <v n="Comment">""</v>
-                            <v n="SymbolComment">""</v>
-                            <v n="Address">""</v>
-                            <o n="Flags" t="Flags">
-                              <v n="Flags">0</v>
-                              <v n="Fixed">false</v>
-                              <v n="Extensible">false</v>
-                            </o>
-                            <v n="LValue">true</v>
-                            <v n="Boolean">true</v>
-                            <v n="IsInstance">false</v>
-                            <v n="Id">1346L</v>
-                          </o>
-                        </l2>
-                      </o>
-                      <o n="Flags" t="Flags">
-                        <v n="Flags">16</v>
-                        <v n="Fixed">true</v>
-                        <v n="Extensible">false</v>
-                      </o>
-                      <o n="RValue" t="BoxTreeDemux">
-                        <v n="VarId">17</v>
-                        <n n="Input" />
-                        <v n="Id">1345L</v>
-                      </o>
-                      <v n="Id">1347L</v>
                     </o>
                   </l2>
                   <l2 n="Connectors" />
@@ -556,7 +556,7 @@ END_VAR
                   <v n="Id">1359L</v>
                 </o>
               </l2>
-              <v n="BranchCounter">17</v>
+              <v n="BranchCounter">22</v>
               <v n="ValidIds">true</v>
             </o>
           </Data>
