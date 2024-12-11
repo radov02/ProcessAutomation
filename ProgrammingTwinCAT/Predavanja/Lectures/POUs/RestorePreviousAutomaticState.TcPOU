@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="RestorePreviousAutomaticState" Id="{bf2e792f-bc3c-4ce2-afd6-05125fa35279}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC RestorePreviousAutomaticState
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	RotationRestored: BOOL := FALSE;
+	LiftingRestored: BOOL := FALSE;
+	ExtensionRestored: BOOL := FALSE;
+	GripRestored: BOOL := FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF IO.PreviousManualMode THEN
+	Automatic.AllRestored := FALSE;
+END_IF
+
+// reset rotation:
+IF Automatic.RotationPositionAuto - Automatic.RotationPositionCurrent > 5 AND (NOT RotationRestored) AND (NOT Automatic.SafetyRON) THEN
+	IO.MotorRotationDirection := 0;
+	Automatic.RCurrentlyMoving := TRUE;
+	IO.MotorRotation := 1;
+ELSIF Automatic.RotationPositionCurrent - Automatic.RotationPositionAuto > 5 AND (NOT RotationRestored) AND (NOT Automatic.SafetyRON) THEN
+	IO.MotorRotationDirection := 1;
+	Automatic.RCurrentlyMoving := TRUE;
+	IO.MotorRotation := 1;
+ELSE
+	Automatic.RCurrentlyMoving := FALSE;
+	IO.MotorRotation := 0;
+	RotationRestored := TRUE;
+END_IF
+
+// reset lifting:
+IF Automatic.LiftingPositionAuto - Automatic.LiftingPositionCurrent > 5 AND (NOT LiftingRestored) AND (NOT Automatic.SafetyLON) THEN
+	IO.MotorLiftingDirection := 0;
+	Automatic.LCurrentlyMoving := TRUE;
+	IO.MotorLifting := 1;
+ELSIF Automatic.LiftingPositionCurrent - Automatic.LiftingPositionAuto > 5 AND (NOT LiftingRestored) AND (NOT Automatic.SafetyLON) THEN
+	IO.MotorLiftingDirection := 0;
+	Automatic.LCurrentlyMoving := TRUE;
+	IO.MotorLifting := 1;
+ELSE
+	Automatic.LCurrentlyMoving := FALSE;
+	IO.MotorLifting := 0;
+	LiftingRestored := TRUE;
+END_IF
+
+// reset extension:
+IF Automatic.ExtensionPositionAuto - Automatic.ExtensionPositionCurrent > 5 AND (NOT ExtensionRestored) AND (NOT Automatic.SafetyEON) THEN
+	IO.MotorExtensionDirection := 0;
+	Automatic.ECurrentlyMoving := TRUE;
+	IO.MotorExtension := 1;
+ELSIF Automatic.ExtensionPositionCurrent - Automatic.ExtensionPositionAuto > 5 AND (NOT ExtensionRestored) AND (NOT Automatic.SafetyEON) THEN
+	IO.MotorExtensionDirection := 0;
+	Automatic.ECurrentlyMoving := TRUE;
+	IO.MotorExtension := 1;
+ELSE
+	Automatic.ECurrentlyMoving := FALSE;
+	IO.MotorExtension := 0;
+	ExtensionRestored := TRUE;
+END_IF
+
+// reset grip:
+IF Automatic.GripPositionAuto - Automatic.GripPositionCurrent > 5 AND (NOT GripRestored) AND (NOT Automatic.SafetyGON) THEN
+	IO.MotorGripDirection := 0;
+	Automatic.GCurrentlyMoving := TRUE;
+	IO.MotorGrip := 1;
+ELSIF Automatic.GripPositionCurrent - Automatic.GripPositionAuto > 5 AND (NOT GripRestored) AND (NOT Automatic.SafetyGON) THEN
+	IO.MotorGripDirection := 0;
+	Automatic.GCurrentlyMoving := TRUE;
+	IO.MotorGrip := 1;
+ELSE
+	Automatic.GCurrentlyMoving := FALSE;
+	IO.MotorGrip := 0;
+	GripRestored := TRUE;
+END_IF
+
+// if all restored then go on to exeecute recipes in AutomaticControl:
+IF RotationRestored AND LiftingRestored AND ExtensionRestored AND GripRestored THEN
+	IO.PreviousManualMode := FALSE;
+	Automatic.AllRestored := TRUE;
+	
+	RotationRestored := FALSE;
+	ExtensionRestored := FALSE;
+	LiftingRestored := FALSE;
+	GripRestored := FALSE;
+	Automatic.RCurrentlyMoving := FALSE;
+	Automatic.ECurrentlyMoving := FALSE;
+	Automatic.LCurrentlyMoving := FALSE;
+	Automatic.GCurrentlyMoving := FALSE;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="RestorePreviousAutomaticState">
+      <LineId Id="184" Count="0" />
+      <LineId Id="186" Count="1" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="17" Count="5" />
+      <LineId Id="49" Count="1" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="128" Count="3" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="56" Count="8" />
+      <LineId Id="138" Count="3" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="69" Count="4" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="75" Count="2" />
+      <LineId Id="149" Count="3" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="153" Count="0" />
+      <LineId Id="82" Count="8" />
+      <LineId Id="159" Count="3" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="36" Count="1" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="164" Count="7" />
+      <LineId Id="54" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

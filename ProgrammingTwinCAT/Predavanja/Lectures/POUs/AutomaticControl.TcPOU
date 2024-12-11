@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="AutomaticControl" Id="{f9244839-88dd-4f0f-95ab-d4274120fb90}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC AutomaticControl
+VAR_INPUT
+    Switch: BOOL;
+END_VAR
+VAR
+    State: INT := 0;
+    ExecutingRecipe1: BOOL := FALSE;
+    ExecutingRecipe2: BOOL := FALSE;
+	myRecipe1: Recipe1;
+    myRecipe2: Recipe2;
+    Tmp: BOOL;
+    RestorePreviousAutomaticState: RestorePreviousAutomaticState;
+	CountCurrentPosition1: CountCurrentPosition1;
+	Safety: Safety1;
+END_VAR
+VAR_OUTPUT
+    Output: BOOL := TRUE;
+END_VAR
+
+// TwinCAT ensures that all POUs, including your AutomaticControl program 
+// and Recipe1() Function Block, are executed once per cycle.]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// for debugging purposes:
+IF IO.ButtonRed THEN
+	IO.Initialized := FALSE;
+END_IF
+
+
+IF (NOT IO.Initialized) THEN
+	Initialize();
+ELSIF (NOT IO.Switch) AND IO.PreviousManualMode THEN
+	CountCurrentPosition1();
+	Safety();
+	RestorePreviousAutomaticState();
+ELSE
+	CountCurrentPosition1();
+	Safety();
+	
+    IF (IO.ButtonUpperLeft OR ExecutingRecipe1) AND Automatic.AllRestored THEN
+        //ExecutingRecipe1 := TRUE;
+		//Recipe11();
+        //ExecutingRecipe1 := NOT Recipe11.SuccesfullyEnded; // Update ExecutingRecipe1 based on output
+		myRecipe1.ExecutingRecipe1 := TRUE;
+		ExecutingRecipe1 := NOT myRecipe1.SuccesfullyEnded;
+    ELSIF (NOT ExecutingRecipe1) AND (IO.ButtonUpperRight OR ExecutingRecipe2) AND Automatic.AllRestored THEN
+        ExecutingRecipe2 := TRUE;
+        myRecipe2.ExecutingRecipe2 := ExecutingRecipe2; // Pass input to the function block
+        //myRecipe2(); // Call the function block
+        ExecutingRecipe2 := NOT myRecipe2.SuccesfullyEnded; // Update ExecutingRecipe2 based on output
+    END_IF
+END_IF
+
+
+
+
+RETURN;]]></ST>
+    </Implementation>
+    <LineIds Name="AutomaticControl">
+      <LineId Id="1173" Count="19" />
+      <LineId Id="1204" Count="1" />
+      <LineId Id="1193" Count="10" />
+      <LineId Id="1015" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="Safety1" Id="{5dafd35d-1bf3-4cf6-972b-beee4c406310}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Safety1
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	MaxRotationPosition: INT := 555;
+	MaxLiftingPosition: INT := 270;
+	MaxExtensionPosition: INT := 445;
+	MaxGripPosition: INT := 155;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Safety for Rotation:
+IF Automatic.RotationPositionCurrent >= MaxRotationPosition AND NOT IO.ButtonLowerLeft AND NOT IO.MotorRotationDirection = 1 THEN
+	Automatic.SafetyRON := TRUE;
+	IO.MotorRotation := 0;
+	IF Automatic.RotationPositionCurrent >= MaxRotationPosition THEN
+		Automatic.RotationPositionCurrent := MaxRotationPosition;
+	END_IF
+	//Automatic.MotorR.CurrentlyMoving := FALSE;
+	Automatic.RCurrentlyMoving := FALSE;
+END_IF
+IF IO.MotorRotationDirection = 0 THEN
+	Automatic.SafetyRON := FALSE;
+END_IF
+IF IO.EndRotationSensor THEN
+	IF IO.MotorRotationDirection = 0 THEN
+		Automatic.SafetyRON := FALSE;
+	ELSE
+		Automatic.SafetyRON := TRUE;
+		Automatic.RotationPositionCurrent := 0;
+		//Automatic.MotorR.CurrentlyMoving := FALSE;
+		Automatic.RCurrentlyMoving := FALSE;
+	END_IF
+END_IF
+
+// Safety for Lifting:
+IF Automatic.LiftingPositionCurrent >= MaxLiftingPosition AND NOT IO.ButtonLowerLeft AND NOT IO.MotorLiftingDirection = 1 THEN
+	Automatic.SafetyLON := TRUE;
+	IO.MotorLifting := 0;
+	IF Automatic.LiftingPositionCurrent >= MaxLiftingPosition THEN
+		Automatic.LiftingPositionCurrent := MaxLiftingPosition;
+	END_IF
+	//Automatic.MotorL.CurrentlyMoving := FALSE;
+	Automatic.LCurrentlyMoving := FALSE;
+END_IF
+IF IO.MotorLiftingDirection = 0 THEN
+	Automatic.SafetyLON := FALSE;
+END_IF
+IF IO.EndLiftingSensor THEN
+	IF IO.MotorLiftingDirection = 0 THEN
+		Automatic.SafetyLON := FALSE;
+	ELSE
+		Automatic.SafetyLON := TRUE;
+		Automatic.LiftingPositionCurrent := 0;
+		//Automatic.MotorL.CurrentlyMoving := FALSE;
+		Automatic.RCurrentlyMoving := FALSE;
+	END_IF
+END_IF
+
+// Safety for Extension:
+IF Automatic.ExtensionPositionCurrent >= MaxExtensionPosition AND NOT IO.ButtonLowerLeft AND NOT IO.MotorExtensionDirection = 1 THEN
+	Automatic.SafetyEON := TRUE;
+	IO.MotorExtension := 0;
+	IF Automatic.ExtensionPositionCurrent >= MaxExtensionPosition THEN
+		Automatic.ExtensionPositionCurrent := MaxExtensionPosition;
+	END_IF
+	//Automatic.MotorE.CurrentlyMoving := FALSE;
+	Automatic.ECurrentlyMoving := FALSE;
+END_IF
+IF IO.MotorExtensionDirection = 0 THEN
+	Automatic.SafetyEON := FALSE;
+END_IF
+IF IO.EndExtensionSensor THEN
+	IF IO.MotorExtensionDirection = 0 THEN
+		Automatic.SafetyEON := FALSE;
+	ELSE
+		Automatic.SafetyEON := TRUE;
+		Automatic.ExtensionPositionCurrent := 0;
+		//Automatic.MotorE.CurrentlyMoving := FALSE;
+		Automatic.ECurrentlyMoving := FALSE;
+	END_IF
+END_IF
+
+// Safety for Grip:
+IF Automatic.GripPositionCurrent >= MaxGripPosition AND NOT IO.ButtonLowerLeft AND IO.MotorGripDirection = 0 THEN
+	Automatic.SafetyGON := TRUE;
+	IO.MotorGrip := 0;
+	IF Automatic.GripPositionCurrent >= MaxGripPosition THEN
+		Automatic.GripPositionCurrent := MaxGripPosition;
+	END_IF
+	//Automatic.GCurrentlyMoving := FALSE;
+	Automatic.GCurrentlyMoving := FALSE;
+END_IF
+IF IO.MotorGripDirection = 1 THEN
+	Automatic.SafetyGON := FALSE;
+END_IF
+IF IO.EndGripSensor THEN
+	IF IO.MotorGripDirection = 0 THEN
+		Automatic.SafetyGON := FALSE;
+	ELSE
+		Automatic.SafetyGON := TRUE;
+		Automatic.GripPositionCurrent := 0;
+		//Automatic.GCurrentlyMoving := FALSE;
+		Automatic.GCurrentlyMoving := FALSE;
+	END_IF
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="Safety1">
+      <LineId Id="10" Count="3" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="16" Count="8" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="25" Count="6" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="33" Count="9" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="43" Count="6" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="51" Count="9" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="61" Count="6" />
+      <LineId Id="112" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="69" Count="9" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

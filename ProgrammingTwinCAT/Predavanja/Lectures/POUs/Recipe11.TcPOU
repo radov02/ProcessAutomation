@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="Recipe11" Id="{5d219c28-f5d8-4531-a7b6-25bb4e49e9af}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Recipe11
+VAR_INPUT
+	ExecutingRecipe1: BOOL;
+END_VAR
+VAR_OUTPUT
+	SuccesfullyEnded: BOOL := FALSE;
+END_VAR
+VAR
+	State: INT := 0;
+	WoodInitialLiftingPosition: INT := 50;
+	InitialExtensionPosition: INT := 388;
+	MaxGripPosition: INT := 150;
+	RotationDropOffPosition: INT := 300;
+	PlasticsInitialLiftingPosition: INT := 250;
+	PlasticsDropOffExtensionPosition: INT := 300;
+	MetalInitialLiftingPosition: INT := 400;
+	MetalDropOffExtensionPosition: INT := 500;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF ExecutingRecipe1 THEN	// we start executing recipe1 (again)
+	SuccesfullyEnded := FALSE;
+END_IF
+
+IF (NOT IO.Switch) AND (NOT SuccesfullyEnded) THEN
+	IO.LEDGreen := 1;
+	// WOOD:
+	IF State = 0 THEN
+		IF Automatic.LiftingPositionAuto < WoodInitialLiftingPosition THEN
+			IO.MotorLiftingDirection := 0;
+			IF (NOT Automatic.SafetyLON) THEN
+				Automatic.LCurrentlyMoving := TRUE;
+				IO.MotorLifting := 1;
+			END_IF
+		ELSE
+			State := 1;
+			IO.MotorLifting := 0;
+			Automatic.LCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 1 THEN
+		IF Automatic.ExtensionPositionAuto < InitialExtensionPosition THEN
+			IO.MotorExtensionDirection := 0;
+			IF NOT Automatic.SafetyEON THEN
+				Automatic.ECurrentlyMoving := TRUE;
+				IO.MotorExtension := 1;
+			END_IF
+		ELSE
+			State := 2;
+			IO.MotorExtension := 0;
+			Automatic.ECurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 2 THEN
+		IF Automatic.GripPositionAuto < MaxGripPosition THEN
+			IO.MotorGripDirection := 0;
+			IF NOT Automatic.SafetyGON THEN
+				Automatic.GCurrentlyMoving := TRUE;
+				IO.MotorGrip := 1;
+			END_IF
+		ELSE
+			State := 3;
+			IO.MotorGrip := 0;
+			Automatic.GCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 3 THEN
+		IF NOT IO.EndLiftingSensor THEN
+			IO.MotorLiftingDirection := 1;
+			IF NOT Automatic.SafetyLON THEN
+				Automatic.GCurrentlyMoving := TRUE;
+				IO.MotorLifting := 1;
+			END_IF
+		ELSE
+			State := 4;
+			IO.MotorLifting := 0;
+			Automatic.LCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 4 THEN
+		IF Automatic.RotationPositionAuto < RotationDropOffPosition THEN
+			IO.MotorRotationDirection := 0;
+			IF NOT Automatic.SafetyRON THEN
+				Automatic.RCurrentlyMoving := TRUE;
+				IO.MotorRotation := 1;
+			END_IF
+		ELSE
+			State := 5;
+			IO.MotorRotation := 0;
+			Automatic.RCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 5 THEN
+		IF NOT IO.EndExtensionSensor THEN	// it drops wood in the nearest bin
+			IO.MotorExtensionDirection := 1;
+			IF NOT Automatic.SafetyEON THEN
+				Automatic.ECurrentlyMoving := TRUE;
+				IO.MotorExtension := 1;
+			END_IF
+		ELSE
+			State := 6;
+			IO.MotorExtension := 0;
+			Automatic.ECurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 6 THEN
+		IF NOT IO.EndGripSensor THEN
+			IO.MotorGripDirection := 1;
+			IF NOT Automatic.SafetyGON THEN
+				Automatic.GCurrentlyMoving := TRUE;
+				IO.MotorGrip := 1;
+			END_IF
+		ELSE
+			State := 7;
+			IO.MotorGrip := 0;
+			Automatic.GCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 7 THEN
+		IF NOT IO.EndRotationSensor THEN
+			IO.MotorRotationDirection := 1;
+			IF NOT Automatic.SafetyRON THEN
+				Automatic.RCurrentlyMoving := TRUE;
+				IO.MotorRotation := 1;
+			END_IF
+		ELSE
+			State := 8;
+			IO.MotorRotation := 0;
+			Automatic.RCurrentlyMoving := FALSE;
+		END_IF
+	END_IF
+	
+	// PLASTICS:
+	IF State = 8 THEN
+		IF Automatic.LiftingPositionAuto < PlasticsInitialLiftingPosition THEN
+			IO.MotorLiftingDirection := 0;
+			IF NOT Automatic.SafetyLON THEN
+				Automatic.LCurrentlyMoving := TRUE;
+				IO.MotorLifting := 1;
+			END_IF
+		ELSE
+			State := 9;
+			IO.MotorLifting := 0;
+			Automatic.LCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 9 THEN
+		IF Automatic.ExtensionPositionAuto < InitialExtensionPosition THEN
+			IO.MotorExtensionDirection := 0;
+			IF NOT Automatic.SafetyEON THEN
+				Automatic.ECurrentlyMoving := TRUE;
+				IO.MotorExtension := 1;
+			END_IF
+		ELSE
+			State := 10;
+			IO.MotorExtension := 0;
+			Automatic.ECurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 10 THEN
+		IF Automatic.GripPositionAuto < MaxGripPosition THEN
+			IO.MotorGripDirection := 0;
+			IF NOT Automatic.SafetyGON THEN
+				Automatic.GCurrentlyMoving := TRUE;
+				IO.MotorGrip := 1;
+			END_IF
+		ELSE
+			State := 11;
+			IO.MotorGrip := 0;
+			Automatic.GCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 11 THEN
+		IF NOT IO.EndLiftingSensor THEN
+			IO.MotorLiftingDirection := 1;
+			IF NOT Automatic.SafetyLON THEN
+				Automatic.LCurrentlyMoving := TRUE;
+				IO.MotorLifting := 1;
+			END_IF
+		ELSE
+			State := 12;
+			IO.MotorLifting := 0;
+			Automatic.LCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 12 THEN
+		IF Automatic.RotationPositionAuto < RotationDropOffPosition THEN
+			IO.MotorRotationDirection := 0;
+			IF NOT Automatic.SafetyRON THEN
+				Automatic.RCurrentlyMoving := TRUE;
+				IO.MotorRotation := 1;
+			END_IF
+		ELSE
+			State := 13;
+			IO.MotorRotation := 0;
+			Automatic.RCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 13 THEN
+		IF Automatic.ExtensionPositionAuto > PlasticsDropOffExtensionPosition THEN	// it drops plastics into second nearest bin
+			IO.MotorExtensionDirection := 1;
+			IF NOT Automatic.SafetyEON THEN
+				Automatic.ECurrentlyMoving := TRUE;
+				IO.MotorExtension := 1;
+			END_IF
+		ELSE
+			State := 14;
+			IO.MotorExtension := 0;
+			Automatic.ECurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 14 THEN
+		IF NOT IO.EndGripSensor THEN
+			IO.MotorGripDirection := 1;
+			IF NOT Automatic.SafetyGON THEN
+				Automatic.GCurrentlyMoving := TRUE;
+				IO.MotorGrip := 1;
+			END_IF
+		ELSE
+			State := 15;
+			IO.MotorGrip := 0;
+			Automatic.GCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 15 THEN
+		IF NOT IO.EndRotationSensor THEN
+			IO.MotorRotationDirection := 0;
+			IF NOT Automatic.SafetyRON THEN
+				Automatic.RCurrentlyMoving := TRUE;
+				IO.MotorRotation := 1;
+			END_IF
+		ELSE
+			State := 16;
+			IO.MotorRotation := 0;
+			Automatic.RCurrentlyMoving := FALSE;
+		END_IF
+	END_IF
+	
+	// METAL:
+	IF State = 16 THEN
+		IF Automatic.LiftingPositionAuto < MetalInitialLiftingPosition THEN
+			IO.MotorLiftingDirection := 0;
+			IF NOT Automatic.SafetyLON THEN
+				Automatic.LCurrentlyMoving := TRUE;
+				IO.MotorLifting := 1;
+			END_IF
+		ELSE
+			State := 17;
+			IO.MotorLifting := 0;
+			Automatic.LCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 17 THEN
+		IF Automatic.ExtensionPositionAuto < InitialExtensionPosition THEN
+			IO.MotorExtensionDirection := 0;
+			IF NOT Automatic.SafetyEON THEN
+				Automatic.ECurrentlyMoving := TRUE;
+				IO.MotorExtension := 1;
+			END_IF
+		ELSE
+			State := 18;
+			IO.MotorExtension := 0;
+			Automatic.ECurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 18 THEN
+		IF Automatic.GripPositionAuto < MaxGripPosition THEN
+			IO.MotorGripDirection := 0;
+			IF NOT Automatic.SafetyGON THEN
+				Automatic.GCurrentlyMoving := TRUE;
+				IO.MotorGrip := 1;
+			END_IF
+		ELSE
+			State := 19;
+			IO.MotorGrip := 0;
+			Automatic.GCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 19 THEN
+		IF NOT IO.EndLiftingSensor THEN
+			IO.MotorLiftingDirection := 1;
+			IF NOT Automatic.SafetyLON THEN
+				Automatic.LCurrentlyMoving := TRUE;
+				IO.MotorLifting := 1;
+			END_IF
+		ELSE
+			State := 20;
+			IO.MotorLifting := 0;
+			Automatic.LCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 20 THEN
+		IF Automatic.RotationPositionAuto < RotationDropOffPosition THEN
+			IO.MotorRotationDirection := 0;
+			IF NOT Automatic.SafetyRON THEN
+				Automatic.RCurrentlyMoving := TRUE;
+				IO.MotorRotation := 1;
+			END_IF
+		ELSE
+			State := 21;
+			IO.MotorRotation := 0;
+			Automatic.RCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 21 THEN
+		IF Automatic.ExtensionPositionAuto > MetalDropOffExtensionPosition THEN	// it drops metal into farthest bin
+			IO.MotorExtensionDirection := 1;
+			IF NOT Automatic.SafetyEON THEN
+				Automatic.ECurrentlyMoving := TRUE;
+				IO.MotorExtension := 1;
+			END_IF
+		ELSE
+			State := 22;
+			IO.MotorExtension := 0;
+			Automatic.ECurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 22 THEN
+		IF NOT IO.EndGripSensor THEN
+			IO.MotorGripDirection := 1;
+			IF NOT Automatic.SafetyGON THEN
+				Automatic.GCurrentlyMoving := TRUE;
+				IO.MotorGrip := 1;
+			END_IF
+		ELSE
+			State := 23;
+			IO.MotorGrip := 0;
+			Automatic.GCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 23 THEN
+		IF NOT IO.EndRotationSensor THEN
+			IO.MotorRotationDirection := 1;
+			IF NOT Automatic.SafetyRON THEN
+				Automatic.RCurrentlyMoving := TRUE;
+				IO.MotorRotation := 1;
+			END_IF
+		ELSE
+			State := 24;
+			IO.MotorRotation := 0;
+			Automatic.RCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 24 THEN
+		SuccesfullyEnded := TRUE;
+		State := 0;
+		RETURN;
+	END_IF
+END_IF
+RETURN;]]></ST>
+    </Implementation>
+    <LineIds Name="Recipe11">
+      <LineId Id="19" Count="4" />
+      <LineId Id="328" Count="0" />
+      <LineId Id="24" Count="300" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
