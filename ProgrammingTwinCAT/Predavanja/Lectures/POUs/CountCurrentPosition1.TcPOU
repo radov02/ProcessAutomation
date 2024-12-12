@@ -41,28 +41,30 @@ END_VAR
 		END_IF
 	END_IF
 	
-	// COUNT Extension: (-------edino še NESPREMENJENO--------)
-	IF IO.StepExtensionSwitch = 1 THEN
+	// COUNT Extension:
+	IF IO.StepExtensionSwitch = 1 AND Automatic.ECurrentlyMoving THEN
+		// away from the sensor:
 		IF IO.MotorExtensionDirection = 0 THEN
-			IF (NOT IO.Switch) AND Automatic.ECurrentlyMoving THEN
+			IF (NOT IO.Switch) THEN		// in automatic mode
 				IF IO.PreviousManualMode THEN
 					Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent + 1;
-				ELSE
-					Automatic.ExtensionPositionAuto := Automatic.ExtensionPositionAuto + 1;
+				ELSE	// to restore the state
 					Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent + 1;
+					Automatic.ExtensionPositionAuto := Automatic.ExtensionPositionAuto + 1;
 				END_IF
-			ELSIF Automatic.ECurrentlyMoving THEN
+			ELSE		// in manual mode
 				Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent + 1;
 			END_IF
+		// towards the sensor:
 		ELSE
-			IF (NOT IO.Switch) AND Automatic.ECurrentlyMoving THEN
-				IF IO.PreviousManualMode THEN
+			IF (NOT IO.Switch) THEN		// in automatic mode
+				IF IO.PreviousManualMode THEN	
 					Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent - 1;
-				ELSE
+				ELSE	// to restore the state
+					Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent - 1;
 					Automatic.ExtensionPositionAuto := Automatic.ExtensionPositionAuto - 1;
-					Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent - 1;
 				END_IF
-			ELSIF Automatic.ECurrentlyMoving THEN
+			ELSE		// in manual mode
 				Automatic.ExtensionPositionCurrent := Automatic.ExtensionPositionCurrent - 1;
 			END_IF
 		END_IF
@@ -145,25 +147,10 @@ END_IF]]></ST>
       <LineId Id="228" Count="8" />
       <LineId Id="135" Count="0" />
       <LineId Id="27" Count="0" />
-      <LineId Id="30" Count="3" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="142" Count="0" />
-      <LineId Id="175" Count="0" />
-      <LineId Id="147" Count="0" />
-      <LineId Id="193" Count="2" />
-      <LineId Id="176" Count="0" />
-      <LineId Id="145" Count="1" />
-      <LineId Id="141" Count="0" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="149" Count="0" />
-      <LineId Id="177" Count="0" />
-      <LineId Id="154" Count="0" />
-      <LineId Id="196" Count="2" />
-      <LineId Id="178" Count="0" />
-      <LineId Id="152" Count="1" />
-      <LineId Id="148" Count="0" />
-      <LineId Id="49" Count="0" />
-      <LineId Id="52" Count="3" />
+      <LineId Id="30" Count="2" />
+      <LineId Id="278" Count="25" />
+      <LineId Id="277" Count="0" />
+      <LineId Id="53" Count="2" />
       <LineId Id="268" Count="0" />
       <LineId Id="57" Count="0" />
       <LineId Id="156" Count="0" />

@@ -4,6 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC Recipe2
 VAR_INPUT
 	ExecutingRecipe2: BOOL;
+	SuccesfullyEnded2: BOOL := FALSE;
 END_VAR
 VAR_OUTPUT
 	SuccesfullyEnded: BOOL := FALSE;
@@ -13,15 +14,16 @@ VAR
 	InitialRotationPosition: INT := 140;
 	InitialLiftingPosition: INT := 200;
 	MaxGripPosition: INT := 160;
+	WoodInitialLiftingPosition: INT := 90;
 END_VAR
 
 // Recipe is sequence of moves to execute the task.]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF ExecutingRecipe2 THEN	// we start executing recipe2 (again)
+      <ST><![CDATA[IF ExecutingRecipe2 AND (NOT SuccesfullyEnded2) THEN	// we start executing recipe2 (again)
 	SuccesfullyEnded := FALSE;
 END_IF
 
-IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
+IF NOT IO.Switch AND (NOT SuccesfullyEnded2) THEN
 	// WOOD:
 	IF State = 0 THEN
 		IF Automatic.RotationPositionAuto < InitialRotationPosition THEN
@@ -37,7 +39,7 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 		END_IF
 	ELSIF State = 1 THEN
 		IF Automatic.LiftingPositionAuto < InitialLiftingPosition THEN
-			IO.MotorLiftingDirection := 1;
+			IO.MotorLiftingDirection := 0;
 			IF NOT Automatic.SafetyLON THEN
 				Automatic.LCurrentlyMoving := TRUE;
 				IO.MotorLifting := 1;
@@ -61,7 +63,7 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 		END_IF
 	ELSIF State = 3 THEN
 		IF NOT IO.EndLiftingSensor THEN
-			IO.MotorLiftingDirection := 0;
+			IO.MotorLiftingDirection := 1;
 			IF NOT Automatic.SafetyLON THEN
 				Automatic.GCurrentlyMoving := TRUE;
 				IO.MotorLifting := 1;
@@ -84,6 +86,18 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 			Automatic.RCurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 5 THEN
+		IF Automatic.LiftingPositionAuto < WoodInitialLiftingPosition THEN
+			IO.MotorLiftingDirection := 0;
+			IF (NOT Automatic.SafetyLON) THEN
+				Automatic.LCurrentlyMoving := TRUE;
+				IO.MotorLifting := 1;
+			END_IF
+		ELSE
+			State := 6;
+			IO.MotorLifting := 0;
+			Automatic.LCurrentlyMoving := FALSE;
+		END_IF
+	ELSIF State = 6 THEN
 		IF NOT IO.EndGripSensor THEN		// it places the cylinder onto the platform
 			IO.MotorGripDirection := 1;
 			IF NOT Automatic.SafetyGON THEN
@@ -91,11 +105,13 @@ IF NOT IO.Switch AND NOT SuccesfullyEnded THEN
 				IO.MotorGrip := 1;
 			END_IF
 		ELSE
-			State := 6;
+			State := 7;
 			IO.MotorGrip := 0;
 			Automatic.GCurrentlyMoving := FALSE;
 		END_IF
-	ELSIF State = 6 THEN
+	
+	ELSIF State = 7 THEN
+		IO.Initialized := FALSE;
 		SuccesfullyEnded := TRUE;
 		State := 0;
 		RETURN;
@@ -126,12 +142,18 @@ END_IF]]></ST>
       <LineId Id="299" Count="0" />
       <LineId Id="69" Count="1" />
       <LineId Id="300" Count="0" />
-      <LineId Id="71" Count="7" />
+      <LineId Id="71" Count="4" />
+      <LineId Id="343" Count="10" />
+      <LineId Id="342" Count="0" />
+      <LineId Id="76" Count="2" />
       <LineId Id="301" Count="0" />
       <LineId Id="79" Count="1" />
       <LineId Id="302" Count="0" />
       <LineId Id="81" Count="4" />
-      <LineId Id="273" Count="4" />
+      <LineId Id="319" Count="0" />
+      <LineId Id="273" Count="0" />
+      <LineId Id="318" Count="0" />
+      <LineId Id="274" Count="3" />
       <LineId Id="22" Count="0" />
     </LineIds>
   </POU>

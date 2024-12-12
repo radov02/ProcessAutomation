@@ -11,6 +11,7 @@ VAR
 	LiftingRestored: BOOL := FALSE;
 	ExtensionRestored: BOOL := FALSE;
 	GripRestored: BOOL := FALSE;
+	DelayTimer: TON; // Timer instance
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -34,12 +35,12 @@ ELSE
 END_IF
 
 // reset lifting:
-IF Automatic.LiftingPositionAuto - Automatic.LiftingPositionCurrent > 5 AND (NOT LiftingRestored) AND (NOT Automatic.SafetyLON) THEN
+IF Automatic.LiftingPositionAuto - Automatic.LiftingPositionCurrent > 1 AND (NOT LiftingRestored) AND (NOT Automatic.SafetyLON) THEN
 	IO.MotorLiftingDirection := 0;
 	Automatic.LCurrentlyMoving := TRUE;
 	IO.MotorLifting := 1;
-ELSIF Automatic.LiftingPositionCurrent - Automatic.LiftingPositionAuto > 5 AND (NOT LiftingRestored) AND (NOT Automatic.SafetyLON) THEN
-	IO.MotorLiftingDirection := 0;
+ELSIF Automatic.LiftingPositionCurrent - Automatic.LiftingPositionAuto > 1 AND (NOT LiftingRestored) AND (NOT Automatic.SafetyLON) THEN
+	IO.MotorLiftingDirection := 1;
 	Automatic.LCurrentlyMoving := TRUE;
 	IO.MotorLifting := 1;
 ELSE
@@ -49,12 +50,12 @@ ELSE
 END_IF
 
 // reset extension:
-IF Automatic.ExtensionPositionAuto - Automatic.ExtensionPositionCurrent > 5 AND (NOT ExtensionRestored) AND (NOT Automatic.SafetyEON) THEN
+IF Automatic.ExtensionPositionAuto - Automatic.ExtensionPositionCurrent > 1 AND (NOT ExtensionRestored) AND (NOT Automatic.SafetyEON) THEN
 	IO.MotorExtensionDirection := 0;
 	Automatic.ECurrentlyMoving := TRUE;
 	IO.MotorExtension := 1;
-ELSIF Automatic.ExtensionPositionCurrent - Automatic.ExtensionPositionAuto > 5 AND (NOT ExtensionRestored) AND (NOT Automatic.SafetyEON) THEN
-	IO.MotorExtensionDirection := 0;
+ELSIF Automatic.ExtensionPositionCurrent - Automatic.ExtensionPositionAuto > 1 AND (NOT ExtensionRestored) AND (NOT Automatic.SafetyEON) THEN
+	IO.MotorExtensionDirection := 1;
 	Automatic.ECurrentlyMoving := TRUE;
 	IO.MotorExtension := 1;
 ELSE
@@ -64,12 +65,12 @@ ELSE
 END_IF
 
 // reset grip:
-IF Automatic.GripPositionAuto - Automatic.GripPositionCurrent > 5 AND (NOT GripRestored) AND (NOT Automatic.SafetyGON) THEN
+IF Automatic.GripPositionAuto - Automatic.GripPositionCurrent > 1 AND (NOT GripRestored) AND (NOT Automatic.SafetyGON) THEN
 	IO.MotorGripDirection := 0;
 	Automatic.GCurrentlyMoving := TRUE;
 	IO.MotorGrip := 1;
-ELSIF Automatic.GripPositionCurrent - Automatic.GripPositionAuto > 5 AND (NOT GripRestored) AND (NOT Automatic.SafetyGON) THEN
-	IO.MotorGripDirection := 0;
+ELSIF Automatic.GripPositionCurrent - Automatic.GripPositionAuto > 1 AND (NOT GripRestored) AND (NOT Automatic.SafetyGON) THEN
+	IO.MotorGripDirection := 1;
 	Automatic.GCurrentlyMoving := TRUE;
 	IO.MotorGrip := 1;
 ELSE
@@ -80,17 +81,23 @@ END_IF
 
 // if all restored then go on to exeecute recipes in AutomaticControl:
 IF RotationRestored AND LiftingRestored AND ExtensionRestored AND GripRestored THEN
-	IO.PreviousManualMode := FALSE;
-	Automatic.AllRestored := TRUE;
-	
-	RotationRestored := FALSE;
-	ExtensionRestored := FALSE;
-	LiftingRestored := FALSE;
-	GripRestored := FALSE;
-	Automatic.RCurrentlyMoving := FALSE;
-	Automatic.ECurrentlyMoving := FALSE;
-	Automatic.LCurrentlyMoving := FALSE;
-	Automatic.GCurrentlyMoving := FALSE;
+	DelayTimer(IN := TRUE, PT := T#1S); // Start the timer with a n-second delay
+	IF DelayTimer.Q THEN
+		IO.PreviousManualMode := FALSE;
+		Automatic.AllRestored := TRUE;
+		
+		RotationRestored := FALSE;
+		ExtensionRestored := FALSE;
+		LiftingRestored := FALSE;
+		GripRestored := FALSE;
+		Automatic.RCurrentlyMoving := FALSE;
+		Automatic.ECurrentlyMoving := FALSE;
+		Automatic.LCurrentlyMoving := FALSE;
+		Automatic.GCurrentlyMoving := FALSE;
+	DelayTimer(IN := FALSE); // Reset the timer
+    END_IF
+ELSE
+    DelayTimer(IN := FALSE); // Ensure the timer is reset if the conditions are not met
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="RestorePreviousAutomaticState">
@@ -118,10 +125,14 @@ END_IF]]></ST>
       <LineId Id="81" Count="0" />
       <LineId Id="94" Count="0" />
       <LineId Id="36" Count="1" />
+      <LineId Id="202" Count="0" />
       <LineId Id="53" Count="0" />
+      <LineId Id="204" Count="0" />
       <LineId Id="163" Count="0" />
       <LineId Id="183" Count="0" />
       <LineId Id="164" Count="7" />
+      <LineId Id="206" Count="2" />
+      <LineId Id="205" Count="0" />
       <LineId Id="54" Count="0" />
     </LineIds>
   </POU>

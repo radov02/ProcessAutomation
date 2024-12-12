@@ -40,16 +40,15 @@ ELSE
 	Safety();
 	
     IF (IO.ButtonUpperLeft OR ExecutingRecipe1) AND Automatic.AllRestored THEN
-        //ExecutingRecipe1 := TRUE;
-		//Recipe11();
-        //ExecutingRecipe1 := NOT Recipe11.SuccesfullyEnded; // Update ExecutingRecipe1 based on output
-		myRecipe1.ExecutingRecipe1 := TRUE;
+        myRecipe1.ExecutingRecipe1 := TRUE;
+		myRecipe1();
+		myRecipe1.SuccesfullyEnded1 := FALSE;
 		ExecutingRecipe1 := NOT myRecipe1.SuccesfullyEnded;
     ELSIF (NOT ExecutingRecipe1) AND (IO.ButtonUpperRight OR ExecutingRecipe2) AND Automatic.AllRestored THEN
-        ExecutingRecipe2 := TRUE;
-        myRecipe2.ExecutingRecipe2 := ExecutingRecipe2; // Pass input to the function block
-        //myRecipe2(); // Call the function block
-        ExecutingRecipe2 := NOT myRecipe2.SuccesfullyEnded; // Update ExecutingRecipe2 based on output
+        myRecipe2.ExecutingRecipe2 := TRUE; // Pass input to the function block
+        myRecipe2(); // Call the function block
+		myRecipe2.SuccesfullyEnded2 := FALSE;
+        ExecutingRecipe2 := NOT myRecipe2.SuccesfullyEnded;
     END_IF
 END_IF
 
@@ -59,9 +58,14 @@ END_IF
 RETURN;]]></ST>
     </Implementation>
     <LineIds Name="AutomaticControl">
-      <LineId Id="1173" Count="19" />
-      <LineId Id="1204" Count="1" />
-      <LineId Id="1193" Count="10" />
+      <LineId Id="1173" Count="16" />
+      <LineId Id="1204" Count="0" />
+      <LineId Id="1226" Count="1" />
+      <LineId Id="1205" Count="0" />
+      <LineId Id="1193" Count="0" />
+      <LineId Id="1195" Count="1" />
+      <LineId Id="1228" Count="0" />
+      <LineId Id="1197" Count="6" />
       <LineId Id="1015" Count="0" />
     </LineIds>
   </POU>

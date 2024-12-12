@@ -4,6 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK Recipe1
 VAR_INPUT
 	ExecutingRecipe1: BOOL;
+	SuccesfullyEnded1: BOOL := FALSE;
 END_VAR
 VAR_OUTPUT
 	SuccesfullyEnded: BOOL := FALSE;
@@ -12,16 +13,19 @@ VAR
 	State: INT := 0;
 	WoodInitialLiftingPosition: INT := 50;
 	InitialExtensionPosition: INT := 388;
-	MaxGripPosition: INT := 150;
-	RotationDropOffPosition: INT := 300;
-	PlasticsInitialLiftingPosition: INT := 250;
+	MaxGripPosition: INT := 160;
+	RotationDropOffPosition: INT := 210;
+	PlasticsInitialLiftingPosition: INT := 175;
 	PlasticsDropOffExtensionPosition: INT := 300;
-	MetalInitialLiftingPosition: INT := 400;
+	MetalInitialLiftingPosition: INT := 245;
 	MetalDropOffExtensionPosition: INT := 500;
+	
+	DelayTimer: TON; // Timer variable
+    DelayElapsed: BOOL := FALSE;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF ExecutingRecipe1 THEN	// we start executing recipe1 (again)
+      <ST><![CDATA[IF ExecutingRecipe1 AND (NOT SuccesfullyEnded1) THEN	// we start executing recipe1 (again)
 	SuccesfullyEnded := FALSE;
 END_IF
 
@@ -36,8 +40,9 @@ IF (NOT IO.Switch) AND (NOT SuccesfullyEnded) THEN
 				IO.MotorLifting := 1;
 			END_IF
 		ELSE
-			State := 1;
 			IO.MotorLifting := 0;
+State := 1;
+			// DELAY... 
 			Automatic.LCurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 1 THEN
@@ -213,7 +218,7 @@ IF (NOT IO.Switch) AND (NOT SuccesfullyEnded) THEN
 		END_IF
 	ELSIF State = 15 THEN
 		IF NOT IO.EndRotationSensor THEN
-			IO.MotorRotationDirection := 0;
+			IO.MotorRotationDirection := 1;
 			IF NOT Automatic.SafetyRON THEN
 				Automatic.RCurrentlyMoving := TRUE;
 				IO.MotorRotation := 1;
@@ -323,6 +328,7 @@ IF (NOT IO.Switch) AND (NOT SuccesfullyEnded) THEN
 			Automatic.RCurrentlyMoving := FALSE;
 		END_IF
 	ELSIF State = 24 THEN
+		IO.Initialized := FALSE;
 		SuccesfullyEnded := TRUE;
 		State := 0;
 		RETURN;
@@ -331,7 +337,7 @@ END_IF
 RETURN;]]></ST>
     </Implementation>
     <LineIds Name="Recipe1">
-      <LineId Id="26" Count="306" />
+      <LineId Id="552" Count="308" />
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>
