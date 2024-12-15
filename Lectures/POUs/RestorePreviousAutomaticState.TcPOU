@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="RestorePreviousAutomaticState" Id="{bf2e792f-bc3c-4ce2-afd6-05125fa35279}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC RestorePreviousAutomaticState
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	RotationRestored: BOOL := FALSE;
+	LiftingRestored: BOOL := FALSE;
+	ExtensionRestored: BOOL := FALSE;
+	GripRestored: BOOL := FALSE;
+	DelayTimer: TON; // Timer instance
+	
+	MotorDirectionEnum: MovementDirection;	// for better clarity on the direction 0 and 1
+	MovementEnum: Movement;	// for better clarity on the ON/OFF movement of the motors
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF IO.PreviousManualMode THEN
+	Automatic.AllRestored := FALSE;
+END_IF
+
+// reset:
+Restore(RotationRestored, Automatic.RotationPositionAuto, Automatic.RotationPositionCurrent, 
+		Automatic.SafetyRON, Automatic.RCurrentlyMoving, IO.MotorRotationDirection, IO.MotorRotation);
+
+Restore(LiftingRestored, Automatic.LiftingPositionAuto, Automatic.LiftingPositionCurrent, 
+		Automatic.SafetyLON, Automatic.LCurrentlyMoving, IO.MotorLiftingDirection, IO.MotorLifting);
+
+Restore(ExtensionRestored, Automatic.ExtensionPositionAuto, Automatic.ExtensionPositionCurrent,
+		Automatic.SafetyEON, Automatic.ECurrentlyMoving, IO.MotorExtensionDirection, IO.MotorExtension);
+
+Restore(GripRestored, Automatic.GripPositionAuto, Automatic.GripPositionCurrent,
+		Automatic.SafetyGON, Automatic.GCurrentlyMoving, IO.MotorGripDirection, IO.MotorGrip);
+
+
+// if all restored then go on to execute recipes in AutomaticControl:
+IF RotationRestored AND LiftingRestored AND ExtensionRestored AND GripRestored THEN
+	DelayTimer(IN := TRUE, PT := T#1S); // Start the timer with a n-second delay
+	IF DelayTimer.Q THEN
+		IO.PreviousManualMode := FALSE;
+		Automatic.AllRestored := TRUE;
+		
+		RotationRestored := FALSE;
+		ExtensionRestored := FALSE;
+		LiftingRestored := FALSE;
+		GripRestored := FALSE;
+		Automatic.RCurrentlyMoving := FALSE;
+		Automatic.ECurrentlyMoving := FALSE;
+		Automatic.LCurrentlyMoving := FALSE;
+		Automatic.GCurrentlyMoving := FALSE;
+		DelayTimer(IN := FALSE); // Reset the timer
+    END_IF
+ELSE
+    DelayTimer(IN := FALSE); // Ensure the timer is reset if the conditions are not met
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="RestorePreviousAutomaticState">
+      <LineId Id="184" Count="0" />
+      <LineId Id="186" Count="1" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="224" Count="0" />
+      <LineId Id="226" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="225" Count="0" />
+      <LineId Id="227" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="229" Count="1" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="231" Count="1" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="36" Count="1" />
+      <LineId Id="202" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="204" Count="0" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="164" Count="7" />
+      <LineId Id="206" Count="2" />
+      <LineId Id="205" Count="0" />
+      <LineId Id="54" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

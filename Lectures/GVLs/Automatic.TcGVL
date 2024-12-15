@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <GVL Name="Automatic" Id="{7e4bdbd1-b96b-4df8-905c-fcd22461ac06}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	RCurrentlyMoving: BOOL;
+	RotationPositionAuto: INT;
+	RotationPositionCurrent: INT;
+	SafetyRON: BOOL;
+	
+	LCurrentlyMoving: BOOL;
+	LiftingPositionAuto: INT;
+	LiftingPositionCurrent: INT;
+	SafetyLON: BOOL;
+	
+	ECurrentlyMoving: BOOL;
+	ExtensionPositionAuto: INT;
+	ExtensionPositionCurrent: INT;
+	SafetyEON: BOOL;
+	
+	GCurrentlyMoving: BOOL;
+	GripPositionAuto: INT;
+	GripPositionCurrent: INT;
+	SafetyGON: BOOL;
+	
+	AllRestored: BOOL;
+	
+	Recipes: ARRAY[1..50] OF Recipe;
+	RecipesIndex: INT := 3;
+	CurrentRecipe: INT;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

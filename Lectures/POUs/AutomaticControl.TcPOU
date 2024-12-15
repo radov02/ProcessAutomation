@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="AutomaticControl" Id="{f9244839-88dd-4f0f-95ab-d4274120fb90}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC AutomaticControl
+VAR_INPUT
+    Switch: BOOL;
+END_VAR
+VAR
+    State: INT := 0;
+    RestorePreviousAutomaticState: RestorePreviousAutomaticState;
+	CountCurrentPosition: CountCurrentPosition;
+	Safety: Safety;
+	ExecuteCurrentRecipe: ExecuteCurrentRecipe;
+	ExecutingRecipe: BOOL := FALSE;
+END_VAR
+VAR_OUTPUT
+    Output: BOOL := TRUE;
+END_VAR
+
+// TwinCAT ensures that all POUs, including your AutomaticControl program 
+// and Recipe1() Function Block, are executed once per cycle.]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// for debugging purposes:
+IF IO.ButtonRed THEN
+	IO.Initialized := FALSE;
+END_IF
+
+
+IF (NOT IO.Initialized) THEN
+	Initialize();
+ELSE
+	CountCurrentPosition();
+	Safety();
+
+	IF (NOT IO.Switch) AND IO.PreviousManualMode THEN
+		RestorePreviousAutomaticState();
+	ELSE
+		// select recipe:
+		IF (IO.ButtonUpperLeft AND (NOT ExecutingRecipe) AND Automatic.CurrentRecipe > 1) THEN
+			Automatic.CurrentRecipe := Automatic.CurrentRecipe - 1;
+		ELSIF (IO.ButtonUpperRight AND NOT ExecutingRecipe AND Automatic.CurrentRecipe < Automatic.RecipesIndex-1) THEN
+			Automatic.CurrentRecipe := Automatic.CurrentRecipe + 1;
+		END_IF
+		
+		// green button starts executing current recipe:
+		IF (IO.ButtonGreen OR ExecutingRecipe) AND Automatic.AllRestored THEN
+			ExecutingRecipe := TRUE;
+			ExecuteCurrentRecipe(ExecutingRecipe1 := ExecutingRecipe, SuccesfullyEnded1 := FALSE);
+			ExecuteCurrentRecipe.SuccesfullyEnded1 := FALSE;		
+			ExecutingRecipe := NOT ExecuteCurrentRecipe.SuccesfullyEnded;
+		END_IF
+	END_IF
+END_IF
+
+RETURN;]]></ST>
+    </Implementation>
+    <LineIds Name="AutomaticControl">
+      <LineId Id="1277" Count="14" />
+      <LineId Id="1318" Count="0" />
+      <LineId Id="1310" Count="0" />
+      <LineId Id="1313" Count="0" />
+      <LineId Id="1316" Count="1" />
+      <LineId Id="1314" Count="0" />
+      <LineId Id="1319" Count="2" />
+      <LineId Id="1324" Count="0" />
+      <LineId Id="1322" Count="0" />
+      <LineId Id="1325" Count="1" />
+      <LineId Id="1323" Count="0" />
+      <LineId Id="1303" Count="0" />
+      <LineId Id="1306" Count="1" />
+      <LineId Id="1015" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

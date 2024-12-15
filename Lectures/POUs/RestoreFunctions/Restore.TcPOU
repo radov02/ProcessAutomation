@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="Restore" Id="{c35f155a-143d-4f41-9a6e-6178c1b6d0e2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION Restore : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	MotorDirectionEnum: MovementDirection;	// for better clarity on the direction 0 and 1
+	MovementEnum: Movement; // for better clarity on the ON/OFF movement of the motors
+END_VAR
+VAR_IN_OUT	// REFERENCES!
+	Restored: BOOL;
+	AUTOMATICPositionAuto: INT;
+	AUTOMATICPositionCurrent: INT;
+	AUTOMATICSafetyON: BOOL;
+	AUTOMATICCurrentlyMoving: BOOL;
+	IODirection: BOOL;	
+	IOMotor: BOOL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF AUTOMATICPositionAuto - AUTOMATICPositionCurrent > 5 AND (NOT Restored) AND (NOT AUTOMATICSafetyON) THEN
+	IODirection := (MotorDirectionEnum = MovementDirection.AwayFromSensor);
+	AUTOMATICCurrentlyMoving := TRUE;
+	IOMotor := (MovementEnum = Movement.ON);
+	Restored := FALSE;
+ELSIF AUTOMATICPositionCurrent - AUTOMATICPositionAuto > 5 AND (NOT Restored) AND (NOT AUTOMATICSafetyON) THEN
+	IODirection := (MotorDirectionEnum = MovementDirection.TowardsSensor);
+	AUTOMATICCurrentlyMoving := TRUE;
+	IOMotor := (MovementEnum = Movement.ON);
+	Restored := FALSE;
+ELSE
+	AUTOMATICCurrentlyMoving := FALSE;
+	IOMotor := (MovementEnum = Movement.OFF);
+	Restored := TRUE;
+END_IF
+
+Restore := Restored;
+RETURN;	// Restored]]></ST>
+    </Implementation>
+    <LineIds Name="Restore">
+      <LineId Id="8" Count="3" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="12" Count="3" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="16" Count="3" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="29" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

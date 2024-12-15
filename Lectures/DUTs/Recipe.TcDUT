@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <DUT Name="Recipe" Id="{e323d0b6-376b-438e-add7-08d745a9bb0b}">
+    <Declaration><![CDATA[TYPE Recipe :
+STRUCT
+	NoOfMovements: INT;
+	MovementList: ARRAY[1..100] OF INT;
+	MovementMotors: ARRAY[1..100] OF Motor;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

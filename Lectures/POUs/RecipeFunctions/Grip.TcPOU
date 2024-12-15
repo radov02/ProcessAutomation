@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="Grip" Id="{69c52a9e-9855-458c-8351-023b987ea65f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION Grip : INT
+VAR_INPUT
+	EndPosition: INT;
+	State: INT;
+END_VAR
+VAR
+	MovementEnum: Movement;
+	NextState: INT;
+	MotorDirectionEnum: MovementDirection;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF Automatic.GripPositionAuto > EndPosition THEN
+	MotorDirectionEnum := MovementDirection.TowardsSensor;
+ELSE
+	MotorDirectionEnum := MovementDirection.AwayFromSensor;
+END_IF
+
+IF MotorDirectionEnum = MovementDirection.TowardsSensor THEN
+	IF Automatic.GripPositionAuto > EndPosition THEN
+		IO.MotorGripDirection := (MotorDirectionEnum = MovementDirection.TowardsSensor);
+		IF NOT Automatic.SafetyGON THEN
+			Automatic.GCurrentlyMoving := TRUE;
+			IO.MotorGrip := (MovementEnum = Movement.ON);
+		END_IF
+		NextState := State;
+	ELSE
+		IO.MotorGrip := (MovementEnum = Movement.OFF);
+		NextState := State + 1;
+		Automatic.GCurrentlyMoving := FALSE;
+	END_IF
+ELSE
+	IF Automatic.GripPositionAuto < EndPosition THEN
+		IO.MotorGripDirection := (MotorDirectionEnum = MovementDirection.AwayFromSensor);
+		IF NOT Automatic.SafetyGON THEN
+			Automatic.GCurrentlyMoving := TRUE;
+			IO.MotorGrip := (MovementEnum = Movement.ON);
+		END_IF
+		NextState := State;
+	ELSE
+		IO.MotorGrip := (MovementEnum = Movement.OFF);
+		NextState := State + 1;
+		Automatic.GCurrentlyMoving := FALSE;
+	END_IF
+END_IF
+
+Grip := NextState;
+RETURN;]]></ST>
+    </Implementation>
+    <LineIds Name="Grip">
+      <LineId Id="77" Count="3" />
+      <LineId Id="75" Count="1" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="61" Count="5" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="48" Count="5" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

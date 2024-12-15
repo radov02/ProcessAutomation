@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="Recipe1" Id="{7856265b-22db-4c1e-94a8-2bb2cbb09f5f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Recipe1	// Recipe is sequence of moves to execute the task.
+VAR_INPUT
+	ExecutingRecipe1: BOOL;
+	SuccesfullyEnded1: BOOL := FALSE;
+END_VAR
+VAR_OUTPUT
+	SuccesfullyEnded: BOOL := FALSE;
+END_VAR
+VAR
+	State: INT := 0;
+	
+	MinRotationPosition: INT := 0;
+	RotationDropOffPosition: INT := 210;
+	
+	MinLiftingPosition: INT := 0;
+	WoodInitialLiftingPosition: INT := 50;
+	PlasticsInitialLiftingPosition: INT := 175;
+	MetalInitialLiftingPosition: INT := 245;
+	
+	MinExtensionPosition: INT := 0;
+	InitialExtensionPosition: INT := 388;
+	PlasticsDropOffExtensionPosition: INT := 300;
+	MetalDropOffExtensionPosition: INT := 500;
+	
+	MinGripPosition: INT := 0;
+	MaxGripPosition: INT := 160;
+	
+	MovementEnum: Movement;	// for better clarity on the ON/OFF movement of the motors
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF ExecutingRecipe1 AND (NOT SuccesfullyEnded1) THEN	// we start executing recipe1 (again)
+	SuccesfullyEnded := FALSE;
+END_IF
+
+IF (NOT IO.Switch) AND (NOT SuccesfullyEnded) THEN
+	// WOOD:
+	IF State = 0 THEN
+		State := Lifting(WoodInitialLiftingPosition, State);
+
+	ELSIF State = 1 THEN
+		State := Extension(InitialExtensionPosition, State);
+			
+	ELSIF State = 2 THEN
+		State := Grip(MaxGripPosition, State);
+	
+	ELSIF State = 3 THEN
+		State := Lifting(MinLiftingPosition, State);
+	
+	ELSIF State = 4 THEN
+		State := Rotation(RotationDropOffPosition, State);
+	
+	ELSIF State = 5 THEN
+		State := Extension(MinExtensionPosition, State);
+	
+	ELSIF State = 6 THEN
+		State := Grip(MinGripPosition, State);
+	
+	ELSIF State = 7 THEN
+		State := Rotation(MinRotationPosition, State);
+	END_IF
+	
+	// PLASTICS:
+	IF State = 8 THEN
+		State := Lifting(PlasticsInitialLiftingPosition, State);
+
+	ELSIF State = 9 THEN
+		State := Extension(InitialExtensionPosition, State);
+	
+	ELSIF State = 10 THEN
+		State := Grip(MaxGripPosition, State);
+		
+	ELSIF State = 11 THEN
+		State := Lifting(MinGripPosition, State);
+
+	ELSIF State = 12 THEN
+		State := Rotation(RotationDropOffPosition, State);
+		
+	ELSIF State = 13 THEN
+		State := Extension(PlasticsDropOffExtensionPosition, State);
+		
+	ELSIF State = 14 THEN
+		State := Grip(MinGripPosition, State);
+		
+	ELSIF State = 15 THEN
+		State := Rotation(MinRotationPosition, State);
+	END_IF
+	
+	// METAL:
+	IF State = 16 THEN
+		State := Lifting(MetalInitialLiftingPosition, State);
+		
+	ELSIF State = 17 THEN
+		State := Extension(InitialExtensionPosition, State);
+		
+	ELSIF State = 18 THEN
+		State := Grip(MaxGripPosition, State);
+
+	ELSIF State = 19 THEN
+		State := Lifting(MinLiftingPosition, State);
+		
+	ELSIF State = 20 THEN
+		State := Rotation(RotationDropOffPosition, State);
+		
+	ELSIF State = 21 THEN
+		State := Extension(MetalDropOffExtensionPosition, State);
+		
+	ELSIF State = 22 THEN
+		State := Grip(MinGripPosition, State);
+		
+	ELSIF State = 23 THEN
+		State := Rotation(MinRotationPosition, State);
+
+	ELSIF State = 24 THEN
+		IO.Initialized := FALSE;
+		SuccesfullyEnded := TRUE;
+		State := 0;
+		RETURN;
+	END_IF
+END_IF
+RETURN;]]></ST>
+    </Implementation>
+    <LineIds Name="Recipe1">
+      <LineId Id="552" Count="4" />
+      <LineId Id="558" Count="1" />
+      <LineId Id="893" Count="0" />
+      <LineId Id="571" Count="1" />
+      <LineId Id="933" Count="1" />
+      <LineId Id="584" Count="0" />
+      <LineId Id="937" Count="0" />
+      <LineId Id="940" Count="0" />
+      <LineId Id="596" Count="0" />
+      <LineId Id="899" Count="1" />
+      <LineId Id="608" Count="0" />
+      <LineId Id="914" Count="1" />
+      <LineId Id="620" Count="0" />
+      <LineId Id="935" Count="1" />
+      <LineId Id="632" Count="0" />
+      <LineId Id="941" Count="1" />
+      <LineId Id="644" Count="0" />
+      <LineId Id="916" Count="0" />
+      <LineId Id="656" Count="3" />
+      <LineId Id="956" Count="0" />
+      <LineId Id="670" Count="1" />
+      <LineId Id="958" Count="1" />
+      <LineId Id="683" Count="0" />
+      <LineId Id="960" Count="0" />
+      <LineId Id="694" Count="1" />
+      <LineId Id="961" Count="0" />
+      <LineId Id="706" Count="1" />
+      <LineId Id="963" Count="0" />
+      <LineId Id="718" Count="1" />
+      <LineId Id="964" Count="0" />
+      <LineId Id="730" Count="1" />
+      <LineId Id="965" Count="0" />
+      <LineId Id="742" Count="1" />
+      <LineId Id="966" Count="0" />
+      <LineId Id="755" Count="3" />
+      <LineId Id="967" Count="0" />
+      <LineId Id="769" Count="1" />
+      <LineId Id="968" Count="0" />
+      <LineId Id="781" Count="1" />
+      <LineId Id="969" Count="0" />
+      <LineId Id="793" Count="1" />
+      <LineId Id="970" Count="0" />
+      <LineId Id="805" Count="1" />
+      <LineId Id="971" Count="0" />
+      <LineId Id="817" Count="1" />
+      <LineId Id="972" Count="0" />
+      <LineId Id="829" Count="1" />
+      <LineId Id="973" Count="0" />
+      <LineId Id="841" Count="1" />
+      <LineId Id="974" Count="0" />
+      <LineId Id="853" Count="7" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
