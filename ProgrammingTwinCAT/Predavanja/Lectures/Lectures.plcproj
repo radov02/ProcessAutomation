@@ -19,10 +19,16 @@
     <Released>false</Released>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DUTs\Item.TcDUT">
+    <Compile Include="DUTs\Motor.TcTLEO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Location.TcDUT">
+    <Compile Include="DUTs\Movement.TcTLEO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\MovementDirection.TcTLEO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Recipe.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GVLs\Automatic.TcGVL">
@@ -39,7 +45,10 @@
     <Compile Include="POUs\AutomaticControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\CountCurrentPosition1.TcPOU">
+    <Compile Include="POUs\CountCurrentPosition.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\ExecuteCurrentRecipe.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Initialize.TcPOU">
@@ -84,6 +93,9 @@
     <Compile Include="POUs\Lectures%27 programs\p12_controlLight.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\MakeNewRecipe.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\ManualControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -96,16 +108,28 @@
     <Compile Include="POUs\Recipe1.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Recipe11.TcPOU">
+    <Compile Include="POUs\Recipe2.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Recipe2.TcPOU">
+    <Compile Include="POUs\RecipeFunctions\Extension.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\RecipeFunctions\Grip.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\RecipeFunctions\Lifting.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\RecipeFunctions\Rotation.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\RestoreFunctions\Restore.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\RestorePreviousAutomaticState.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Safety1.TcPOU">
+    <Compile Include="POUs\Safety.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -113,6 +137,8 @@
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
     <Folder Include="POUs\Lectures%27 programs" />
+    <Folder Include="POUs\RestoreFunctions" />
+    <Folder Include="POUs\RecipeFunctions" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>

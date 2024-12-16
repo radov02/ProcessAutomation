@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="ExecuteCurrentRecipe" Id="{526d192d-729d-4382-85b9-e5b229d16aa2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ExecuteCurrentRecipe
+VAR_INPUT
+	ExecutingRecipe1: BOOL;
+	SuccesfullyEnded1: BOOL := FALSE;
+END_VAR
+VAR_OUTPUT
+	SuccesfullyEnded: BOOL := FALSE;
+END_VAR
+VAR
+	Recipe1: Recipe1;
+	Recipe2: Recipe2;
+	State: INT := 1;
+	WoodInitialLiftingPosition: INT;
+	InitialExtensionPosition: INT;
+	CurrentMovement: INT;
+	CurrentMotor: INT;
+	CurrentDirection: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF ExecutingRecipe1 AND (NOT SuccesfullyEnded1) THEN	// we start executing recipe1 (again)
+	SuccesfullyEnded := FALSE;
+END_IF
+
+IF (NOT IO.Switch) AND (NOT SuccesfullyEnded) THEN
+	IF Automatic.CurrentRecipe = 1 THEN
+		Recipe1(ExecutingRecipe1 := ExecutingRecipe1, SuccesfullyEnded1 := SuccesfullyEnded1);
+	ELSIF Automatic.CurrentRecipe = 2 THEN
+		Recipe2(ExecutingRecipe2 := ExecutingRecipe1, SuccesfullyEnded2 := SuccesfullyEnded1);
+	ELSE
+		// TODO: make additional recepies:
+		IF State = Automatic.Recipes[Automatic.CurrentRecipe].NoOfMovements+1 THEN
+			IO.Initialized := FALSE;
+			SuccesfullyEnded := TRUE;
+			State := 0;
+			RETURN;
+		ELSE
+			CurrentMovement := Automatic.Recipes[Automatic.CurrentRecipe].MovementList[State];
+			CurrentMotor := Automatic.Recipes[Automatic.CurrentRecipe].MovementMotors[State];
+			
+			CASE CurrentMotor OF
+				0: State := Rotation(CurrentMovement, State);
+				1: State := Lifting(CurrentMovement, State);
+				2: State := Extension(CurrentMovement, State);
+				3: State := Grip(CurrentMovement, State);
+			END_CASE
+		END_IF
+	END_IF
+END_IF
+RETURN;]]></ST>
+    </Implementation>
+    <LineIds Name="ExecuteCurrentRecipe">
+      <LineId Id="13" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="151" Count="2" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="155" Count="14" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="19" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

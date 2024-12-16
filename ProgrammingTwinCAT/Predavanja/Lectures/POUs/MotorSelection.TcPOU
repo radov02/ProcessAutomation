@@ -30,7 +30,7 @@ VAR
 	temp3: BOOL;
 END_VAR
 VAR_OUTPUT
-	CurrentlySelectedMotor: INT;
+	CurrentlySelectedMotor: WORD;
 END_VAR]]></Declaration>
     <Implementation>
       <NWL>
@@ -629,7 +629,7 @@ END_VAR]]></Declaration>
                             </o>
                             <o>
                               <v n="Operand">"CurrentlySelectedMotor"</v>
-                              <v n="Type">"INT"</v>
+                              <v n="Type">"WORD"</v>
                               <v n="Comment">""</v>
                               <v n="SymbolComment">""</v>
                               <v n="Address">""</v>

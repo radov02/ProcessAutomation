@@ -24,6 +24,10 @@ VAR_GLOBAL
 	SafetyGON: BOOL;
 	
 	AllRestored: BOOL;
+	
+	Recipes: ARRAY[1..50] OF Recipe;
+	RecipesIndex: INT := 3;
+	CurrentRecipe: INT;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

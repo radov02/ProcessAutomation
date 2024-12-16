@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
+  <POU Name="MakeNewRecipe" Id="{46a50fc8-6651-4bb7-bd5b-aa4aa95e59d3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK MakeNewRecipe
+VAR_IN_OUT
+	NumberOfMovements: INT;
+	MovementList: ARRAY[1..NumberOfMovements] OF INT;
+	MovementMotors: ARRAY[1..NumberOfMovements] OF Motor;
+END_VAR
+VAR_OUTPUT
+	NewRecipe: Recipe;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF Automatic.RecipesIndex <= Automatic.MaxNumberOfRecipes THEN
+	NewRecipe.NoOfMovements := NumberOfMovements;
+	NewRecipe.MovementList := MovementList;
+	NewRecipe.MovementMotors := MovementMotors;
+	
+	Automatic.Recipes[Automatic.RecipesIndex] := NewRecipe;
+	Automatic.RecipesIndex := Automatic.RecipesIndex + 1;
+END_IF
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="MakeNewRecipe">
+      <LineId Id="9" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="38" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

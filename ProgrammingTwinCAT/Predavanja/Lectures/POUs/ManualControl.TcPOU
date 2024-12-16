@@ -10,7 +10,7 @@ VAR
 	TimeForInterlockDelay: TIME := T#0.05S;
 	ManualMode: BOOL;
 	MotorSelection_1: MotorSelection;
-	SelectedMotor: INT;
+	SelectedMotor: WORD;
 	temp: TIME;
 	LowerLeftInterlock: TOF;
 	LowerLeft: BOOL;
@@ -118,7 +118,7 @@ END_VAR
                             <v>CurrentlySelectedMotor</v>
                           </l2>
                           <l2 n="Types" cet="String">
-                            <v>INT</v>
+                            <v>WORD</v>
                           </l2>
                         </o>
                         <v n="CallType" t="Operator">FunctionBlock</v>

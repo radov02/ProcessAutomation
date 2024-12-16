@@ -8,10 +8,10 @@ VAR
 END_VAR
 
 // Initially it goes to position (0,0,0,0) and initializes motors by Initialize PRG.
-// There is Safety PRG that keeps checking if motors are out of bounds.
+// There is Safety FB that keeps checking if motors are out of bounds.
 // Motors are instantiated as global vars to retain their properties.
-// CountCurrentPosition PRG is the only place where we count position using the sensors.
-// RestorePreviousAutomaticState is a FB that gets execture cyclic until all the directions are set to previous positions.
+// CountCurrentPosition FB is the only place where we count position using the sensors.
+// RestorePreviousAutomaticState is a FB that gets exectuted cyclically until all the motors are set to previous positions.
 // AutomaticControl FB remembers which recipe is being executed and recipe remembers its state.
 ]]></Declaration>
     <Implementation>

@@ -7,14 +7,11 @@ VAR_INPUT
 END_VAR
 VAR
     State: INT := 0;
-    ExecutingRecipe1: BOOL := FALSE;
-    ExecutingRecipe2: BOOL := FALSE;
-	myRecipe1: Recipe1;
-    myRecipe2: Recipe2;
-    Tmp: BOOL;
     RestorePreviousAutomaticState: RestorePreviousAutomaticState;
-	CountCurrentPosition1: CountCurrentPosition1;
-	Safety: Safety1;
+	CountCurrentPosition: CountCurrentPosition;
+	Safety: Safety;
+	ExecuteCurrentRecipe: ExecuteCurrentRecipe;
+	ExecutingRecipe: BOOL := FALSE;
 END_VAR
 VAR_OUTPUT
     Output: BOOL := TRUE;
@@ -31,41 +28,46 @@ END_IF
 
 IF (NOT IO.Initialized) THEN
 	Initialize();
-ELSIF (NOT IO.Switch) AND IO.PreviousManualMode THEN
-	CountCurrentPosition1();
-	Safety();
-	RestorePreviousAutomaticState();
 ELSE
-	CountCurrentPosition1();
+	CountCurrentPosition();
 	Safety();
-	
-    IF (IO.ButtonUpperLeft OR ExecutingRecipe1) AND Automatic.AllRestored THEN
-        myRecipe1.ExecutingRecipe1 := TRUE;
-		myRecipe1();
-		myRecipe1.SuccesfullyEnded1 := FALSE;
-		ExecutingRecipe1 := NOT myRecipe1.SuccesfullyEnded;
-    ELSIF (NOT ExecutingRecipe1) AND (IO.ButtonUpperRight OR ExecutingRecipe2) AND Automatic.AllRestored THEN
-        myRecipe2.ExecutingRecipe2 := TRUE; // Pass input to the function block
-        myRecipe2(); // Call the function block
-		myRecipe2.SuccesfullyEnded2 := FALSE;
-        ExecutingRecipe2 := NOT myRecipe2.SuccesfullyEnded;
-    END_IF
+
+	IF (NOT IO.Switch) AND IO.PreviousManualMode THEN
+		RestorePreviousAutomaticState();
+	ELSE
+		// select recipe:
+		IF (IO.ButtonUpperLeft AND (NOT ExecutingRecipe) AND Automatic.CurrentRecipe > 1) THEN
+			Automatic.CurrentRecipe := Automatic.CurrentRecipe - 1;
+		ELSIF (IO.ButtonUpperRight AND NOT ExecutingRecipe AND Automatic.CurrentRecipe < Automatic.RecipesIndex-1) THEN
+			Automatic.CurrentRecipe := Automatic.CurrentRecipe + 1;
+		END_IF
+		
+		// green button starts executing current recipe:
+		IF (IO.ButtonGreen OR ExecutingRecipe) AND Automatic.AllRestored THEN
+			ExecutingRecipe := TRUE;
+			ExecuteCurrentRecipe(ExecutingRecipe1 := ExecutingRecipe, SuccesfullyEnded1 := FALSE);
+			ExecuteCurrentRecipe.SuccesfullyEnded1 := FALSE;		
+			ExecutingRecipe := NOT ExecuteCurrentRecipe.SuccesfullyEnded;
+		END_IF
+	END_IF
 END_IF
-
-
-
 
 RETURN;]]></ST>
     </Implementation>
     <LineIds Name="AutomaticControl">
-      <LineId Id="1173" Count="16" />
-      <LineId Id="1204" Count="0" />
-      <LineId Id="1226" Count="1" />
-      <LineId Id="1205" Count="0" />
-      <LineId Id="1193" Count="0" />
-      <LineId Id="1195" Count="1" />
-      <LineId Id="1228" Count="0" />
-      <LineId Id="1197" Count="6" />
+      <LineId Id="1277" Count="14" />
+      <LineId Id="1318" Count="0" />
+      <LineId Id="1310" Count="0" />
+      <LineId Id="1313" Count="0" />
+      <LineId Id="1316" Count="1" />
+      <LineId Id="1314" Count="0" />
+      <LineId Id="1319" Count="2" />
+      <LineId Id="1324" Count="0" />
+      <LineId Id="1322" Count="0" />
+      <LineId Id="1325" Count="1" />
+      <LineId Id="1323" Count="0" />
+      <LineId Id="1303" Count="0" />
+      <LineId Id="1306" Count="1" />
       <LineId Id="1015" Count="0" />
     </LineIds>
   </POU>
